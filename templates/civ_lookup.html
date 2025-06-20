@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select a Civilization</title>
+
+    <!-- shared base -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <!-- page-specific styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/civ_lookup.css') }}">
+</head>
+<body>
+<div class="civ-container"> 
+    <!-- Form tag starts here, encompassing filters, table, and new button --> 
+    <form method="POST" action="{{ url_for('gameplay') }}" id="civ-selection-form"> 
+        <div class="page-header">
+            <button type="button" id="surprise-civ-btn" class="surprise-me-btn"> 
+            Surprise Me!
+        </button>
+        <h1>Choose a Civilization</h1>
+        <!-- Removed the <a> tag from here -->
+    </div>
+
+    <!-- New button container, placed below the header -->
+    <div class="back-to-region-container">
+        <button type="button" id="back-to-region-btn" class="back-to-region-btn">
+            ← Random by Region/Period
+        </button>
+    </div>
+
+    <div id="civ-count" class="civ-count">0 records</div>
+
+    <div class="filter-panel filters">
+
+    <!-- Year range (integer inputs) -->
+    <div class="filter-block">
+        <label for="start-year">Start&nbsp;year:</label>
+        <input id="start-year" type="number" min="-2000" max="1599" value="-2000" 
+            maxlength="5" step="1">
+        <span id="start-error" class="error-msg"></span>
+    </div>
+    <div class="filter-block">
+        <label for="end-year">End&nbsp;year:</label>
+        <input id="end-year" type="number" min="-1999" max="1600" value="1600" 
+            maxlength="5" step="1">
+        <span id="end-error" class="error-msg"></span>
+    </div>
+
+    <!-- Custom Start Year Option -->
+    <div class="filter-block-column"> <!-- New class for vertical stacking of these elements -->
+        <label class="attention-message">A random game start year within the civilization's range will be assigned.</label>
+        <div class="toggle-container">
+            <input type="checkbox" id="custom-year-toggle" class="custom-toggle-input">
+            <label for="custom-year-toggle" class="toggle-label">Set specific start year?</label>
+            <input type="number" id="custom-year-input" class="custom-year-input-field" placeholder="Year" disabled>
+            <span id="custom-year-error" class="error-msg"></span>
+        </div>
+    </div>
+
+    <!-- Region select + tags -->
+    <div class="filter-block">
+        <label for="region-select">Add region:</label>
+        <select id="region-select">
+        <option value="" disabled selected>Select…</option>
+        </select>
+        <div id="region-tags" class="tag-box"></div>
+    </div>
+
+    <!-- Name search -->
+    <div class="filter-block">
+        <label for="name-search">Name:</label>
+        <input id="name-search" type="text" autocomplete="off" placeholder="Type a name…">
+        <span id="name-search-error" class="error-msg"></span>
+    </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table id="civ-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Region(s)</th>
+                    <th>Start Year</th>
+                    <th>End Year</th>
+                    <th class="notes-col">Notes</th>
+                </tr>
+            </thead>
+            <tbody><!-- rows injected by JS --></tbody>
+        </table>
+    </div>
+
+    <!-- Hidden fields for form submission -->
+    <input type="hidden" id="selected-civ-name" name="selected_civ_name">
+    <input type="hidden" id="selected-civ-start-year" name="selected_civ_start_year">
+    <input type="hidden" id="selected-civ-end-year" name="selected_civ_end_year">
+    <input type="hidden" id="use-custom-start-year-toggle" name="use_custom_start_year_toggle">
+    <input type="hidden" id="final-game-start-year" name="final_game_start_year">
+    <input type="hidden" id="filter-start-year-val" name="filter_start_year_val">
+    <input type="hidden" id="filter-end-year-val" name="filter_end_year_val">
+    <!-- Add other hidden fields if needed, e.g., region, notes -->
+
+    <div class="button-container-bottom">
+        <button type="submit" id="continue-to-gameplay-btn" class="submit-btn" disabled>
+            Continue to Game Setup
+        </button>
+    </div>
+</form> <!-- Form tag ends here -->
+</div>
+
+<script src="{{ url_for('static', filename='javascript/civ_lookup.js') }}"></script>
+</body>
+</html>

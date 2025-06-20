@@ -1,0 +1,80 @@
+[
+  {
+    "ethnicity": "White",
+    "usa_population": 204277273,
+    "usa_percentage": 61.6,
+    "primary_language": "English",
+    "secondary_language": "German",
+    "tertiary_language": "French",
+    "management_professional": 43.0,
+    "sales_office": 20.0,
+    "service": 15.0,
+    "production_transportation_material_moving": 12.0,
+    "technology_financial": 10.0
+  },
+  {
+    "ethnicity": "Black or African American",
+    "usa_population": 41104200,
+    "usa_percentage": 12.4,
+    "primary_language": "English",
+    "secondary_language": "Haitian",
+    "tertiary_language": "French",
+    "management_professional": 35.0,
+    "sales_office": 21.0,
+    "service": 22.0,
+    "production_transportation_material_moving": 17.0,
+    "technology_financial": 5.0
+  },
+  {
+    "ethnicity": "Asian",
+    "usa_population": 19886049,
+    "usa_percentage": 6.0,
+    "primary_language": "English",
+    "secondary_language": "Chinese",
+    "tertiary_language": "Vietnamese",
+    "management_professional": 58.0,
+    "sales_office": 16.0,
+    "service": 14.0,
+    "production_transportation_material_moving": 9.0,
+    "technology_financial": 25.0
+  },
+  {
+    "ethnicity": "American Indian or Alaska Native",
+    "usa_population": 3727135,
+    "usa_percentage": 1.1,
+    "primary_language": "English",
+    "secondary_language": "Navajo",
+    "tertiary_language": "Central Yupik",
+    "management_professional": 33.0,
+    "sales_office": 18.0,
+    "service": 24.0,
+    "production_transportation_material_moving": 15.0,
+    "technology_financial": 4.0
+  },
+  {
+    "ethnicity": "Native Hawaiian or Other Pacific Islander",
+    "usa_population": 689966,
+    "usa_percentage": 0.2,
+    "primary_language": "English",
+    "secondary_language": "Hawaiian",
+    "tertiary_language": "Samoan",
+    "management_professional": 35.0,
+    "sales_office": 20.0,
+    "service": 25.0,
+    "production_transportation_material_moving": 10.0,
+    "technology_financial": 3.0
+  },
+  {
+    "ethnicity": "Hispanic or Latino",
+    "usa_population": 62080044,
+    "usa_percentage": 18.7,
+    "primary_language": "English",
+    "secondary_language": "Spanish",
+    "tertiary_language": "Portuguese",
+    "management_professional": 26.0,
+    "sales_office": 20.0,
+    "service": 22.0,
+    "production_transportation_material_moving": 17.0,
+    "technology_financial": 7.0
+  }
+]

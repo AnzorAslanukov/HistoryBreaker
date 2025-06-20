@@ -1,0 +1,211 @@
+/* base.css - General styles used across the application */
+
+body {
+    margin: 0;
+    padding: 20px;
+    height: 100vh;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+hr {
+    margin-top: 24px;
+    border: 1px dashed #ccc;
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"], /* Added specifically to ensure consistency */
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 6px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+input[type="range"] {
+    width: 200px; /* This width is for the range input for player count */
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+input[disabled] {
+    background: #eee;
+    color: #777;
+}
+
+/* --- Generic Button Styles (base.css) --- */
+button {
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white; /* Default text color for all buttons */
+}
+
+button:disabled {
+    background-color: #aaa !important; /* Force override for disabled state */
+    cursor: not-allowed;
+}
+
+/* Button Color Themes */
+.btn-primary { /* Standard blue for primary actions (e.g., Save, Continue) */
+    background-color: #007bff;
+}
+.btn-primary:hover:enabled {
+    background-color: #0056b3;
+}
+
+.btn-success { /* Green for positive/affirmative actions (e.g., Auto-Fill, Clear Saved Settings when it's a reset) */
+    background-color: #28a745;
+}
+.btn-success:hover:enabled {
+    background-color: #1e7e34;
+}
+
+.btn-warning { /* Orange for cautionary/secondary actions (e.g., Auto-Fill Me) */
+    background-color: #ff9800;
+}
+.btn-warning:hover:enabled {
+    background-color: #e67e00;
+}
+
+.btn-danger { /* Red for destructive/clear actions (e.g., Clear Me, Clear Player) */
+    background-color: #dc3545;
+}
+.btn-danger:hover:enabled {
+    background-color: #c82333;
+}
+
+.btn-info { /* Teal/light blue for informational/secondary actions (e.g., Auto-Fill Player in blocks) */
+    background: #17a2b8;
+}
+.btn-info:hover:enabled {
+    background: #128097;
+}
+
+/* --- General Layout & Utility Classes (base.css) --- */
+.top-center { /* Used probably on index or llm_setup */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100px;
+    padding-top: 20px;
+}
+
+.form-container { /* Used on start_personal and llm_setup */
+    max-width: 800px;
+    margin: auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
+.hint { /* General hint style */
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 2px;
+}
+
+/* Status/validation classes (general, used by JS for feedback) */
+.status-icon {
+    margin-left: 6px;
+    font-size: 1.2rem;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.status-icon.valid {
+    color: #28a745;
+}
+
+.status-icon.invalid {
+    color: #dc3545;
+}
+
+.input-error { /* General error class for inputs */
+    border: 1px solid #dc3545 !important;
+}
+
+.error-text { /* General error message text */
+    color: #dc3545;
+    font-size: 0.85rem;
+}
+
+.status-msg { /* Sub-message for status icons */
+    font-size: 0.75rem;
+    font-weight: normal;
+    margin-left: 4px;
+}
+
+/* Tom-Select dropdown search field decoration - General third-party component styling. */
+.ts-dropdown .ts-dropdown-input {
+    padding-left: 1.75rem;
+}
+
+.ts-dropdown .ts-dropdown-input::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    transform: translateY(-50%);
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666' stroke-width='2'><circle cx='11' cy='11' r='8'/><line x1='21' y1='21' x2='16.65' y2='16.65' stroke-linecap='round'/></svg>");
+    background-size: cover;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* ===== LANDING PAGE ===== */
+/* Apply these styles to a specific class for the landing page body */
+.landing-page-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure it takes full viewport height for centering */
+}
+
+.landing-card{
+    background:#fff;
+    padding:50px 60px;
+    border-radius:14px;
+    box-shadow:0 0 18px rgba(0,0,0,.15);
+    text-align:center;
+}
+
+.landing-title{
+    margin:0 0 40px;
+    font-size:2.4rem;
+    letter-spacing:1px;
+}
+
+.landing-btn-group{
+    display:flex;
+    gap:28px;
+    justify-content:center;
+    margin-bottom:30px;
+}
+
+/* tiny “no saves” notice */
+.save-hint{
+    font-size:.9rem;
+    color:#666;
+    margin:0;
+}

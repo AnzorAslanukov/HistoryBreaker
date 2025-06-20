@@ -1,0 +1,2270 @@
+[
+  {
+    "name": "Late Period",
+    "region": "North Africa",
+    "start_year": -664,
+    "end_year": -332,
+    "notes": "Refers to Egypt's Late Period, marked by foreign invasions, Saite dynasty, and Persian rule."
+  },
+  {
+    "name": "Ptolemaic Dynasty",
+    "region": "Africa",
+    "start_year": -305,
+    "end_year": -30,
+    "notes": "Greek-ruled Egypt; famous for Alexandria, Cleopatra VII, and the Rosetta Stone."
+  },
+  {
+    "name": "Twelfth Dynasty of Egypt",
+    "region": "North Africa",
+    "start_year": -1991,
+    "end_year": -1802,
+    "notes": "Well-documented dynasty; notable rulers include Senusret III and Amenemhat III. Major advances in administration and architecture."
+  },
+  {
+    "name": "Hellenistic Greece",
+    "region": "Europe, Middle East, North Africa, Central Asia, South Asia",
+    "start_year": -323,
+    "end_year": -31,
+    "notes": "Well-documented era post-Alexander; Greek culture spread widely. Extensive archaeological and textual sources."
+  },
+  {
+    "name": "Ptolemaic Kingdom",
+    "region": "Africa, Middle East",
+    "start_year": -305,
+    "end_year": -30,
+    "notes": "Hellenistic dynasty in Egypt, founded by Ptolemy I after Alexander the Great's death. Ended with Cleopatra VII."
+  },
+  {
+    "name": "Roman Republic",
+    "region": "Southern Europe",
+    "start_year": -509,
+    "end_year": -27,
+    "notes": "Extensively documented; foundational to Western political and legal traditions."
+  },
+  {
+    "name": "Principate",
+    "region": "Europe, Middle East, North Africa",
+    "start_year": -27,
+    "end_year": 284,
+    "notes": "Early Roman Empire under emperors; Augustus to Diocletian. Extensive sources and archaeological remains."
+  },
+  {
+    "name": "Western Roman Empire",
+    "region": "Southern Europe, Western Europe, North Africa",
+    "start_year": 285,
+    "end_year": 476,
+    "notes": "Well-documented; Latin sources, archaeological remains, and detailed leadership chronology."
+  },
+  {
+    "name": "Eastern Roman Empire",
+    "region": "Europe, Middle East, North Africa",
+    "start_year": 330,
+    "end_year": 1453,
+    "notes": "Also known as Byzantine Empire; extensive records, art, and architecture survive."
+  },
+  {
+    "name": "Constantinian Dynasty",
+    "region": "Europe, Middle East, North Africa",
+    "start_year": 306,
+    "end_year": 363,
+    "notes": "Roman imperial dynasty founded by Constantine the Great; pivotal for Christianity and late Roman reforms."
+  },
+  {
+    "name": "Justinian Dynasty",
+    "region": "Europe, Middle East, North Africa",
+    "start_year": 518,
+    "end_year": 602,
+    "notes": "Byzantine dynasty; notable for Justinian I, legal reforms, Hagia Sophia, and wars with Sassanids and Germanic tribes."
+  },
+  {
+    "name": "Habsburg Dynasty",
+    "region": "Europe",
+    "start_year": 1020,
+    "end_year": 1918,
+    "notes": "Ruled Austria, Spain, and more. Extensive records, art, and architecture survive. Dynasty ended with WWI."
+  },
+  {
+    "name": "Norman Kingdom of Sicily",
+    "region": "Southern Europe",
+    "start_year": 1130,
+    "end_year": 1194,
+    "notes": "Multicultural kingdom noted for Norman, Arab, and Byzantine influences; well-documented rulers and administration."
+  },
+  {
+    "name": "Kingdom of England",
+    "region": "Europe, Western Europe",
+    "start_year": 927,
+    "end_year": 1707,
+    "notes": "Unified under Æthelstan; merged into Kingdom of Great Britain in 1707; extensive documentation."
+  },
+  {
+    "name": "Kingdom of France (Capetian)",
+    "region": "Western Europe",
+    "start_year": 987,
+    "end_year": 1328,
+    "notes": "Capetian dynasty established by Hugh Capet; strong documentation and cultural legacy."
+  },
+  {
+    "name": "Valois Dynasty",
+    "region": "Western Europe",
+    "start_year": 1328,
+    "end_year": 1589,
+    "notes": "French royal dynasty; ruled during Hundred Years' War, Renaissance; extensive documentation and cultural legacy."
+  },
+  {
+    "name": "Bourbon France",
+    "region": "Europe, Western Europe",
+    "start_year": 1589,
+    "end_year": 1792,
+    "notes": "Bourbon dynasty ruled France from Henry IV to the French Revolution; rich documentation and cultural legacy."
+  },
+  {
+    "name": "Republic of Venice",
+    "region": "Southern Europe",
+    "start_year": 697,
+    "end_year": 1797,
+    "notes": "Major maritime republic; extensive archives, art, and architecture survive. Ended with Napoleon's conquest."
+  },
+  {
+    "name": "Papal States (Renaissance)",
+    "region": "Southern Europe",
+    "start_year": 1300,
+    "end_year": 1600,
+    "notes": "Extensive records exist; Papal States were a major Renaissance power with clear leadership and rich cultural legacy."
+  },
+  {
+    "name": "Papal States (Early Modern)",
+    "region": "Europe, Southern Europe",
+    "start_year": 1500,
+    "end_year": 1799,
+    "notes": "Well-documented theocratic state under papal rule; extensive archives and material culture survive."
+  },
+  {
+    "name": "Crown of Castile",
+    "region": "Southern Europe, Western Europe",
+    "start_year": 1230,
+    "end_year": 1715,
+    "notes": "Major medieval/early modern Spanish kingdom; key in Reconquista and Spanish unification."
+  },
+  {
+    "name": "Crown of Aragon",
+    "region": "Southern Europe, Western Europe",
+    "start_year": 1162,
+    "end_year": 1716,
+    "notes": "A major medieval and early modern polity; rich records in Catalan, Aragonese, Latin, and Spanish."
+  },
+  {
+    "name": "Habsburg Spain",
+    "region": "Europe, Americas, Africa, Asia",
+    "start_year": 1516,
+    "end_year": 1700,
+    "notes": "Ruled by Habsburg dynasty; global empire; extensive documentation and cultural legacy."
+  },
+  {
+    "name": "Bourbon Spain",
+    "region": "Europe, South America, North America, Caribbean",
+    "start_year": 1700,
+    "end_year": 1808,
+    "notes": "Bourbon dynasty ruled Spain after 1700, influencing politics, reforms, and colonial administration."
+  },
+  {
+    "name": "Kingdom of Portugal (1139–1910)",
+    "region": "Southern Europe, Western Europe",
+    "start_year": 1139,
+    "end_year": 1910,
+    "notes": "Well-documented monarchy; pivotal in global exploration, colonial empire, and European politics."
+  },
+  {
+    "name": "Kingdom of Poland (elective monarchy)",
+    "region": "Europe, Central Europe, Eastern Europe",
+    "start_year": 1569,
+    "end_year": 1795,
+    "notes": "Elective monarchy formed after Union of Lublin; ended with Third Partition. Rich documentation and cultural legacy."
+  },
+  {
+    "name": "Polish–Lithuanian Commonwealth",
+    "region": "Eastern Europe, Central Europe",
+    "start_year": 1569,
+    "end_year": 1795,
+    "notes": "A major European state, known for its elective monarchy and religious tolerance. Partitioned by neighbors in the late 18th century."
+  },
+  {
+    "name": "Habsburg Monarchy",
+    "region": "Europe, Central Europe, Western Europe, Eastern Europe, Southern Europe",
+    "start_year": 1526,
+    "end_year": 1918,
+    "notes": "Ruled by the Habsburg dynasty, major European power; extensive records and cultural legacy."
+  },
+  {
+    "name": "Kingdom of Hungary (1867–1918)",
+    "region": "Europe, Central Europe, Eastern Europe",
+    "start_year": 1867,
+    "end_year": 1918,
+    "notes": "Part of Austro-Hungarian Empire; extensive documentation and cultural records available."
+  },
+  {
+    "name": "Archduchy of Austria",
+    "region": "Central Europe",
+    "start_year": 1453,
+    "end_year": 1804,
+    "notes": "Key Habsburg territory; became Austrian Empire in 1804. Extensive documentation and cultural legacy."
+  },
+  {
+    "name": "Austro-Hungarian Empire",
+    "region": "Central Europe, Eastern Europe, Southern Europe",
+    "start_year": 1867,
+    "end_year": 1918,
+    "notes": "Multi-ethnic empire; dual monarchy of Austria and Hungary; dissolved after WWI."
+  },
+  {
+    "name": "Swiss Confederation (Federal State)",
+    "region": "Western Europe, Central Europe",
+    "start_year": 1848,
+    "end_year": 2024,
+    "notes": "Modern federal state established 1848; multilingual, stable democracy, extensive documentation."
+  },
+  {
+    "name": "Dutch Republic",
+    "region": "Western Europe",
+    "start_year": 1588,
+    "end_year": 1795,
+    "notes": "Known for maritime power, trade, and art. Extensive records in Dutch and other languages."
+  },
+  {
+    "name": "Old Babylonian Kingdom",
+    "region": "Middle East",
+    "start_year": -1894,
+    "end_year": -1595,
+    "notes": "Well-documented via cuneiform tablets; famous for Hammurabi and his law code."
+  },
+  {
+    "name": "Neo-Assyrian Empire",
+    "region": "Middle East",
+    "start_year": -911,
+    "end_year": -609,
+    "notes": "Well-documented empire with extensive cuneiform records, monumental architecture, and detailed king lists."
+  },
+  {
+    "name": "Abbasid Caliphate",
+    "region": "Middle East, North Africa, Central Asia, South Asia",
+    "start_year": 750,
+    "end_year": 1258,
+    "notes": "Extensive documentation; major Islamic Golden Age polity; capital at Baghdad; major scientific and cultural advances."
+  },
+  {
+    "name": "Fatimid Caliphate",
+    "region": "North Africa, Middle East",
+    "start_year": 909,
+    "end_year": 1171,
+    "notes": "Ismaili Shia dynasty; founded in Ifriqiya, later ruled Egypt; Cairo established as capital; major cultural and economic influence."
+  },
+  {
+    "name": "Mamluk Sultanate",
+    "region": "Middle East, North Africa",
+    "start_year": 1250,
+    "end_year": 1517,
+    "notes": "Well-documented sultanate; ruled Egypt, Levant. Extensive Arabic sources and material remains."
+  },
+  {
+    "name": "Ottoman Empire",
+    "region": "Europe, Asia, Middle East, North Africa",
+    "start_year": 1299,
+    "end_year": 1922,
+    "notes": "Extensive records, clear sultanic lineage, rich material and written culture, major world power for centuries."
+  },
+  {
+    "name": "Mamluk Dynasty",
+    "region": "Middle East, North Africa",
+    "start_year": 1250,
+    "end_year": 1517,
+    "notes": "Ruled Egypt and Syria; known for defeating Mongols and Crusaders; rich architectural and documentary legacy."
+  },
+  {
+    "name": "Western Han",
+    "region": "East Asia",
+    "start_year": -202,
+    "end_year": 9,
+    "notes": "Extensive records, archaeological finds, and external contacts. Major dynasty in Chinese history."
+  },
+  {
+    "name": "Eastern Han",
+    "region": "East Asia",
+    "start_year": 25,
+    "end_year": 220,
+    "notes": "Well-documented Chinese dynasty; extensive historical records and archaeological finds."
+  },
+  {
+    "name": "Tang Dynasty",
+    "region": "East Asia",
+    "start_year": 618,
+    "end_year": 907,
+    "notes": "Golden age of Chinese culture, cosmopolitan capital Chang'an, major influence on East Asia."
+  },
+  {
+    "name": "Later Han",
+    "region": "East Asia",
+    "start_year": 25,
+    "end_year": 220,
+    "notes": "Also known as Eastern Han; extensive records, artifacts, and influence on Chinese history."
+  },
+  {
+    "name": "Northern Song",
+    "region": "East Asia",
+    "start_year": 960,
+    "end_year": 1127,
+    "notes": "Well-documented Chinese dynasty; major advances in technology, economy, and culture. Ended with Jurchen conquest."
+  },
+  {
+    "name": "Southern Song",
+    "region": "East Asia",
+    "start_year": 1127,
+    "end_year": 1279,
+    "notes": "Well-documented Chinese dynasty; rich sources in Chinese and other languages."
+  },
+  {
+    "name": "Yuan Dynasty",
+    "region": "East Asia",
+    "start_year": 1271,
+    "end_year": 1368,
+    "notes": "Founded by Kublai Khan, the Yuan unified China under Mongol rule; extensive records and artifacts survive."
+  },
+  {
+    "name": "Ming Dynasty",
+    "region": "East Asia",
+    "start_year": 1368,
+    "end_year": 1644,
+    "notes": "Well-documented Chinese dynasty, renowned for cultural, technological, and architectural achievements."
+  },
+  {
+    "name": "Goryeo",
+    "region": "East Asia",
+    "start_year": 918,
+    "end_year": 1392,
+    "notes": "Unified Korean dynasty; known for celadon pottery, Buddhism, and civil service exams."
+  },
+  {
+    "name": "Joseon",
+    "region": "East Asia",
+    "start_year": 1392,
+    "end_year": 1897,
+    "notes": "Well-documented Korean dynasty; extensive records, art, and surviving architecture."
+  },
+  {
+    "name": "Nara Period",
+    "region": "Asia, East Asia",
+    "start_year": 710,
+    "end_year": 794,
+    "notes": "First permanent Japanese capital at Nara; Buddhism flourished; detailed records and artifacts survive."
+  },
+  {
+    "name": "Heian Period",
+    "region": "East Asia",
+    "start_year": 794,
+    "end_year": 1185,
+    "notes": "Japanese era marked by imperial court culture, literature (e.g., Tale of Genji), and rise of samurai."
+  },
+  {
+    "name": "Kamakura Shogunate",
+    "region": "East Asia",
+    "start_year": 1185,
+    "end_year": 1333,
+    "notes": "First shogunate in Japan; marked by samurai rule, Mongol invasions, and feudal governance."
+  },
+  {
+    "name": "Ashikaga Shogunate",
+    "region": "Asia",
+    "start_year": 1336,
+    "end_year": 1573,
+    "notes": "Ruled Japan during the Muromachi period; known for samurai culture, Zen Buddhism, and flourishing arts."
+  },
+  {
+    "name": "Azuchi–Momoyama Period",
+    "region": "Asia, East Asia",
+    "start_year": 1573,
+    "end_year": 1603,
+    "notes": "Transitional era in Japan marked by Oda Nobunaga, Toyotomi Hideyoshi, and the rise of Tokugawa Ieyasu."
+  },
+  {
+    "name": "Nguyễn dynasty",
+    "region": "Southeast Asia",
+    "start_year": 1802,
+    "end_year": 1945,
+    "notes": "Last imperial dynasty of Vietnam; extensive records, architecture, and cultural legacy remain."
+  },
+  {
+    "name": "Kingdom of Hawaii",
+    "region": "Oceania",
+    "start_year": 1795,
+    "end_year": 1893,
+    "notes": "Unified by Kamehameha I; overthrown in 1893. Rich documentation in Hawaiian and English."
+  },
+  {
+    "name": "New Kingdom of Egypt",
+    "region": "North Africa",
+    "start_year": -1550,
+    "end_year": -1077,
+    "notes": "Well-documented period; pharaohs, temples, and tombs extensively studied. Hieroglyphic sources and archaeology are abundant."
+  },
+  {
+    "name": "Classical Greece",
+    "region": "Europe",
+    "start_year": -510,
+    "end_year": -323,
+    "notes": "Extensive sources: literature, inscriptions, archaeology. Covers city-states like Athens, Sparta, Thebes."
+  },
+  {
+    "name": "Macedonian Dynasty",
+    "region": "Europe",
+    "start_year": 867,
+    "end_year": 1056,
+    "notes": "Byzantine dynasty, marked by territorial expansion and cultural flourishing. Sources in Greek and other languages."
+  },
+  {
+    "name": "Palaiologan Dynasty",
+    "region": "Europe",
+    "start_year": 1261,
+    "end_year": 1453,
+    "notes": "Last ruling dynasty of Byzantine Empire; extensive records, art, and foreign accounts exist."
+  },
+  {
+    "name": "Swiss Confederation (Restored Confederacy)",
+    "region": "Western Europe, Central Europe",
+    "start_year": 1815,
+    "end_year": 1848,
+    "notes": "Post-Napoleonic Swiss Confederation restored by Congress of Vienna; led to modern federal state in 1848."
+  },
+  {
+    "name": "Achaemenid Empire",
+    "region": "Asia, Middle East, Europe, North Africa",
+    "start_year": -550,
+    "end_year": -330,
+    "notes": "Extensive Persian empire; well-documented administration, monuments, and sources in multiple languages."
+  },
+  {
+    "name": "Sasanian Empire",
+    "region": "Asia, Middle East",
+    "start_year": 224,
+    "end_year": 651,
+    "notes": "Well-documented Persian empire; rich archaeological and textual sources; clear dynastic succession."
+  },
+  {
+    "name": "Umayyad Caliphate",
+    "region": "Middle East, North Africa, Europe, South Asia, Central Asia",
+    "start_year": 661,
+    "end_year": 750,
+    "notes": "First major Islamic dynasty; capital in Damascus; vast records and archaeological remains."
+  },
+  {
+    "name": "Safavid Empire",
+    "region": "Middle East",
+    "start_year": 1501,
+    "end_year": 1736,
+    "notes": "Major Persianate dynasty; established Twelver Shi'ism as state religion; extensive art, architecture, and documentation."
+  },
+  {
+    "name": "Samanid Empire",
+    "region": "Central Asia, Middle East",
+    "start_year": 819,
+    "end_year": 999,
+    "notes": "Persianate dynasty; key in Islamic Golden Age; revived Persian culture; capital at Bukhara."
+  },
+  {
+    "name": "Eastern Zhou",
+    "region": "East Asia",
+    "start_year": -770,
+    "end_year": -256,
+    "notes": "Era of major philosophical schools, feudal states, and warfare; well-documented in Chinese sources."
+  },
+  {
+    "name": "Qin Dynasty",
+    "region": "East Asia",
+    "start_year": -221,
+    "end_year": -206,
+    "notes": "Unified China under Qin Shi Huang; standardized script, currency, and laws; built first Great Wall sections."
+  },
+  {
+    "name": "Sengoku period",
+    "region": "Asia, East Asia",
+    "start_year": 1467,
+    "end_year": 1615,
+    "notes": "Era of civil war in Japan; samurai, daimyo, and shogunate power struggles; well-documented in Japanese sources."
+  },
+  {
+    "name": "Colonial Period",
+    "region": "Africa, Asia, Europe, North America, South America, Oceania, Caribbean, Central America",
+    "start_year": 1400,
+    "end_year": 1960,
+    "notes": "Refers to European colonial rule globally; timelines vary by region and colonial power."
+  },
+  {
+    "name": "Crisis of the Third Century",
+    "region": "Europe, Middle East, North Africa",
+    "start_year": 235,
+    "end_year": 284,
+    "notes": "Period of Roman Empire instability: civil wars, invasions, economic crisis, and short-lived emperors."
+  },
+  {
+    "name": "Heraclian Dynasty",
+    "region": "Europe, Middle East, North Africa",
+    "start_year": 610,
+    "end_year": 711,
+    "notes": "Byzantine dynasty; major reforms, wars with Sassanids and early Islamic Caliphates; Greek main language."
+  },
+  {
+    "name": "Komnenian Dynasty",
+    "region": "Europe",
+    "start_year": 1081,
+    "end_year": 1185,
+    "notes": "Byzantine dynasty; revitalized empire after crisis, notable emperors include Alexios I, John II, Manuel I."
+  },
+  {
+    "name": "Valentinianic Dynasty",
+    "region": "Europe",
+    "start_year": 364,
+    "end_year": 392,
+    "notes": "Roman imperial dynasty founded by Valentinian I; ruled Western and Eastern Roman Empires."
+  },
+  {
+    "name": "Theodosian Dynasty",
+    "region": "Europe, Middle East, North Africa",
+    "start_year": 379,
+    "end_year": 457,
+    "notes": "Roman imperial dynasty; ruled Eastern and Western Empires. Well-documented reigns and major events."
+  },
+  {
+    "name": "Leonid Dynasty",
+    "region": "Europe",
+    "start_year": 457,
+    "end_year": 518,
+    "notes": "Byzantine dynasty founded by Leo I; period includes significant political and military events."
+  },
+  {
+    "name": "Hohenstaufen Dynasty",
+    "region": "Europe, Western Europe",
+    "start_year": 1138,
+    "end_year": 1254,
+    "notes": "German dynasty ruling the Holy Roman Empire; notable emperors include Frederick I Barbarossa and Frederick II."
+  },
+  {
+    "name": "Papal States (Restoration and Risorgimento)",
+    "region": "Southern Europe",
+    "start_year": 1814,
+    "end_year": 1870,
+    "notes": "Restored after Napoleonic era; lost territory during Italian unification. Papal rule ended with Rome's capture in 1870."
+  },
+  {
+    "name": "Grand Duchy of Moscow",
+    "region": "Europe, Eastern Europe",
+    "start_year": 1263,
+    "end_year": 1547,
+    "notes": "Precursor to Tsardom of Russia; extensive chronicles, architecture, and legal codes survive."
+  },
+  {
+    "name": "Přemyslid Dynasty",
+    "region": "Central Europe",
+    "start_year": 870,
+    "end_year": 1306,
+    "notes": "Ruled Bohemia and Moravia; well-documented dynasty; ended with Wenceslaus III's death."
+  },
+  {
+    "name": "Jagiellonian Dynasty",
+    "region": "Eastern Europe, Central Europe",
+    "start_year": 1386,
+    "end_year": 1572,
+    "notes": "Ruled Poland, Lithuania, Hungary, and Bohemia; well-documented dynasty with extensive sources."
+  },
+  {
+    "name": "Kingdom of Hungary (1920–1946)",
+    "region": "Europe, Central Europe, Eastern Europe",
+    "start_year": 1920,
+    "end_year": 1946,
+    "notes": "Post-WWI kingdom under regency; significant WWII involvement; extensive documentation available."
+  },
+  {
+    "name": "State of the Teutonic Order",
+    "region": "Eastern Europe, Northern Europe, Central Europe",
+    "start_year": 1226,
+    "end_year": 1525,
+    "notes": "German crusader state; major role in Baltic Christianization. Ended as secular Duchy of Prussia in 1525."
+  },
+  {
+    "name": "Kingdom of Ugarit",
+    "region": "Middle East",
+    "start_year": -1800,
+    "end_year": -1190,
+    "notes": "Well-documented via cuneiform tablets; known for trade, diplomacy, and early alphabet."
+  },
+  {
+    "name": "Chola Dynasty",
+    "region": "South Asia",
+    "start_year": 300,
+    "end_year": 1279,
+    "notes": "Tamil sources, inscriptions, and foreign accounts provide rich detail on Chola administration, culture, and maritime activity."
+  },
+  {
+    "name": "Hoysala Empire",
+    "region": "South Asia",
+    "start_year": 1000,
+    "end_year": 1346,
+    "notes": "Renowned for ornate temple architecture; ruled Karnataka; extensive inscriptions in Kannada and Sanskrit."
+  },
+  {
+    "name": "Cao Wei",
+    "region": "East Asia",
+    "start_year": 220,
+    "end_year": 266,
+    "notes": "One of the Three Kingdoms, founded by Cao Pi after Han. Well-documented in Chinese sources."
+  },
+  {
+    "name": "Western Jin",
+    "region": "East Asia",
+    "start_year": 266,
+    "end_year": 316,
+    "notes": "Unified China after Three Kingdoms; ended by invasions and internal strife. Extensive historical records available."
+  },
+  {
+    "name": "Later Tang",
+    "region": "East Asia",
+    "start_year": 923,
+    "end_year": 937,
+    "notes": "One of the Five Dynasties, ruled northern China; strong documentation in Chinese sources."
+  },
+  {
+    "name": "Ayutthaya Kingdom",
+    "region": "Southeast Asia",
+    "start_year": 1351,
+    "end_year": 1767,
+    "notes": "Major Siamese kingdom; rich records, architecture, and foreign accounts. Destroyed by Burma in 1767."
+  },
+  {
+    "name": "Spanish Colonial Period",
+    "region": "Europe, North America, South America, Caribbean, Africa, Asia, Oceania",
+    "start_year": 1492,
+    "end_year": 1898,
+    "notes": "Extensive documentation exists on Spanish colonial rule, administration, and cultural impact across multiple continents."
+  },
+  {
+    "name": "German Colonial Period",
+    "region": "Africa, Oceania",
+    "start_year": 1884,
+    "end_year": 1919,
+    "notes": "German colonies included Togoland, Cameroon, German South West Africa, German East Africa, and Pacific holdings."
+  },
+  {
+    "name": "Japanese Mandate Period",
+    "region": "East Asia, Oceania, Micronesia",
+    "start_year": 1914,
+    "end_year": 1945,
+    "notes": "Japan administered former German Pacific islands under League of Nations mandate until WWII defeat."
+  },
+  {
+    "name": "Antigonid dynasty",
+    "region": "Europe, Asia",
+    "start_year": -306,
+    "end_year": -168,
+    "notes": "Macedonian dynasty ruling parts of Greece and Asia after Alexander. Ended with Roman conquest at Pydna."
+  },
+  {
+    "name": "Isaurian Dynasty",
+    "region": "Europe",
+    "start_year": 717,
+    "end_year": 802,
+    "notes": "Byzantine dynasty founded by Leo III; known for iconoclasm and military reforms."
+  },
+  {
+    "name": "Angelid Dynasty",
+    "region": "Europe",
+    "start_year": 1185,
+    "end_year": 1204,
+    "notes": "Byzantine dynasty ruling during the empire's decline; overthrown in Fourth Crusade."
+  },
+  {
+    "name": "Ostrogothic Kingdom",
+    "region": "Europe",
+    "start_year": 493,
+    "end_year": 553,
+    "notes": "Founded by Theoderic the Great in Italy; fell to Byzantines. Well-documented in Roman and Gothic sources."
+  },
+  {
+    "name": "Carolingian Empire",
+    "region": "Western Europe, Central Europe, Southern Europe",
+    "start_year": 800,
+    "end_year": 888,
+    "notes": "Well-documented Frankish empire; Charlemagne crowned in 800. Latin sources and archaeological finds are extensive."
+  },
+  {
+    "name": "Salian Dynasty",
+    "region": "Europe, Western Europe",
+    "start_year": 1024,
+    "end_year": 1125,
+    "notes": "German royal dynasty; produced four Holy Roman Emperors. Well-documented in medieval sources."
+  },
+  {
+    "name": "Late Viking Age",
+    "region": "Northern Europe",
+    "start_year": 900,
+    "end_year": 1066,
+    "notes": "Well-documented era with sagas, chronicles, and extensive archaeological finds. Marked by expansion, trade, and Christianization."
+  },
+  {
+    "name": "Kingdom of Poland (Jagiellonian dynasty)",
+    "region": "Eastern Europe, Central Europe",
+    "start_year": 1386,
+    "end_year": 1572,
+    "notes": "Well-documented dynasty; union with Lithuania, Renaissance influence, and major European power."
+  },
+  {
+    "name": "First Bulgarian Empire",
+    "region": "Eastern Europe",
+    "start_year": 681,
+    "end_year": 1018,
+    "notes": "Major medieval state; rich sources in Slavic, Greek, and Latin. Well-documented rulers and events."
+  },
+  {
+    "name": "Kingdom of Hungary (1301–1526)",
+    "region": "Europe, Central Europe, Eastern Europe",
+    "start_year": 1301,
+    "end_year": 1526,
+    "notes": "Well-documented medieval kingdom; major events include Ottoman wars and the Battle of Mohács."
+  },
+  {
+    "name": "Kingdom of Hungary (1526–1867)",
+    "region": "Europe, Central Europe, Eastern Europe",
+    "start_year": 1526,
+    "end_year": 1867,
+    "notes": "Period marked by Habsburg rule, Ottoman wars, and reforms; well-documented in multiple European languages."
+  },
+  {
+    "name": "Kingdom of Bohemia (Habsburg rule)",
+    "region": "Central Europe",
+    "start_year": 1526,
+    "end_year": 1918,
+    "notes": "Bohemia became part of the Habsburg Monarchy in 1526; Czech and German sources are extensive."
+  },
+  {
+    "name": "Kingdom of Hungary (Habsburg rule)",
+    "region": "Europe, Central Europe, Eastern Europe",
+    "start_year": 1526,
+    "end_year": 1867,
+    "notes": "Well-documented period; sources in Hungarian, German, Latin. Habsburgs ruled after Mohács until Austro-Hungarian Compromise."
+  },
+  {
+    "name": "Mongol Empire",
+    "region": "Asia, Europe",
+    "start_year": 1206,
+    "end_year": 1368,
+    "notes": "Largest contiguous land empire; founded by Genghis Khan; extensive records from multiple cultures."
+  },
+  {
+    "name": "Golden Horde",
+    "region": "Europe, Asia",
+    "start_year": 1240,
+    "end_year": 1502,
+    "notes": "Mongol khanate; ruled Rus', Central Asia. Extensive records, coins, architecture, and foreign accounts."
+  },
+  {
+    "name": "Tughlaq Dynasty",
+    "region": "South Asia",
+    "start_year": 1320,
+    "end_year": 1414,
+    "notes": "Delhi Sultanate dynasty known for ambitious projects, shifting capitals, and extensive chronicles."
+  },
+  {
+    "name": "Chandelas of Jejakabhukti",
+    "region": "South Asia",
+    "start_year": 831,
+    "end_year": 1315,
+    "notes": "Famed for Khajuraho temples; ruled Bundelkhand. Sources include inscriptions, coins, and later chronicles."
+  },
+  {
+    "name": "Qi (Warring States period)",
+    "region": "East Asia",
+    "start_year": -1046,
+    "end_year": -221,
+    "notes": "Qi was a major state in ancient China, especially influential during the Warring States period."
+  },
+  {
+    "name": "Shu Han",
+    "region": "East Asia",
+    "start_year": 221,
+    "end_year": 263,
+    "notes": "One of the Three Kingdoms of China, founded by Liu Bei. Well-documented in Chinese sources."
+  },
+  {
+    "name": "Liu Song dynasty",
+    "region": "East Asia",
+    "start_year": 420,
+    "end_year": 479,
+    "notes": "First of the Southern Dynasties in China; founded by Liu Yu; extensive historical records."
+  },
+  {
+    "name": "Liang dynasty",
+    "region": "East Asia",
+    "start_year": 502,
+    "end_year": 557,
+    "notes": "Southern Chinese dynasty, part of the Southern and Northern Dynasties period; strong Buddhist influence."
+  },
+  {
+    "name": "Northern Qi dynasty",
+    "region": "East Asia",
+    "start_year": 550,
+    "end_year": 577,
+    "notes": "Northern Qi ruled northern China after the Eastern Wei, known for political intrigue and Buddhist patronage."
+  },
+  {
+    "name": "Sui Dynasty",
+    "region": "East Asia",
+    "start_year": 581,
+    "end_year": 618,
+    "notes": "Unified China after centuries of division; known for Grand Canal construction and legal reforms."
+  },
+  {
+    "name": "Wu Zhou dynasty",
+    "region": "East Asia",
+    "start_year": 690,
+    "end_year": 705,
+    "notes": "Wu Zhou was established by Empress Wu Zetian, interrupting the Tang dynasty. Well-documented in Chinese sources."
+  },
+  {
+    "name": "Liao Dynasty",
+    "region": "East Asia",
+    "start_year": 907,
+    "end_year": 1125,
+    "notes": "Khitan-led dynasty in northern China; strong documentation and archaeological finds."
+  },
+  {
+    "name": "Later Lê dynasty",
+    "region": "Southeast Asia",
+    "start_year": 1428,
+    "end_year": 1789,
+    "notes": "Vietnamese dynasty, restored independence from Ming China, saw civil wars and cultural flourishing."
+  },
+  {
+    "name": "Angkorian Period",
+    "region": "Southeast Asia",
+    "start_year": 802,
+    "end_year": 1431,
+    "notes": "Centered on Angkor, Cambodia; famed for temples like Angkor Wat and sophisticated urban planning."
+  },
+  {
+    "name": "Classic Maya",
+    "region": "Central America",
+    "start_year": 250,
+    "end_year": 900,
+    "notes": "Well-documented via inscriptions, architecture, and codices; many city-states with complex dynastic histories."
+  },
+  {
+    "name": "Triple Alliance",
+    "region": "North America",
+    "start_year": 1428,
+    "end_year": 1521,
+    "notes": "Also known as the Aztec Empire; alliance of Tenochtitlan, Texcoco, and Tlacopan."
+  },
+  {
+    "name": "Middle Kingdom",
+    "region": "Africa",
+    "start_year": -2055,
+    "end_year": -1650,
+    "notes": "Egyptian Middle Kingdom; reunification under Mentuhotep II, advances in art, literature, and administration."
+  },
+  {
+    "name": "Mali Empire",
+    "region": "West Africa",
+    "start_year": 1235,
+    "end_year": 1670,
+    "notes": "Well-documented empire; famous for Mansa Musa, Timbuktu, and trans-Saharan trade routes."
+  },
+  {
+    "name": "Zanzibar Sultanate",
+    "region": "Africa",
+    "start_year": 1856,
+    "end_year": 1964,
+    "notes": "Omani Arab-ruled sultanate on Zanzibar; major Indian Ocean trade hub; ended by 1964 revolution."
+  },
+  {
+    "name": "Argead Dynasty",
+    "region": "Europe",
+    "start_year": -700,
+    "end_year": -310,
+    "notes": "Ruling dynasty of Macedon, culminating with Alexander the Great; well-attested in classical sources."
+  },
+  {
+    "name": "Nikephorian Dynasty",
+    "region": "Europe",
+    "start_year": 802,
+    "end_year": 813,
+    "notes": "Byzantine dynasty founded by Nikephoros I; short-lived but well-documented in Byzantine sources."
+  },
+  {
+    "name": "Doukid Dynasty",
+    "region": "Europe",
+    "start_year": 1059,
+    "end_year": 1081,
+    "notes": "Byzantine dynasty, notable rulers include Constantine X and Michael VII. Well-documented in Byzantine sources."
+  },
+  {
+    "name": "Ottonian Dynasty",
+    "region": "Western Europe",
+    "start_year": 919,
+    "end_year": 1024,
+    "notes": "German dynasty ruling Holy Roman Empire; notable for church-state relations and Ottonian Renaissance."
+  },
+  {
+    "name": "Welf Dynasty",
+    "region": "Europe, Western Europe, Central Europe",
+    "start_year": 780,
+    "end_year": 1918,
+    "notes": "Prominent German and Italian dynasty; produced kings, dukes, and electors. Extensive documentation exists."
+  },
+  {
+    "name": "Republic of Genoa",
+    "region": "Southern Europe",
+    "start_year": 1005,
+    "end_year": 1797,
+    "notes": "Major maritime republic; extensive archives; well-documented governance, trade, and art."
+  },
+  {
+    "name": "Papal States (High Middle Ages)",
+    "region": "Southern Europe",
+    "start_year": 800,
+    "end_year": 1300,
+    "notes": "Papal States were governed by the Pope, with extensive documentation and influence in medieval European politics."
+  },
+  {
+    "name": "Second Bulgarian Empire",
+    "region": "Eastern Europe",
+    "start_year": 1185,
+    "end_year": 1396,
+    "notes": "Major medieval state; known for Asen dynasty, Orthodox Christianity, and resistance to Byzantines and Ottomans."
+  },
+  {
+    "name": "Serbian Empire",
+    "region": "Europe, Eastern Europe, Balkans",
+    "start_year": 1346,
+    "end_year": 1371,
+    "notes": "Founded by Stefan Dušan; peaked mid-14th c.; fragmented after 1371; rich medieval sources."
+  },
+  {
+    "name": "Austrian Empire",
+    "region": "Central Europe",
+    "start_year": 1804,
+    "end_year": 1867,
+    "notes": "Multiethnic empire; dissolved after Austro-Hungarian Compromise. Extensive documentation and cultural legacy."
+  },
+  {
+    "name": "Hittite New Kingdom",
+    "region": "Asia, Europe",
+    "start_year": -1400,
+    "end_year": -1190,
+    "notes": "Well-documented Anatolian empire; cuneiform archives, royal lists, and treaties survive."
+  },
+  {
+    "name": "Palmyrene Empire",
+    "region": "Middle East",
+    "start_year": 260,
+    "end_year": 273,
+    "notes": "Short-lived breakaway state led by Queen Zenobia; well-documented in Roman and local sources."
+  },
+  {
+    "name": "Rashidun Caliphate",
+    "region": "Middle East, North Africa",
+    "start_year": 632,
+    "end_year": 661,
+    "notes": "First Islamic caliphate, led by the four 'Rightly Guided' caliphs after Muhammad's death."
+  },
+  {
+    "name": "Great Seljuk Empire",
+    "region": "Asia, Middle East, Eastern Europe",
+    "start_year": 1037,
+    "end_year": 1194,
+    "notes": "Turko-Persian empire; key in Islamic Golden Age; notable for Nizam al-Mulk's vizierate and the Battle of Manzikert."
+  },
+  {
+    "name": "Ilkhanate",
+    "region": "Asia, Middle East",
+    "start_year": 1256,
+    "end_year": 1335,
+    "notes": "Mongol khanate in Persia; rich sources in Persian, Arabic, Chinese; notable for cultural and religious diversity."
+  },
+  {
+    "name": "Uyghur Khaganate",
+    "region": "Central Asia, East Asia",
+    "start_year": 744,
+    "end_year": 840,
+    "notes": "Turkic empire replacing the Second Turkic Khaganate; capital at Ordu-Baliq; strong Chinese contacts."
+  },
+  {
+    "name": "Gupta Empire",
+    "region": "South Asia",
+    "start_year": 320,
+    "end_year": 550,
+    "notes": "Known as India's Golden Age; advances in science, art, and literature; ruled by Chandragupta I and successors."
+  },
+  {
+    "name": "Badami Chalukya",
+    "region": "South Asia",
+    "start_year": 543,
+    "end_year": 753,
+    "notes": "Ruled much of southern and central India; known for rock-cut temples at Badami, Aihole, and Pattadakal."
+  },
+  {
+    "name": "Sisodia Dynasty",
+    "region": "South Asia",
+    "start_year": 1326,
+    "end_year": 1947,
+    "notes": "Rajput dynasty of Mewar, famed for resistance to Delhi Sultanate and Mughals; notable rulers include Rana Kumbha and Maharana Pratap."
+  },
+  {
+    "name": "Anuradhapura Kingdom",
+    "region": "South Asia",
+    "start_year": -377,
+    "end_year": 1017,
+    "notes": "Sri Lankan kingdom known for Buddhist monuments, irrigation, and extensive chronicles like the Mahavamsa."
+  },
+  {
+    "name": "Polonnaruwa Kingdom",
+    "region": "Asia",
+    "start_year": 1070,
+    "end_year": 1232,
+    "notes": "Successor to Anuradhapura; famed for irrigation, Buddhist monuments, and Chola invasions."
+  },
+  {
+    "name": "Shang Dynasty",
+    "region": "East Asia",
+    "start_year": -1600,
+    "end_year": -1046,
+    "notes": "Earliest Chinese dynasty with direct archaeological evidence; known for oracle bones and bronze work."
+  },
+  {
+    "name": "Eastern Wu",
+    "region": "East Asia",
+    "start_year": 222,
+    "end_year": 280,
+    "notes": "One of the Three Kingdoms of China, ruled by the Sun family; well-documented in Chinese sources."
+  },
+  {
+    "name": "Southern Qi dynasty",
+    "region": "East Asia",
+    "start_year": 479,
+    "end_year": 502,
+    "notes": "Short-lived Southern Chinese dynasty; well-documented in Chinese sources; notable for political instability."
+  },
+  {
+    "name": "Southern Tang",
+    "region": "East Asia",
+    "start_year": 937,
+    "end_year": 976,
+    "notes": "Successor state during China's Five Dynasties and Ten Kingdoms period; known for art and literature."
+  },
+  {
+    "name": "Asuka Period",
+    "region": "Asia, East Asia",
+    "start_year": 538,
+    "end_year": 710,
+    "notes": "Marked by Buddhism's introduction, Taika reforms, and early Japanese state formation."
+  },
+  {
+    "name": "Trần dynasty",
+    "region": "Asia, Southeast Asia",
+    "start_year": 1225,
+    "end_year": 1400,
+    "notes": "Vietnamese dynasty noted for resisting Mongol invasions and fostering Confucian culture."
+  },
+  {
+    "name": "Ming occupation of Đại Việt",
+    "region": "East Asia, Southeast Asia",
+    "start_year": 1407,
+    "end_year": 1427,
+    "notes": "Ming China occupied Đại Việt after Hồ dynasty's fall; ended by Lê Lợi's Lam Sơn uprising."
+  },
+  {
+    "name": "Khmer Empire",
+    "region": "Southeast Asia",
+    "start_year": 802,
+    "end_year": 1431,
+    "notes": "Famed for Angkor Wat; inscriptions, architecture, and Chinese records provide rich detail."
+  },
+  {
+    "name": "Taungoo Dynasty",
+    "region": "Southeast Asia",
+    "start_year": 1510,
+    "end_year": 1752,
+    "notes": "Unified much of Burma; known for military expansion and administrative reforms. Sources mainly in Burmese and some European records."
+  },
+  {
+    "name": "Postclassic Maya",
+    "region": "Central America",
+    "start_year": 900,
+    "end_year": 1524,
+    "notes": "Postclassic Maya civilization saw city-states, codices, and contact with Spanish; many sites and artifacts survive."
+  },
+  {
+    "name": "Inca Empire",
+    "region": "South America",
+    "start_year": 1438,
+    "end_year": 1533,
+    "notes": "Extensive archaeological remains; Quechua sources and Spanish chronicles provide substantial information."
+  },
+  {
+    "name": "United States Trust Territory Period",
+    "region": "Oceania, Micronesia",
+    "start_year": 1947,
+    "end_year": 1994,
+    "notes": "Administered by the US under UN trusteeship; included several island groups in Micronesia."
+  },
+  {
+    "name": "Eleventh Dynasty of Egypt",
+    "region": "North Africa",
+    "start_year": -2130,
+    "end_year": -1991,
+    "notes": "Reunified Egypt after First Intermediate Period; Mentuhotep II notable pharaoh; tombs and inscriptions survive."
+  },
+  {
+    "name": "Kingdom of Aksum",
+    "region": "Africa, Sub-Saharan Africa, East Africa",
+    "start_year": -100,
+    "end_year": 940,
+    "notes": "Major Red Sea power; famed for stelae, coinage, and early Christianization. Sources include inscriptions and Greco-Roman accounts."
+  },
+  {
+    "name": "Mauretania Caesariensis (Roman province)",
+    "region": "North Africa",
+    "start_year": 42,
+    "end_year": 430,
+    "notes": "Roman province in present-day Algeria; well-documented administration, cities, and Christian communities."
+  },
+  {
+    "name": "Solomonic Dynasty",
+    "region": "Africa",
+    "start_year": 1270,
+    "end_year": 1974,
+    "notes": "Ethiopian dynasty claiming descent from King Solomon; ruled until 1974 revolution. Early origins partly legendary."
+  },
+  {
+    "name": "Kano",
+    "region": "Africa, Sub-Saharan Africa",
+    "start_year": 999,
+    "end_year": 1807,
+    "notes": "Kano was a major Hausa city-state and emirate, known for trade, Islamic scholarship, and its ancient city walls."
+  },
+  {
+    "name": "Katsina",
+    "region": "Africa, Sub-Saharan Africa",
+    "start_year": 1400,
+    "end_year": 1805,
+    "notes": "Prominent Hausa city-state; known for trade, scholarship, and Islamic leadership before Sokoto Caliphate conquest."
+  },
+  {
+    "name": "Kingdom of Kongo",
+    "region": "Africa, Sub-Saharan Africa",
+    "start_year": 1390,
+    "end_year": 1914,
+    "notes": "Centralized monarchy; extensive contact with Portugal; Christianity adopted; rich oral and written records."
+  },
+  {
+    "name": "Ashanti Empire",
+    "region": "Africa, Sub-Saharan Africa",
+    "start_year": 1670,
+    "end_year": 1902,
+    "notes": "Well-documented Akan state; strong oral and written sources; British colonial conquest ended independence."
+  },
+  {
+    "name": "Amorian Dynasty",
+    "region": "Europe",
+    "start_year": 820,
+    "end_year": 867,
+    "notes": "Byzantine dynasty; notable for Iconoclasm's end and Arab-Byzantine conflicts."
+  },
+  {
+    "name": "Merovingian dynasty",
+    "region": "Western Europe",
+    "start_year": 457,
+    "end_year": 751,
+    "notes": "Frankish dynasty ruling much of Gaul; known for early medieval politics, art, and law."
+  },
+  {
+    "name": "High Viking Age",
+    "region": "Northern Europe, Western Europe, Eastern Europe",
+    "start_year": 800,
+    "end_year": 1050,
+    "notes": "Extensive archaeological finds, runic inscriptions, and contemporary chronicles document Viking activities and society."
+  },
+  {
+    "name": "Kingdom of Wessex",
+    "region": "Europe, Western Europe",
+    "start_year": 519,
+    "end_year": 927,
+    "notes": "Anglo-Saxon kingdom, key in English unification; well-documented rulers and events."
+  },
+  {
+    "name": "Kingdom of Poland (Piast dynasty)",
+    "region": "Eastern Europe, Central Europe",
+    "start_year": 960,
+    "end_year": 1370,
+    "notes": "First Polish state under Piasts; sources include chronicles, archaeology, and foreign records."
+  },
+  {
+    "name": "Kievan Rus’",
+    "region": "Eastern Europe",
+    "start_year": 882,
+    "end_year": 1240,
+    "notes": "Early East Slavic state; notable for Christianization in 988 and Mongol conquest in 1240."
+  },
+  {
+    "name": "Kingdom of Hungary (1000–1301)",
+    "region": "Europe, Central Europe, Eastern Europe",
+    "start_year": 1000,
+    "end_year": 1301,
+    "notes": "Well-documented medieval kingdom; Latin and Hungarian sources; clear royal lineage; significant regional influence."
+  },
+  {
+    "name": "Swiss Confederation (Helvetic Republic)",
+    "region": "Western Europe",
+    "start_year": 1798,
+    "end_year": 1803,
+    "notes": "French-imposed centralized state replacing the Old Swiss Confederacy; ended with Act of Mediation."
+  },
+  {
+    "name": "Old Assyrian Empire",
+    "region": "Middle East",
+    "start_year": -2025,
+    "end_year": -1378,
+    "notes": "Well-documented via cuneiform tablets; notable for trade colonies and early imperial expansion."
+  },
+  {
+    "name": "Middle Assyrian Empire",
+    "region": "Middle East",
+    "start_year": -1392,
+    "end_year": -934,
+    "notes": "Well-documented empire; cuneiform records, law codes, and royal inscriptions survive."
+  },
+  {
+    "name": "Nabataean Kingdom",
+    "region": "Middle East",
+    "start_year": -168,
+    "end_year": 106,
+    "notes": "Famous for Petra; left inscriptions, architecture, and trade records; absorbed by Rome in 106 CE."
+  },
+  {
+    "name": "Ayyubid Sultanate",
+    "region": "Middle East, North Africa",
+    "start_year": 1171,
+    "end_year": 1260,
+    "notes": "Founded by Saladin, the Ayyubids ruled Egypt, Syria, and parts of Arabia; known for Crusader conflicts and architectural patronage."
+  },
+  {
+    "name": "Timurid Empire",
+    "region": "Central Asia, South Asia, Middle East",
+    "start_year": 1370,
+    "end_year": 1507,
+    "notes": "Founded by Timur; renowned for Persianate culture, architecture, and arts; strong documentation of rulers and events."
+  },
+  {
+    "name": "Maurya Empire",
+    "region": "South Asia",
+    "start_year": -322,
+    "end_year": -185,
+    "notes": "Well-documented empire; sources include Ashokan edicts, Greek accounts, and archaeological finds."
+  },
+  {
+    "name": "Rashtrakuta Empire",
+    "region": "South Asia",
+    "start_year": 753,
+    "end_year": 982,
+    "notes": "Prominent Deccan dynasty, known for patronage of arts, architecture (Ellora), and multi-lingual inscriptions."
+  },
+  {
+    "name": "Western Chalukya",
+    "region": "Asia",
+    "start_year": 973,
+    "end_year": 1189,
+    "notes": "Kannada and Sanskrit sources; notable for architecture and regional power in Deccan."
+  },
+  {
+    "name": "Medieval Pandya Kingdom",
+    "region": "South Asia",
+    "start_year": 600,
+    "end_year": 1345,
+    "notes": "Tamil sources, inscriptions, and foreign accounts provide good detail; dynasty revived several times in medieval era."
+  },
+  {
+    "name": "Kakatiya dynasty",
+    "region": "South Asia",
+    "start_year": 1163,
+    "end_year": 1323,
+    "notes": "Telugu-speaking dynasty in Deccan; known for Warangal fort, tank irrigation, and resistance to Delhi Sultanate."
+  },
+  {
+    "name": "Sangama Dynasty",
+    "region": "South Asia",
+    "start_year": 1336,
+    "end_year": 1485,
+    "notes": "First dynasty of Vijayanagara Empire; notable for resistance to Delhi Sultanate and fostering Hindu culture."
+  },
+  {
+    "name": "Tuluva Dynasty",
+    "region": "South Asia",
+    "start_year": 1491,
+    "end_year": 1570,
+    "notes": "Third dynasty of Vijayanagara Empire; Krishnadevaraya was its most famous ruler."
+  },
+  {
+    "name": "Mughal Empire (early)",
+    "region": "South Asia",
+    "start_year": 1526,
+    "end_year": 1605,
+    "notes": "Founded by Babur in 1526; early period includes Humayun and Akbar. Persian, Chagatai, and local sources."
+  },
+  {
+    "name": "Rathore Dynasty",
+    "region": "South Asia",
+    "start_year": 1226,
+    "end_year": 1949,
+    "notes": "Rajput dynasty ruling Marwar (Jodhpur), Rajasthan; notable for resistance to Mughals and British."
+  },
+  {
+    "name": "Kachwaha Dynasty",
+    "region": "South Asia",
+    "start_year": 967,
+    "end_year": 1949,
+    "notes": "Rajput dynasty ruling Amber/Jaipur; notable for alliances with Mughals and architectural heritage."
+  },
+  {
+    "name": "Solanki Dynasty",
+    "region": "South Asia",
+    "start_year": 940,
+    "end_year": 1244,
+    "notes": "Ruled Gujarat and parts of Rajasthan; notable for temple architecture and patronage of arts."
+  },
+  {
+    "name": "Pala Empire",
+    "region": "South Asia",
+    "start_year": 750,
+    "end_year": 1174,
+    "notes": "Buddhist dynasty in Bengal and Bihar; notable for Nalanda University and patronage of art and learning."
+  },
+  {
+    "name": "Chu (Warring States period)",
+    "region": "East Asia",
+    "start_year": -1030,
+    "end_year": -223,
+    "notes": "Major Warring States polity; rich archaeological finds; well-documented in Chinese sources."
+  },
+  {
+    "name": "Later Shu",
+    "region": "East Asia",
+    "start_year": 934,
+    "end_year": 965,
+    "notes": "One of the Ten Kingdoms in Sichuan during China's Five Dynasties period; well-documented in Chinese sources."
+  },
+  {
+    "name": "Northern Wei dynasty",
+    "region": "East Asia",
+    "start_year": 386,
+    "end_year": 534,
+    "notes": "Founded by the Tuoba clan; major role in Sinicization and Buddhist art; capital at Pingcheng, later Luoyang."
+  },
+  {
+    "name": "Eastern Wei dynasty",
+    "region": "East Asia",
+    "start_year": 534,
+    "end_year": 550,
+    "notes": "Short-lived Northern Chinese dynasty; split from Northern Wei, succeeded by Northern Qi."
+  },
+  {
+    "name": "Western Wei dynasty",
+    "region": "East Asia",
+    "start_year": 535,
+    "end_year": 557,
+    "notes": "Short-lived successor of Northern Wei; ruled northwest China. Well-documented in Chinese sources."
+  },
+  {
+    "name": "Northern Zhou dynasty",
+    "region": "East Asia",
+    "start_year": 557,
+    "end_year": 581,
+    "notes": "Short-lived Chinese dynasty; unified northern China before Sui. Records in Chinese sources are extensive."
+  },
+  {
+    "name": "Later Zhou",
+    "region": "East Asia",
+    "start_year": 951,
+    "end_year": 960,
+    "notes": "Last of the Five Dynasties in China, founded by Guo Wei; short-lived but well-documented."
+  },
+  {
+    "name": "Wuyue",
+    "region": "East Asia",
+    "start_year": 907,
+    "end_year": 978,
+    "notes": "Wuyue was a prosperous coastal kingdom during China's Five Dynasties and Ten Kingdoms period."
+  },
+  {
+    "name": "Southern Han",
+    "region": "East Asia",
+    "start_year": 917,
+    "end_year": 971,
+    "notes": "One of the Ten Kingdoms in southern China; capital at Guangzhou; absorbed by Song dynasty."
+  },
+  {
+    "name": "Western Xia",
+    "region": "East Asia",
+    "start_year": 1038,
+    "end_year": 1227,
+    "notes": "Tangut-led dynasty in northwestern China, conquered by Mongols. Tangut script and artifacts survive."
+  },
+  {
+    "name": "Late Silla",
+    "region": "East Asia",
+    "start_year": 668,
+    "end_year": 935,
+    "notes": "Unified Silla ruled most of the Korean Peninsula; notable for Buddhism, art, and tombs."
+  },
+  {
+    "name": "Lý dynasty",
+    "region": "Southeast Asia",
+    "start_year": 1009,
+    "end_year": 1225,
+    "notes": "Vietnamese dynasty noted for independence from China, Buddhist influence, and capital at Thăng Long (Hanoi)."
+  },
+  {
+    "name": "Tây Sơn dynasty",
+    "region": "Asia, Southeast Asia",
+    "start_year": 1778,
+    "end_year": 1802,
+    "notes": "Vietnamese dynasty founded by Tây Sơn brothers; known for military reforms and defeating rivals."
+  },
+  {
+    "name": "Mataram Sultanate",
+    "region": "Southeast Asia",
+    "start_year": 1586,
+    "end_year": 1755,
+    "notes": "Javanese Islamic sultanate; key player in Java's history, later split into Yogyakarta and Surakarta."
+  },
+  {
+    "name": "Almoravid Conquest",
+    "region": "North Africa, Western Europe",
+    "start_year": 1040,
+    "end_year": 1147,
+    "notes": "Berber dynasty; conquered Morocco, parts of Algeria, and al-Andalus. Sources in Arabic, Latin, and Berber."
+  },
+  {
+    "name": "Oba Dynasty",
+    "region": "Africa, Sub-Saharan Africa",
+    "start_year": 1200,
+    "end_year": 1897,
+    "notes": "Benin's Oba Dynasty is famed for its bronzes and centralized monarchy; disrupted by British conquest in 1897."
+  },
+  {
+    "name": "Yoruba Ifẹ Kingdom",
+    "region": "Africa, Sub-Saharan Africa, West Africa",
+    "start_year": 1100,
+    "end_year": 1600,
+    "notes": "Renowned for naturalistic bronze and terracotta art; central to Yoruba civilization; oral traditions supplement written records."
+  },
+  {
+    "name": "Oyo Empire",
+    "region": "West Africa",
+    "start_year": 1400,
+    "end_year": 1836,
+    "notes": "Yoruba-speaking empire; known for cavalry, political structure, and trade; fell due to internal strife and external pressures."
+  },
+  {
+    "name": "Kilwa Sultanate",
+    "region": "Africa, East Africa",
+    "start_year": 957,
+    "end_year": 1513,
+    "notes": "Swahili-Islamic sultanate on the Swahili Coast; notable for trade, architecture, and Portuguese conquest."
+  },
+  {
+    "name": "Adal Sultanate",
+    "region": "Africa, Horn of Africa",
+    "start_year": 1415,
+    "end_year": 1577,
+    "notes": "Muslim sultanate in the Horn of Africa, known for conflicts with Ethiopia and Ahmad ibn Ibrahim al-Ghazi's campaigns."
+  },
+  {
+    "name": "Kingdom of Dahomey",
+    "region": "West Africa, Sub-Saharan Africa",
+    "start_year": 1600,
+    "end_year": 1904,
+    "notes": "Fon-speaking kingdom known for military organization, female warriors, and role in Atlantic slave trade."
+  },
+  {
+    "name": "Seleucid Empire",
+    "region": "Asia, Middle East, Europe",
+    "start_year": -312,
+    "end_year": -63,
+    "notes": "Hellenistic state founded after Alexander's empire split; ruled much of Near East; Greek and local sources available."
+  },
+  {
+    "name": "Dominate",
+    "region": "Europe",
+    "start_year": -509,
+    "end_year": 476,
+    "notes": "Assuming reference to the Roman Dominate, late Roman Empire phase; sources are substantial but fragmentary."
+  },
+  {
+    "name": "Laskarid Dynasty",
+    "region": "Europe",
+    "start_year": 1204,
+    "end_year": 1261,
+    "notes": "Byzantine Greek dynasty ruling Empire of Nicaea after Fourth Crusade; restored Constantinople in 1261."
+  },
+  {
+    "name": "Early Viking Age",
+    "region": "Northern Europe, Western Europe, Eastern Europe",
+    "start_year": 793,
+    "end_year": 1066,
+    "notes": "Well-documented via archaeology, runestones, sagas, and foreign chronicles; leadership structures varied by region."
+  },
+  {
+    "name": "County of Portugal",
+    "region": "Southern Europe",
+    "start_year": 868,
+    "end_year": 1139,
+    "notes": "Founded by Vímara Peres as a vassal of León; evolved into the Kingdom of Portugal in 1139."
+  },
+  {
+    "name": "Kingdom of Croatia (925–1102)",
+    "region": "Europe, Southern Europe",
+    "start_year": 925,
+    "end_year": 1102,
+    "notes": "Well-documented medieval kingdom; sources include chronicles, charters, and archaeological finds."
+  },
+  {
+    "name": "Principality of Hungary",
+    "region": "Europe, Central Europe",
+    "start_year": 895,
+    "end_year": 1000,
+    "notes": "Founded by Magyars; transition from pagan tribal federation to Christian monarchy under Stephen I."
+  },
+  {
+    "name": "Dynasty of Larsa",
+    "region": "Middle East",
+    "start_year": -2025,
+    "end_year": -1763,
+    "notes": "Well-documented Sumerian dynasty; rivals of Isin, later conquered by Hammurabi of Babylon."
+  },
+  {
+    "name": "Sidon",
+    "region": "Middle East",
+    "start_year": -3000,
+    "end_year": 636,
+    "notes": "Major Phoenician city; famed for purple dye, glassmaking, and trade. Conquered by Persians, Greeks, Romans, Arabs."
+  },
+  {
+    "name": "Tyre",
+    "region": "Middle East",
+    "start_year": -2750,
+    "end_year": 332,
+    "notes": "Phoenician city-state, famed for trade and purple dye; conquered by Alexander the Great in 332 BCE."
+  },
+  {
+    "name": "Himyarite Kingdom",
+    "region": "Middle East",
+    "start_year": -110,
+    "end_year": 525,
+    "notes": "South Arabian kingdom in Yemen; known for trade, inscriptions, and Jewish conversion under King Dhu Nuwas."
+  },
+  {
+    "name": "Ghassanid Kingdom",
+    "region": "Middle East",
+    "start_year": 220,
+    "end_year": 638,
+    "notes": "Arab Christian kingdom allied with Byzantines; capital at Jabiyah; buffer against Sassanids and nomads."
+  },
+  {
+    "name": "Ghurid Sultanate",
+    "region": "Asia, Middle East, South Asia, Central Asia",
+    "start_year": 879,
+    "end_year": 1215,
+    "notes": "Persianate Sunni Muslim dynasty; expanded from Ghor (Afghanistan) into Iran, N. India. Key in Delhi Sultanate's rise."
+  },
+  {
+    "name": "Buyid Dynasty",
+    "region": "Middle East",
+    "start_year": 934,
+    "end_year": 1062,
+    "notes": "Persian Shi'a dynasty ruling parts of Iran and Iraq; notable for cultural revival and political fragmentation."
+  },
+  {
+    "name": "Ghaznavid Empire",
+    "region": "Asia, Middle East, South Asia, Central Asia",
+    "start_year": 977,
+    "end_year": 1186,
+    "notes": "Turko-Persian dynasty; major role in Islamic expansion into India. Noted for raids, architecture, and Persianate culture."
+  },
+  {
+    "name": "Gandhara",
+    "region": "South Asia, Central Asia",
+    "start_year": -600,
+    "end_year": 1021,
+    "notes": "Renowned for Greco-Buddhist art; ruled by various dynasties including Achaemenids, Mauryans, Kushans."
+  },
+  {
+    "name": "Harsha Empire",
+    "region": "South Asia",
+    "start_year": 606,
+    "end_year": 647,
+    "notes": "Ruled by Harsha; sources include Chinese pilgrim Xuanzang. Known for patronage of arts and Buddhism."
+  },
+  {
+    "name": "Eastern Chalukya",
+    "region": "Asia",
+    "start_year": 624,
+    "end_year": 1075,
+    "notes": "Ruled eastern Deccan, India; notable for patronage of Telugu and Sanskrit literature; capital at Vengi."
+  },
+  {
+    "name": "Later Pandya Kingdom",
+    "region": "South Asia",
+    "start_year": 590,
+    "end_year": 1345,
+    "notes": "Tamil dynasty in southern India, revived after Sangam era; known for trade, temples, and conflicts with Cholas and foreign invaders."
+  },
+  {
+    "name": "Khilji Dynasty",
+    "region": "South Asia",
+    "start_year": 1290,
+    "end_year": 1320,
+    "notes": "Turkic dynasty ruling Delhi Sultanate; notable for Alauddin Khilji's reforms and Mongol invasions."
+  },
+  {
+    "name": "Lodi Dynasty",
+    "region": "South Asia",
+    "start_year": 1451,
+    "end_year": 1526,
+    "notes": "Afghan dynasty ruling Delhi Sultanate; ended by Babur at First Battle of Panipat."
+  },
+  {
+    "name": "Bengal Sultanate",
+    "region": "South Asia",
+    "start_year": 1352,
+    "end_year": 1576,
+    "notes": "Prominent medieval Islamic state in Bengal; rich in architecture, literature, and trade."
+  },
+  {
+    "name": "Western Zhou",
+    "region": "East Asia",
+    "start_year": -1046,
+    "end_year": -771,
+    "notes": "Western Zhou established feudal order, known for bronze artifacts and early Chinese classics."
+  },
+  {
+    "name": "Xin Dynasty",
+    "region": "East Asia",
+    "start_year": 9,
+    "end_year": 23,
+    "notes": "Short-lived Chinese dynasty under Wang Mang; well-documented in Han sources."
+  },
+  {
+    "name": "Eastern Jin",
+    "region": "East Asia",
+    "start_year": 317,
+    "end_year": 420,
+    "notes": "Founded by Sima Rui after Western Jin collapse; known for court intrigue, southern migration, and cultural achievements."
+  },
+  {
+    "name": "Later Jin",
+    "region": "East Asia",
+    "start_year": 936,
+    "end_year": 947,
+    "notes": "Founded by Shi Jingtang, vassal of Liao; short-lived, part of Five Dynasties period in China."
+  },
+  {
+    "name": "Former Shu",
+    "region": "Asia",
+    "start_year": 907,
+    "end_year": 925,
+    "notes": "Former Shu was a short-lived kingdom during China's Five Dynasties and Ten Kingdoms period, centered in Sichuan."
+  },
+  {
+    "name": "Majapahit Empire",
+    "region": "Southeast Asia",
+    "start_year": 1293,
+    "end_year": 1527,
+    "notes": "Centered in Java, Majapahit was a major thalassocratic empire; sources include Nagarakretagama and Chinese records."
+  },
+  {
+    "name": "Malacca Sultanate",
+    "region": "Southeast Asia",
+    "start_year": 1400,
+    "end_year": 1511,
+    "notes": "Key maritime power; rich Malay, Islamic, and trade influences; fell to Portuguese in 1511."
+  },
+  {
+    "name": "Aceh Sultanate",
+    "region": "Southeast Asia",
+    "start_year": 1496,
+    "end_year": 1903,
+    "notes": "Prominent Islamic sultanate in northern Sumatra; known for trade, scholarship, and resistance to colonial powers."
+  },
+  {
+    "name": "Terminal Classic Maya",
+    "region": "Central America",
+    "start_year": 800,
+    "end_year": 950,
+    "notes": "Period marked by political fragmentation, city abandonment, and cultural transformation in southern lowlands."
+  },
+  {
+    "name": "Pioneer Period",
+    "region": "North America",
+    "start_year": 1760,
+    "end_year": 1860,
+    "notes": "Refers to westward expansion and settlement by European-descended Americans in the US."
+  },
+  {
+    "name": "Tupua Tamasese Dynasty",
+    "region": "Polynesia",
+    "start_year": 1879,
+    "end_year": 1963,
+    "notes": "Key chiefly family in Samoa; prominent in anti-colonial Mau movement and Samoan independence."
+  },
+  {
+    "name": "Classic Māori Tribal Period",
+    "region": "Oceania,Polynesia",
+    "start_year": 1350,
+    "end_year": 1800,
+    "notes": "Rich oral tradition, strong archaeological record, but limited written sources before European contact."
+  },
+  {
+    "name": "Tyrian Colony of Carthage",
+    "region": "North Africa",
+    "start_year": -814,
+    "end_year": -146,
+    "notes": "Founded by Phoenicians from Tyre; major Mediterranean power; destroyed by Rome in Third Punic War."
+  },
+  {
+    "name": "Luxembourg Dynasty",
+    "region": "Western Europe",
+    "start_year": 1308,
+    "end_year": 1437,
+    "notes": "Dynasty of Holy Roman Emperors and kings, notably Charles IV. Extensive documentation in European archives."
+  },
+  {
+    "name": "Kingdom of Northumbria",
+    "region": "Europe, Northern Europe, Western Europe",
+    "start_year": 604,
+    "end_year": 954,
+    "notes": "Anglo-Saxon kingdom in northern England; sources include Bede, archaeology, and later chronicles."
+  },
+  {
+    "name": "Kingdom of Poland (Angevin dynasty)",
+    "region": "Europe, Central Europe",
+    "start_year": 1370,
+    "end_year": 1382,
+    "notes": "Ruled by Louis I of Hungary; brief period, well-documented in Polish and Hungarian sources."
+  },
+  {
+    "name": "Old Swiss Confederacy",
+    "region": "Central Europe",
+    "start_year": 1291,
+    "end_year": 1798,
+    "notes": "Loose alliance of cantons; direct democracy elements; dissolved by French invasion (Helvetic Republic)."
+  },
+  {
+    "name": "Khwarazmian Empire",
+    "region": "Central Asia, Middle East",
+    "start_year": 1077,
+    "end_year": 1231,
+    "notes": "Turko-Persian dynasty, fell to Mongols. Good records on rulers and events, moderate on daily life and artifacts."
+  },
+  {
+    "name": "Magadha",
+    "region": "South Asia",
+    "start_year": -684,
+    "end_year": 550,
+    "notes": "Major ancient Indian kingdom; key in rise of Buddhism and Jainism. Sources: Pali, Sanskrit, Greek, and archaeological finds."
+  },
+  {
+    "name": "Kushan Empire",
+    "region": "South Asia, Central Asia",
+    "start_year": 30,
+    "end_year": 375,
+    "notes": "Flourished under Kanishka; key role in Silk Road trade and Buddhist transmission."
+  },
+  {
+    "name": "Jadeja Dynasty",
+    "region": "South Asia",
+    "start_year": 1540,
+    "end_year": 1948,
+    "notes": "Rajput dynasty ruling parts of Gujarat, notably Kutch and Nawanagar, with well-documented rulers and cultural legacy."
+  },
+  {
+    "name": "Ahom Kingdom",
+    "region": "Asia",
+    "start_year": 1228,
+    "end_year": 1826,
+    "notes": "Ruled Assam for nearly 600 years; known for Tai-Ahom culture and resisting Mughal invasions."
+  },
+  {
+    "name": "Zhao (Warring States period)",
+    "region": "East Asia",
+    "start_year": -403,
+    "end_year": -222,
+    "notes": "Major Warring State in ancient China; well-documented in Chinese historical texts."
+  },
+  {
+    "name": "Wei (Warring States period)",
+    "region": "East Asia",
+    "start_year": -403,
+    "end_year": -225,
+    "notes": "Wei was a major state during China's Warring States period, known for reforms and military conflicts."
+  },
+  {
+    "name": "Later Liang",
+    "region": "Asia",
+    "start_year": 386,
+    "end_year": 403,
+    "notes": "One of the Sixteen Kingdoms in northwestern China, founded by the Lü family of Di ethnicity."
+  },
+  {
+    "name": "Later Qin",
+    "region": "Asia",
+    "start_year": 384,
+    "end_year": 417,
+    "notes": "Xianbei-led dynasty in North China during Sixteen Kingdoms; notable for Buddhist patronage and political instability."
+  },
+  {
+    "name": "Chen dynasty",
+    "region": "East Asia",
+    "start_year": 557,
+    "end_year": 589,
+    "notes": "Last of the Southern Dynasties in China; records exist but less material culture survives."
+  },
+  {
+    "name": "Jingnan",
+    "region": "East Asia",
+    "start_year": 907,
+    "end_year": 963,
+    "notes": "Jingnan was a small kingdom during China's Five Dynasties and Ten Kingdoms period."
+  },
+  {
+    "name": "Jin Dynasty (Jurchen)",
+    "region": "East Asia",
+    "start_year": 1115,
+    "end_year": 1234,
+    "notes": "Jurchen-led dynasty in northern China, overthrown by Mongols; significant in Song and Mongol histories."
+  },
+  {
+    "name": "Hồ dynasty",
+    "region": "Asia",
+    "start_year": 1400,
+    "end_year": 1407,
+    "notes": "Short-lived Vietnamese dynasty; notable for reforms and resistance to Ming invasion."
+  },
+  {
+    "name": "Restored Lê dynasty",
+    "region": "Asia",
+    "start_year": 1533,
+    "end_year": 1789,
+    "notes": "Vietnamese dynasty; nominal rulers under Trịnh and Nguyễn lords, ended by Tây Sơn uprising."
+  },
+  {
+    "name": "Classic Period",
+    "region": "Central America",
+    "start_year": 250,
+    "end_year": 900,
+    "notes": "Refers mainly to the Maya civilization's peak; rich archaeology, glyphs partly deciphered."
+  },
+  {
+    "name": "Tuʻi Kanokupolu dynasty",
+    "region": "Oceania, Polynesia",
+    "start_year": 1610,
+    "end_year": 2024,
+    "notes": "Tongan royal dynasty, established 17th century, still influential. Good oral and written records from 18th century onward."
+  },
+  {
+    "name": "Mata'afa Dynasty",
+    "region": "Oceania, Polynesia",
+    "start_year": 1832,
+    "end_year": 1936,
+    "notes": "Samoan chiefly dynasty influential in late 19th–early 20th c. politics; key in Samoan civil wars and colonial encounters."
+  },
+  {
+    "name": "Mauretania Tingitana (Roman province)",
+    "region": "North Africa",
+    "start_year": 42,
+    "end_year": 429,
+    "notes": "Roman province in NW Africa; capital Tingis (Tangier); Berber-Roman culture; annexed by Vandals in 429."
+  },
+  {
+    "name": "Pate Sultanate",
+    "region": "Africa, East Africa",
+    "start_year": 1200,
+    "end_year": 1895,
+    "notes": "Swahili sultanate on Pate Island, Kenya. Known for trade, Islamic scholarship, and stone architecture."
+  },
+  {
+    "name": "Lamu Sultanate",
+    "region": "Africa, East Africa",
+    "start_year": 1500,
+    "end_year": 1885,
+    "notes": "Swahili city-state on Lamu Island, known for trade, Islamic scholarship, and unique architecture."
+  },
+  {
+    "name": "Tewodrosid Restoration",
+    "region": "Africa",
+    "start_year": 1855,
+    "end_year": 1868,
+    "notes": "Refers to Emperor Tewodros II's reign and efforts to unify Ethiopia; well-documented in Ethiopian and foreign sources."
+  },
+  {
+    "name": "Mycenaean Greece",
+    "region": "Southern Europe",
+    "start_year": -1600,
+    "end_year": -1100,
+    "notes": "Linear B tablets, palatial ruins, and rich grave goods provide strong evidence; collapse around 1100 BCE."
+  },
+  {
+    "name": "Archaic Greece",
+    "region": "Europe",
+    "start_year": -800,
+    "end_year": -480,
+    "notes": "Period of city-state formation, Homeric epics, and early colonization; sources include archaeology and later historians."
+  },
+  {
+    "name": "Visigothic Kingdom",
+    "region": "Europe, Western Europe, Southern Europe",
+    "start_year": 418,
+    "end_year": 721,
+    "notes": "Ruled much of Iberia and parts of Gaul; sources include chronicles, law codes, and archaeology."
+  },
+  {
+    "name": "Hittite Old Kingdom",
+    "region": "Asia,Europe",
+    "start_year": -1650,
+    "end_year": -1500,
+    "notes": "Centered in Anatolia; cuneiform texts and royal lists survive. Early phase before empire expansion."
+  },
+  {
+    "name": "Byblos",
+    "region": "Middle East",
+    "start_year": -5000,
+    "end_year": 636,
+    "notes": "One of the oldest continuously inhabited cities; key Phoenician port; rich archaeological remains."
+  },
+  {
+    "name": "Berytus",
+    "region": "Middle East",
+    "start_year": -140,
+    "end_year": 635,
+    "notes": "Berytus (modern Beirut) was a Roman colony, famed for its law school and Greco-Roman culture."
+  },
+  {
+    "name": "Kingdom of Israel (Samaria)",
+    "region": "Middle East",
+    "start_year": -930,
+    "end_year": -722,
+    "notes": "Northern Israelite kingdom; Assyrian conquest ended it. Sources: Bible, Assyrian records, archaeology."
+  },
+  {
+    "name": "Kashi",
+    "region": "South Asia",
+    "start_year": -1200,
+    "end_year": 2024,
+    "notes": "Kashi (Varanasi) is a continuously inhabited city, sacred in Hinduism, with rich cultural and religious history."
+  },
+  {
+    "name": "Satavahana Dynasty",
+    "region": "South Asia",
+    "start_year": -230,
+    "end_year": 220,
+    "notes": "Major Deccan dynasty; known for Prakrit inscriptions, Buddhist monuments, and trade links."
+  },
+  {
+    "name": "Pallava Dynasty",
+    "region": "South Asia",
+    "start_year": 275,
+    "end_year": 897,
+    "notes": "South Indian dynasty known for Dravidian architecture; inscriptions in Tamil, Sanskrit, Prakrit."
+  },
+  {
+    "name": "Sayyid Dynasty",
+    "region": "South Asia",
+    "start_year": 1414,
+    "end_year": 1451,
+    "notes": "Delhi Sultanate dynasty of Persian origin; ruled northern India; succeeded by Lodi dynasty."
+  },
+  {
+    "name": "Paramara Dynasty",
+    "region": "South Asia",
+    "start_year": 800,
+    "end_year": 1305,
+    "notes": "Ruled Malwa region; most famous ruler was Bhoja. Good epigraphic and literary sources."
+  },
+  {
+    "name": "Spring and Autumn period",
+    "region": "East Asia",
+    "start_year": -770,
+    "end_year": -476,
+    "notes": "Era of fragmented Zhou rule; rise of regional states, Confucius lived; sources include Zuo Zhuan and Shiji."
+  },
+  {
+    "name": "Qin (Warring States period)",
+    "region": "East Asia",
+    "start_year": -778,
+    "end_year": -221,
+    "notes": "Qin was a major state in the Warring States period, later unifying China under Qin Shi Huang."
+  },
+  {
+    "name": "Yan (Warring States period)",
+    "region": "East Asia",
+    "start_year": -1100,
+    "end_year": -222,
+    "notes": "Yan was a major state in northern China; records from Chinese chronicles and archaeology exist."
+  },
+  {
+    "name": "Later Zhao",
+    "region": "East Asia",
+    "start_year": 319,
+    "end_year": 351,
+    "notes": "Founded by Shi Le, a Jie-led dynasty during the Sixteen Kingdoms period in northern China."
+  },
+  {
+    "name": "Western Liang",
+    "region": "East Asia",
+    "start_year": 400,
+    "end_year": 421,
+    "notes": "A minor dynasty during China's Sixteen Kingdoms; ruled by the Li family in modern Gansu."
+  },
+  {
+    "name": "Southern Liang",
+    "region": "East Asia",
+    "start_year": 397,
+    "end_year": 414,
+    "notes": "A Xianbei-led dynasty in northwestern China during the Sixteen Kingdoms period."
+  },
+  {
+    "name": "Northern Han",
+    "region": "East Asia",
+    "start_year": 951,
+    "end_year": 979,
+    "notes": "One of the Ten Kingdoms in China, ruled by the Liu family, conquered by Song dynasty."
+  },
+  {
+    "name": "Middle Silla",
+    "region": "Asia",
+    "start_year": 654,
+    "end_year": 935,
+    "notes": "Unified Silla period; notable for Buddhist culture, royal tombs, and consolidation of Korean peninsula."
+  },
+  {
+    "name": "Kofun Period",
+    "region": "East Asia",
+    "start_year": 250,
+    "end_year": 538,
+    "notes": "Named for burial mounds; emergence of Yamato polity; Chinese and Korean sources mention Japan."
+  },
+  {
+    "name": "Yamato period",
+    "region": "East Asia",
+    "start_year": 250,
+    "end_year": 710,
+    "notes": "Early Japanese state formation; archaeological and Chinese sources supplement local records."
+  },
+  {
+    "name": "Mạc dynasty",
+    "region": "Asia",
+    "start_year": 1527,
+    "end_year": 1677,
+    "notes": "Vietnamese dynasty; contested rule with Lê dynasty. Noted for civil war and administrative reforms."
+  },
+  {
+    "name": "Sukhothai Kingdom",
+    "region": "Southeast Asia",
+    "start_year": 1238,
+    "end_year": 1438,
+    "notes": "Early Thai kingdom, famed for art and Theravada Buddhism. Ramkhamhaeng stele is a key source."
+  },
+  {
+    "name": "Pagan Empire",
+    "region": "Southeast Asia",
+    "start_year": 849,
+    "end_year": 1297,
+    "notes": "Centered in present-day Myanmar; known for Bagan temples and Theravada Buddhism."
+  },
+  {
+    "name": "Lan Xang Kingdom",
+    "region": "Southeast Asia",
+    "start_year": 1353,
+    "end_year": 1707,
+    "notes": "Powerful Lao kingdom; split into three after 1707. Buddhist culture, stone inscriptions, and chronicles survive."
+  },
+  {
+    "name": "Pueblo IV Era",
+    "region": "North America",
+    "start_year": 1275,
+    "end_year": 1540,
+    "notes": "Marked by large pueblos, kivas, migrations, and Spanish contact. Rich archaeological remains."
+  },
+  {
+    "name": "Napatan Kingdom",
+    "region": "North Africa",
+    "start_year": -800,
+    "end_year": -300,
+    "notes": "Kushite kingdom centered at Napata; known for pyramids, Egyptian influence, and rule over Egypt as 25th Dynasty."
+  },
+  {
+    "name": "Kingdom of Mauretania",
+    "region": "North Africa",
+    "start_year": -202,
+    "end_year": 44,
+    "notes": "Berber kingdom, later Roman client state. Ruled by Juba II. Good Roman and Greek sources."
+  },
+  {
+    "name": "Etruscan City-States",
+    "region": "Southern Europe",
+    "start_year": -900,
+    "end_year": -264,
+    "notes": "Etruscans influenced Roman culture; language partly undeciphered; known for art, tombs, and city-state structure."
+  },
+  {
+    "name": "Kingdom of Kent",
+    "region": "Europe, Western Europe",
+    "start_year": 450,
+    "end_year": 871,
+    "notes": "Early Anglo-Saxon kingdom in southeast England; sources include Bede and the Anglo-Saxon Chronicle."
+  },
+  {
+    "name": "Dynasty of Isin",
+    "region": "Middle East",
+    "start_year": -2017,
+    "end_year": -1794,
+    "notes": "Sumerian dynasty post-Ur III; known from king lists, tablets, some archaeological remains."
+  },
+  {
+    "name": "Kassite Dynasty",
+    "region": "Asia",
+    "start_year": -1595,
+    "end_year": -1155,
+    "notes": "Kassites ruled Babylonia post-Hittite sack; records in Akkadian, Kassite language poorly attested."
+  },
+  {
+    "name": "Kingdom of Judah",
+    "region": "Middle East",
+    "start_year": -930,
+    "end_year": -586,
+    "notes": "Biblical and archaeological sources; destroyed by Babylonians. Some debate over early history."
+  },
+  {
+    "name": "Kingdom of Aram-Damascus",
+    "region": "Middle East",
+    "start_year": -1000,
+    "end_year": -732,
+    "notes": "Aramaic-speaking kingdom centered on Damascus; fell to Assyria. Known from biblical, Assyrian, and archaeological sources."
+  },
+  {
+    "name": "Lydian Kingdom",
+    "region": "Asia, Europe",
+    "start_year": -1200,
+    "end_year": -546,
+    "notes": "Known for early coinage, ruled by kings like Croesus, conquered by Persia. Sources: Herodotus, archaeology."
+  },
+  {
+    "name": "Kara-Khanid Khanate",
+    "region": "Central Asia",
+    "start_year": 840,
+    "end_year": 1212,
+    "notes": "Turkic Muslim dynasty, notable for Islamization of Central Asia and rivalry with Ghaznavids and Seljuks."
+  },
+  {
+    "name": "Kulasekhara dynasty",
+    "region": "South Asia",
+    "start_year": 800,
+    "end_year": 1102,
+    "notes": "Ruled Kerala; notable for patronage of literature and temples. Sources include inscriptions and later chronicles."
+  },
+  {
+    "name": "Chandra Dynasty",
+    "region": "South Asia",
+    "start_year": 320,
+    "end_year": 550,
+    "notes": "Likely refers to Gupta Dynasty, sometimes called Chandragupta dynasty after its founder."
+  },
+  {
+    "name": "Han (Warring States period)",
+    "region": "East Asia",
+    "start_year": -403,
+    "end_year": -230,
+    "notes": "Han was one of the seven major states during China's Warring States period, later conquered by Qin."
+  },
+  {
+    "name": "Former Qin",
+    "region": "East Asia",
+    "start_year": 351,
+    "end_year": 394,
+    "notes": "Founded by the Di ethnic group, Former Qin briefly unified northern China before its collapse after the Battle of Fei River."
+  },
+  {
+    "name": "Balhae",
+    "region": "East Asia",
+    "start_year": 698,
+    "end_year": 926,
+    "notes": "Multi-ethnic kingdom in Manchuria and northern Korea; sources from China, Korea, Japan."
+  },
+  {
+    "name": "Đinh dynasty",
+    "region": "Asia",
+    "start_year": 968,
+    "end_year": 980,
+    "notes": "First imperial dynasty of Vietnam; founded by Đinh Bộ Lĩnh after unifying the country."
+  },
+  {
+    "name": "Kediri Kingdom",
+    "region": "Southeast Asia",
+    "start_year": 1042,
+    "end_year": 1222,
+    "notes": "Javanese kingdom known from inscriptions and literature; notable for literary works and trade."
+  },
+  {
+    "name": "Bruneian Sultanate",
+    "region": "Southeast Asia",
+    "start_year": 1368,
+    "end_year": 1888,
+    "notes": "Islamic sultanate on Borneo; peak in 15th-17th c.; vassalage to British in 1888."
+  },
+  {
+    "name": "Postclassic Huastec Period",
+    "region": "Mesoamerica, North America",
+    "start_year": 900,
+    "end_year": 1521,
+    "notes": "Huastec culture thrived on Gulf coast; known for ceramics, music, and contact with Aztecs before Spanish conquest."
+  },
+  {
+    "name": "Muisca Confederation",
+    "region": "South America",
+    "start_year": 1450,
+    "end_year": 1540,
+    "notes": "Well-documented by Spanish sources; known for goldwork, salt production, and complex chiefdoms."
+  },
+  {
+    "name": "Haudenosaunee Confederacy",
+    "region": "North America",
+    "start_year": 1450,
+    "end_year": 2024,
+    "notes": "Also known as the Iroquois Confederacy; influential in colonial-era diplomacy and governance."
+  },
+  {
+    "name": "Tuʻi Tonga Empire",
+    "region": "Oceania, Polynesia",
+    "start_year": 950,
+    "end_year": 1865,
+    "notes": "Dominant maritime polity in Polynesia; oral traditions and archaeology support its influence."
+  },
+  {
+    "name": "Tuimaleali'ifano Dynasty",
+    "region": "Oceania, Polynesia",
+    "start_year": 1600,
+    "end_year": 2024,
+    "notes": "One of Samoa's four paramount chiefly dynasties; oral histories and colonial records document its influence."
+  },
+  {
+    "name": "Ancient Hawaiian Chiefdoms",
+    "region": "Oceania, Polynesia",
+    "start_year": 1200,
+    "end_year": 1810,
+    "notes": "Chiefdoms unified under Kamehameha I by 1810. Oral traditions, archaeology, and early European accounts are main sources."
+  }
+]

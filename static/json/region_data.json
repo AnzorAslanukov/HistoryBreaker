@@ -1,0 +1,287 @@
+{
+  "continent_data_flat": {
+    "Africa": 70,
+    "Americas": 65,
+    "Asia": 90,
+    "Europe": 95,
+    "Oceania": 40
+  },
+  "continent_sub_region_data": {
+    "Africa": [
+      {
+        "East Africa": 55
+      },
+      {
+        "Horn of Africa": 60
+      },
+      {
+        "North Africa": 90
+      },
+      {
+        "Sub-Saharan Africa": 45
+      },
+      {
+        "West Africa": 50
+      }
+    ],
+    "Americas": [
+      {
+        "Caribbean": 30
+      },
+      {
+        "Central America": 80
+      },
+      {
+        "North America": 40
+      },
+      {
+        "South America": 75
+      }
+    ],
+    "Asia": [
+      {
+        "Central Asia": 70
+      },
+      {
+        "East Asia": 95
+      },
+      {
+        "Middle East": 98
+      },
+      {
+        "South Asia": 90
+      },
+      {
+        "Southeast Asia": 75
+      }
+    ],
+    "Europe": [
+      {
+        "Balkans": 70
+      },
+      {
+        "Central Europe": 80
+      },
+      {
+        "Eastern Europe": 65
+      },
+      {
+        "Northern Europe": 60
+      },
+      {
+        "Southern Europe": 98
+      },
+      {
+        "Western Europe": 98
+      }
+    ],
+    "Oceania": [
+      {
+        "Micronesia": 25
+      }
+    ]
+  },
+  "world_periods": {
+    "World": {
+      "Early Global Civilizations and Transcontinental Networks": 60,
+      "Post-Classical Transformations and Flourishing Regional Powers": 75,
+      "Age of Global Interconnectivity and Early Modern Foundations": 88
+    }
+  },
+  "continent_periods": {
+    "Africa": {
+      "Ancient African Societies and Early Iron Age": 40,
+      "Classical Influence and Emerging Regional Powers": 55,
+      "Transformations and Religious Diffusion": 65,
+      "Medieval Empires and Trans-Regional Trade": 75,
+      "Consolidation and Early Global Interaction": 80
+    },
+    "Americas": {
+      "Early Complex Societies and Agricultural Innovations": 30,
+      "Regional Formative Cultures and Urban Precursors": 50,
+      "Classic Civilizations and Pan-Regional Influence": 80,
+      "Post-Classic Resurgence and Consolidating Kingdoms": 85,
+      "Imperial Apex and European Contact": 90
+    },
+    "Asia": {
+      "Early Civilizations and Bronze Age Foundations": 90,
+      "Classical Empires and the Axial Age": 95,
+      "Post-Classical Transformations and Religious Expansions": 90,
+      "Medieval Flourishing and Inter-regional Networks": 95,
+      "Pax Mongolica and the Rise of New Empires": 92
+    },
+    "Europe": {
+      "European Bronze Age and Early Iron Age Societies": 50,
+      "Classical Greek and Roman Republican Eras": 95,
+      "Roman Imperial Age and Late Antiquity": 98,
+      "Early Medieval Period and Germanic Transformations": 85,
+      "High Middle Ages and Feudal Consolidation": 95,
+      "Late Medieval, Renaissance, and Early Modern Transition": 98
+    },
+    "Oceania": {
+      "Early Indigenous Development and Near Oceania Settlement": 10,
+      "Lapita Cultural Complex and Austronesian Expansion": 20,
+      "Proto-Polynesian and Early Island Societies": 25,
+      "Major Polynesian Expansion and Cultural Diversification": 35,
+      "Late Polynesian Settlement, Societal Development, and Early European Contact": 50
+    }
+  },
+  "continent_sub_region_dynasties": {
+    "East Africa": {
+      "Early Agricultural and Pastoral Societies": 15,
+      "Iron Age Development and Proto-Urbanization": 30,
+      "Aksumite Influence and Indian Ocean Trade Expansion": 75,
+      "Swahili City-States Emergence and Islamic Influence": 80,
+      "Flourishing Trade and Interior Kingdoms Consolidation": 85
+    },
+    "Horn of Africa": {
+      "Early Agricultural Societies and Proto-States": 15,
+      "Pre-Aksumite Civilizations and Emerging Networks": 30,
+      "Aksumite Hegemony and Christianization": 75,
+      "Post-Aksumite Era and Formation of Islamic Sultanates": 80,
+      "Medieval Christian Empire and Coastal Trade States": 85
+    },
+    "North Africa": {
+      "Early Indigenous Societies and Mediterranean Engagements": 40,
+      "Phoenician/Punic Dominance and Roman Republican Expansion": 85,
+      "Roman Imperial Rule and Late Antique Transformations": 90,
+      "Early Islamic Caliphates and Regional Powers": 92,
+      "Medieval Islamic Dynasties and Emerging Global Interconnections": 95
+    },
+    "Sub-Saharan Africa": {
+      "Early Agricultural Spread and Proto-Bantu Migrations": 10,
+      "Iron Age Development and Early Urbanization": 25,
+      "Rise of Trans-Saharan Trade and First Major Empires": 50,
+      "Medieval African Apex and Expanding Trade Networks": 70,
+      "Diverse State Formations and Initial European Encounters": 80
+    },
+    "West Africa": {
+      "Early Agricultural Development and Sahelian Societies": 15,
+      "Iron Age Emergence and Early Urban Centers": 35,
+      "Trans-Saharan Trade Origins and Proto-States": 60,
+      "Medieval Imperial Growth and Islamic Influence": 85,
+      "Apex of Regional Powers and Initial Atlantic Encounters": 88
+    },
+    "Caribbean": {
+      "Early Pre-Ceramic and Archaic Cultures": 10,
+      "Ceramic Age Migrations and Agricultural Development": 25,
+      "Late Indigenous Societies and Chiefdom Emergence": 40,
+      "European Contact and Early Colonial Restructuring": 75
+    },
+    "Central America": {
+      "Early Agricultural Societies and Sedentary Life": 20,
+      "Formative Period: Emergence of Complex Societies": 55,
+      "Classic Period: Regional Cultural Florescence": 80,
+      "Postclassic Period: Political Restructuring and Trade": 85,
+      "European Contact and Early Colonial Establishment": 90
+    },
+    "North America": {
+      "Late Archaic and Early Horticultural Developments": 15,
+      "Formative and Early Woodland Cultures": 30,
+      "Regional Cultural Florescence and Agricultural Expansion": 50,
+      "Rise of Complex Societies and Interregional Networks": 65,
+      "Late Pre-Contact Societies and Early European Encounters": 80
+    },
+    "South America": {
+      "Early Complex Societies and Agricultural Innovations": 20,
+      "Regional Cultural Diversification and Formative Centers": 50,
+      "Classical Regional States and Pan-Andean Influence": 80,
+      "Late Pre-Columbian Empires and Diverse Confederations": 90,
+      "European Conquest and Early Colonial Administration": 95
+    },
+    "Central Asia": {
+      "Bronze Age Cultures and Early Steppe Nomads": 30,
+      "Classical Empires' Outreach and Nomadic Confederations": 60,
+      "Early Turkic Hegemony and Silk Road Networks": 75,
+      "Islamic Expansion and Turkic Dynasties": 85,
+      "Mongol Ascendancy and Post-Mongol States": 90
+    },
+    "East Asia": {
+      "Early Dynastic Foundations and Bronze Age Development": 80,
+      "Classical Imperial Formation and Philosophical Age": 90,
+      "Period of Disunity and Early Buddhist Integration": 88,
+      "Imperial Re-unification and Cosmopolitan Empires": 95,
+      "Post-Tang Regional States and Flourishing Cultures": 95,
+      "Late Imperial Transformations and Early European Contact": 92
+    },
+    "Middle East": {
+      "Late Bronze Age Civilizations and Networks": 90,
+      "Iron Age Transformations and Neo-Empires": 95,
+      "Achaemenid Imperial Consolidation": 98,
+      "Hellenistic Kingdoms and Roman/Parthian Rivalry": 95,
+      "Sasanian Persia and Byzantine Empire": 92,
+      "Early Islamic Caliphates and Successor States": 98,
+      "Post-Mongol Dynasties and Ottoman/Safavid Emergence": 95
+    },
+    "South Asia": {
+      "Late Harappan and Early Vedic Developments": 70,
+      "Second Urbanization and Early Imperial Formations": 85,
+      "Classical Age and Regional Dynasties": 90,
+      "Early Medieval Regional States": 88,
+      "Sultanate Period and Emergence of New Empires": 92
+    },
+    "Southeast Asia": {
+      "Early Agricultural and Metal Age Societies": 25,
+      "Iron Age and Proto-State Formations": 45,
+      "Early States and Indianization": 65,
+      "Classical Empires and Regional Powers": 75,
+      "Maritime Trading Networks and Early European Contact": 85
+    },
+    "Balkans": {
+      "Bronze Age and Early Iron Age Tribal Societies": 40,
+      "Classical and Hellenistic Influence with Indigenous Kingdoms": 75,
+      "Roman Annexation and Imperial Rule": 85,
+      "Late Antiquity, Migrations, and Byzantine Emergence": 88,
+      "Slavic Settlement and Formation of Early Medieval States": 75,
+      "High Medieval Empires and Regional Fragmentation": 82,
+      "Ottoman Conquest and Early Rule": 88
+    },
+    "Central Europe": {
+      "Bronze Age and Early Iron Age Cultures": 35,
+      "Celtic Dominance and Roman Frontier Interactions": 70,
+      "Roman Influence and Germanic Migrations": 80,
+      "Early Medieval Transformations and Slavic Settlements": 85,
+      "High Medieval Kingdoms and Holy Roman Empire": 90,
+      "Late Medieval and Early Modern States Formation": 92
+    },
+    "Eastern Europe": {
+      "Bronze Age Cultures and Early Steppe Interactions": 30,
+      "Iron Age Tribal Societies and Greek Colonization": 50,
+      "Classical and Late Antiquity: Nomadic Incursions and Roman Influence": 65,
+      "Migration Period and Slavic Settlement": 75,
+      "Emergence of Slavic and Regional States": 80,
+      "Mongol Dominance and Re-Emergence of States": 85,
+      "Consolidation of Eastern European Powers": 88
+    },
+    "Northern Europe": {
+      "Bronze Age and Pre-Roman Iron Age Societies": 25,
+      "Roman Iron Age and Migration Period Influences": 45,
+      "Germanic Iron Age and Pre-Viking Period": 55,
+      "Viking Age and Early Christianization": 75,
+      "High Medieval Nordic Kingdoms and Baltic Expansion": 85,
+      "Kalmar Union and Late Medieval Period": 88,
+      "Reformation and Early Modern State Formation": 92
+    },
+    "Southern Europe": {
+      "Bronze Age Civilizations and Early Iron Age Cultures": 70,
+      "Classical City-States and Early Roman Expansion": 90,
+      "Roman Hegemony and Imperial Era": 98,
+      "Post-Roman Kingdoms and Byzantine Influence": 95,
+      "High Medieval Regional Powers and Maritime Republics": 92,
+      "Renaissance, Maritime Empires, and Ottoman Challenges": 95
+    },
+    "Western Europe": {
+      "Bronze Age and Pre-Roman Iron Age Cultures": 45,
+      "Roman Hegemony and Provincial Integration": 90,
+      "Post-Roman Kingdoms and Early Medieval Development": 92,
+      "High Middle Ages and Feudal Consolidation": 95,
+      "Late Medieval, Renaissance, and Early Modern Period": 98
+    },
+    "Micronesia": {
+      "Early Settlement and Initial Cultural Diversification": 10,
+      "Proto-Societies and Island Adaptations": 15,
+      "Development of Complex Societies and Chiefdoms": 25,
+      "Late Indigenous Development and Early European Encounters": 40
+    }
+  }
+}

@@ -1,0 +1,313 @@
+/* wrapper */
+.civ-container{
+    width:75%; /* Set width to 75% of the page */
+    margin:40px auto;
+    text-align:center;
+}
+
+/* fixed-height scrollable table */
+.table-wrapper{
+    height:500px;                 /*  fixed height as requested  */
+    overflow-y:auto;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
+
+/* base table look */
+#civ-table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;           /* so columns don’t jump */
+    font-size:.95rem;
+}
+
+/* headings stay visible */
+#civ-table thead th{
+    position:sticky;
+    top:0;
+    background:#f8f8f8;
+    z-index:2;
+    border-bottom:2px solid #999;
+    padding:8px;
+}
+
+/* body cells */
+#civ-table tbody td{
+    padding:6px 8px;
+    border-bottom:1px solid #e0e0e0;
+    word-wrap:break-word;
+}
+
+/* optional narrower notes column */
+.notes-col{ width:35%; }
+
+/* record counter */
+.civ-count{
+    text-align:left;
+    font-size:.9rem;
+    margin-bottom:6px;
+    color:#555;
+}
+
+/* ---------- FILTER BAR ---------- */
+/* filter wrapper card */
+.filter-panel{
+    background:#fff;
+    border:1px solid #ccc;
+    border-radius:8px;
+    padding:20px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+/* stack filters vertically */
+.filters{ display:flex; flex-direction:column; gap:14px; }
+.filter-block{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.filter-block-column { display:flex; flex-direction:column; gap:8px; } /* For vertical stacking inside a filter block */
+.mono{ font-family:monospace; }
+
+/* Custom year toggle and input */
+.attention-message {
+    font-size: 0.9rem;
+    color: #555; /* Or a more prominent color if needed */
+    margin-bottom: 4px; /* Space below the message */
+    text-align: left; /* Align with other labels */
+    font-weight: normal; /* Standard weight, not bold like other labels */
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap; /* Allow wrapping if space is tight */
+}
+
+.custom-toggle-input {
+    width: auto; /* Override base.css width:100% for checkboxes */
+    margin-top: 0; /* Align with label */
+    vertical-align: middle;
+}
+
+.toggle-label {
+    font-weight: normal; /* Standard weight */
+    margin-top: 0; /* Align with checkbox */
+    display: inline; /* Keep it on the same line as checkbox */
+}
+
+.custom-year-input-field {
+    width: 110px; /* Same as start/end year inputs */
+    margin-top: 0; /* Align with other elements in toggle-container */
+}
+
+/* Ensure labels in filter-block-column don't take full width if not needed */
+.filter-block-column > label {
+    display: block; /* Keep as block for spacing */
+    width: auto; /* Allow content to determine width */
+}
+
+/* number inputs width */
+#start-year,#end-year{ width:110px; }
+
+/* tag area box */
+.tag-box{
+    display:flex; flex-wrap:wrap; gap:6px;
+    height:64px;           /* fixed height, scrolls vertically */
+    width:100%;
+    border:1px dashed #bbb; padding:6px;
+    overflow-y:auto;
+}
+.tag{
+    background:#007bff; color:#fff; padding:2px 8px; border-radius:14px;
+    font-size:.8rem; display:flex; align-items:center; gap:4px;
+}
+.tag button{
+    border:none; background:transparent; color:#fff; cursor:pointer; font-weight:700;
+}
+
+.name-wrapper{ position:relative; }
+#name-search{ width:220px; }
+
+
+/* error state */
+.error{ border-color:#dc3545 !important; }
+.error-msg{ color:#dc3545; font-size:.75rem; }
+
+/* ---------- TABLE SELECTION ---------- */
+#civ-table tbody tr.selected{ outline:3px solid #28a745; background:#f6fff6; }
+#civ-table tbody tr:hover {
+  background-color: #e6f7ff; 
+  cursor: pointer;           
+}
+
+.page-header{
+    display:flex;
+    align-items:center;
+    justify-content:center;   /* h1 stays centred */
+    gap:16px;
+    position:relative;
+    margin-bottom:28px;       /* extra space above counter */
+}
+.page-header h1{ margin:0; }
+.page-header .surprise-me-btn{
+    position:absolute;        /* takes button out of flex flow */
+    left:0;
+}
+
+/* --- "Back to Region/Period" Button --- */
+.back-to-region-container {
+    text-align: center; /* Horizontally center the button */
+    margin-top: 10px; /* Space below the header */
+    margin-bottom: 20px; /* Space above the civ-count/filter panel */
+}
+
+.back-to-region-btn {
+    background: #17a2b8; /* Teal color like civ-lookup-btn */
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background .25s;
+    font-size: 1rem; /* Consistent font size */
+}
+
+.back-to-region-btn:hover {
+    background: #128097; /* Darker teal on hover */
+}
+
+/* ===== SURPRISE-ME BUTTON ===== */
+.surprise-me-btn {
+    position: relative;
+    padding: 10px 18px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    color: white;
+    overflow: hidden;
+    cursor: pointer;
+    background: linear-gradient(to right, red, orange, yellow, green, teal, blue, indigo, violet);
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    background-image: linear-gradient(to right, red, orange, yellow, green, teal, blue, indigo, violet, red),
+                      linear-gradient(to right, red, orange, yellow, green, teal, blue, indigo, violet, red);
+    background-origin: border-box;
+    background-size: 200% auto;
+    background-position: 0% center;
+    animation: rainbowSlide 8s linear infinite;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.surprise-me-btn:disabled {
+    background: #6c757d !important; /* Important to override inline linear-gradient */
+    color: #ccc !important;
+    border-color: #5a6268 !important;
+    animation: none !important; /* Stop animation */
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+    opacity: 0.65 !important;
+}
+
+.surprise-me-btn.clicked {
+    border-color: #39ff14;
+    box-shadow: 0 0 6px 2px #39ff14, 0 0 12px 4px #39ff14;
+    background: linear-gradient(to right, cyan, magenta, yellow, cyan);
+    background-clip: padding-box;
+    background-image: linear-gradient(to right, cyan, magenta, yellow, cyan),
+                      linear-gradient(to right, cyan, magenta, yellow, cyan);
+    background-origin: border-box;
+    background-size: 200% auto;
+    animation: rainbowSlide 8s linear infinite;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
+
+.surprise-me-btn:hover:not(:disabled) {
+    background-position: 100% center; /* Keep existing hover background animation */
+    /* Combine existing shadow with sparkle effect */
+    box-shadow: 0 0 10px 2px rgba(255,255,255,0.8),
+                0 0 20px 4px rgba(255,255,255,0.6),
+                0 0 5px #fff, /* Inner white glow */
+                0 0 10px #fff,
+                0 0 15px #00ffea, /* Cyan sparkle */
+                0 0 25px #00ffea;
+    /* Apply both animations. Ensure rainbowSlide is still primary for background. */
+    animation: rainbowSlide 8s linear infinite, sparkleEffect 1s ease-in-out infinite alternate;
+}
+
+@keyframes sparkleEffect {
+    0% {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00ffea, 0 0 20px #00ffea, 0 0 25px #00ffea, 0 0 30px #00ffea, 0 0 35px #00ffea;
+    }
+    100% {
+        text-shadow: 0 0 2px #fff, 0 0 5px #fff, 0 0 8px #00ffea, 0 0 12px #00ffea, 0 0 15px #00ffea, 0 0 20px #00ffea, 0 0 25px #00ffea;
+    }
+}
+
+@keyframes rainbowSlide {
+    0%   { background-position:   0% center; }
+    100% { background-position: 200% center; }
+}
+
+/* ===== CONTINUE BUTTON (copied from start_region.css) ===== */
+.submit-btn { /* This is the #continue-to-gameplay-btn */
+    display: block; /* Allows margin auto to work for centering */
+    margin-top: 20px; /* Space above the button */
+    margin-bottom: 20px; /* Space below the button */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px 25px;
+    margin-bottom: 80px; /* Increased space below the button */
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff; /* White text */
+    background-color: #007bff; /* Standard blue color */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    opacity: 1; /* Ensure full opacity when enabled */
+}
+
+.submit-btn:hover:not(:disabled) {
+    background-color: #0056b3; /* Darker blue on hover when not disabled */
+    transform: translateY(-1px);
+}
+
+.submit-btn:disabled {
+    background-color: #6c757d; /* Grey color when disabled */
+    color: #ccc; /* Lighter text color when disabled */
+    cursor: not-allowed;
+    opacity: 0.65; /* Standard opacity for disabled elements */
+    transform: translateY(0); /* No transform when disabled */
+}
+
+/* Styles for disabled-looking elements when Surprise Me is active */
+.surprise-me-active .filter-block input,
+.surprise-me-active .filter-block select,
+.surprise-me-active .filter-block .tag-box,
+.surprise-me-active .custom-toggle-input,
+.surprise-me-active .custom-year-input-field,
+.surprise-me-active #civ-table {
+    opacity: 0.5;
+    pointer-events: none;
+    background-color: #f0f0f0; /* Light grey to indicate disabled */
+}
+
+/* Specific styling for the table to ensure it looks disabled */
+.surprise-me-active #civ-table {
+    border-color: #ddd;
+}
+
+.surprise-me-active #civ-table tbody tr:hover {
+    background-color: transparent; /* No hover effect when table is disabled */
+    cursor: default;
+}
+
+/* New container for the button to add space below it */
+.button-container-bottom {
+    padding-bottom: 10px; /* Add padding to the bottom of the container */
+}

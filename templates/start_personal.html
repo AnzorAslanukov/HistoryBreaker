@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start New Game - Personal Info</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/start_personal.css') }}">
+    
+    <script defer src="{{ url_for('static', filename='javascript/start_personal.js') }}"></script>
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css">
+    <script defer
+            src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+</head>
+<body>
+    <!-- Busy-overlay -->
+    <div id="loading-overlay" class="loading-overlay" hidden>
+        <div class="spinner"></div>
+    </div>
+    <div class="form-container">
+        <h1>Enter Player Information</h1>
+        
+        <label for="player-count">Number of Players (1–4):</label>
+        <input type="range" id="player-count" name="player-count" min="1" max="4" value="1" oninput="updatePlayerCount(this.value)">
+        <span id="player-count-display">1</span>
+
+        <form method="POST" action="/start_region" id="players-form">
+            <div class="button-group">
+                <button type="button" id="autofill-btn" class="btn-success" disabled>
+                    Auto-Fill Players
+                </button>
+                <button type="button" id="autofill-me-btn" class="btn-warning">
+                    Auto-Fill Me
+                </button>
+                <button type="button" id="clear-me-btn" class="btn-danger">
+                    Clear Me
+                </button>
+                <button type="button" id="clear-others-btn" class="btn-danger" disabled>
+                    Clear Other Players
+                </button>
+            </div>
+            <div id="players-wrapper"></div>
+           
+            <!-- New save/clear buttons -->
+            <div class="button-group">
+                <button type="button" id="save-all-data" class="btn-success">
+                    Save User & Player Data
+                </button>
+                <button type="button" id="clear-all-data" class="btn-danger">
+                    Clear All Saved Data
+                </button>
+                <button type="button" id="clear-user-data" class="btn-warning">
+                    Clear User Data Only
+                </button>
+                <button type="button" id="clear-players-data" class="btn-warning">
+                    Clear All Player Data Only
+                </button>
+            </div>
+            
+            <button type="submit"
+                    id="continue-btn"
+                    class="btn-primary"
+                    disabled>
+                Continue to Region Setup
+            </button>
+        </form>
+    </div>
+    <script>
+        window.languageOptions = {{ all_languages|tojson }};
+    </script>
+</body>
+</html>

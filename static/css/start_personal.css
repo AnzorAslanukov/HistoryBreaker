@@ -1,0 +1,149 @@
+/* start_personal.css - Styles specific to the player personal information page */
+
+/* Player count slider display */
+#player-count-display {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+/* Group for autofill/clear buttons at top */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+/* Individual Player Block Styling */
+.player-block {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.player-block h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Tools (autofill/clear) within each player block */
+.player-tools {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+    gap: 8px;
+}
+
+/* Ensure buttons always look enabled */
+.player-tools button {
+    opacity: 1; /* Allow browser default for disabled state */
+    cursor: pointer; /* Allow browser default for disabled state */
+    background-color: #17a2b8; /* btn-info color */
+}
+
+.player-tools button:disabled {
+    opacity: 0.6; /* Grey out disabled buttons */
+    cursor: not-allowed; /* Indicate unclickable */
+}
+
+.player-tools .btn-danger {
+    background-color: #dc3545; /* danger color for clear */
+}
+
+.player-tools button:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+/* Input validation feedback */
+.name-valid {
+    border: 1px solid #28a745 !important;
+}
+
+.name-invalid {
+    border: 1px solid #dc3545 !important;
+}
+
+/* Updated character counter styles */
+.label-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.char-counter {
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.char-counter.invalid {
+    color: #dc3545; /* Red for invalid */
+}
+
+.char-counter.valid {
+    color: #28a745; /* Green for valid */
+}
+
+.textarea-invalid {
+    border: 1px solid #dc3545 !important; /* Red border for invalid */
+}
+
+.textarea-valid {
+    border: 1px solid #28a745 !important; /* Green border for valid */
+}
+
+/* Textarea auto-resize styles */
+.player-block textarea {
+    resize: none; /* Disable manual resize handle */
+    overflow-y: auto; /* Allow scrollbar when content exceeds max-height */
+    min-height: 3em; /* Equivalent to 3 rows, as requested */
+    max-height: 10em; /* Equivalent to 10 rows, adjust as needed */
+}
+
+/* Header for text areas with counter */
+.char-counter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* MBTI label */
+.mbti-label {
+    margin-top: 8px;
+    font-style: italic;
+    color: #333;
+}
+
+/* ===== Busy-overlay ===== */
+.loading-overlay {
+    position: fixed;
+    inset: 0;                      /* top:0 right:0 bottom:0 left:0 */
+    background: rgba(255,255,255,.4);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all;           /* blocks clicks on underlying widgets */
+}
+
+.spinner {
+    width: 64px;
+    height: 64px;
+    border: 8px solid #ccc;
+    border-top-color: #007bff;     /* Bootstrap primary */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Always hide overlay when the element has the `hidden` attribute */
+.loading-overlay[hidden] {
+    display: none !important;
+}

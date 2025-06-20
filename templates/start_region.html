@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Game Region</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/start_region.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <div class="page-header-controls">
+            <h1>Select Game Region</h1>
+            <button type="button" id="surprise-me-btn" class="surprise-me-btn">
+                Surprise Me!
+            </button>
+        </div>
+
+        <div class="civ-lookup-container">
+            <button type="button" id="civ-lookup-btn" class="civ-lookup-btn">
+                Choose a civilisation instead →
+            </button>
+        </div>
+
+        <div class="legend">
+            <p><strong>Progress Bars:</strong> Show "Historicity Score" - depth of available historical information.</p>
+        </div>
+        
+        <form method="POST" action="" id="region-form-main">
+            <div class="region-buttons-vertical">
+                <div class="world-container">
+                    <button type="button" class="region-btn-vertical world-btn" data-region="World"
+                            style="background-image: url('{{ url_for('static', filename='start_region_images/button_background_world.png') }}');">
+                        <div class="region-name-container">
+                            <span class="region-name">World</span>
+                        </div>
+                    </button>
+                    <div class="era-container">
+                        <!-- World Era buttons (dynamically added) -->
+                    </div>
+                </div>
+                
+                {% for region, value in continent_data.items() %}
+                <div class="region-btn-vertical-wrapper">
+                    <button type="button" class="region-btn-vertical" data-region="{{ region }}"
+                            style="background-image: url('{{ url_for('static', filename='start_region_images/button_background_' + region.lower() + '.png') }}');">
+                        <div class="region-name-container">
+                            <span class="region-name">{{ region }}</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-fill" style="width: {{ value }}%;"></div>
+                            <span class="region-value">{{ value }}%</span>
+                        </div>
+                    </button>
+                    
+                    <div class="subregion-container" id="subregion-container-{{ region | lower | replace(' ', '-') }}">
+                        <!-- Subregion buttons (dynamically added) -->
+                    </div>
+                    
+                    <div class="continent-periods-container" id="continent-periods-container-{{ region | lower | replace(' ', '-') }}">
+                        <!-- Continent Period buttons (dynamically added) -->
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <input type="hidden" id="selected-region" name="selected_region">
+            <input type="hidden" id="selected-eras" name="selected_eras">
+            <button type="submit" id="continue-btn" class="submit-btn" disabled>
+                Continue to Game
+            </button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='javascript/start_region.js') }}"></script>
+</body>
+</html>

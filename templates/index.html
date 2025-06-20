@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HistoryBreaker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+</head>
+<body>
+    <div class="landing-card">
+        <h1 class="landing-title">HistoryBreaker</h1>
+
+        <div class="landing-btn-group">
+            <form action="/start" method="get">
+                <button type="submit" class="btn-primary">New Game</button>
+            </form>
+
+            <form action="/load" method="get">
+                <button type="submit"
+                        class="btn-success"
+                        {% if not has_saves %}disabled{% endif %}>
+                    Load Game
+                </button>
+            </form>
+        </div>
+
+        {% if not has_saves %}
+            <p class="save-hint">No save files found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

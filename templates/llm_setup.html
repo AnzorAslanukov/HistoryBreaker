@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LLM Provider Setup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/llm_setup.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Configure Your LLMs</h1>
+        <p>
+            Enter your OpenRouter credentials and choose which models the project
+            should call for <em>light</em> vs. <em>main-narrative</em> tasks.
+        </p>
+
+        <!-- API KEY -->
+        <label>OpenRouter API Key:
+            <input type="password" id="or-api-key" placeholder="sk-or-…" autocomplete="off">
+            <small class="status-row">
+                <span class="status-icon" id="api-status"></span>
+                <span class="error-text" id="api-error"></span>
+                <span class="balance-text"></span>
+            </small>
+        </label>
+
+        <!-- SMALL HELPER MODEL -->
+        <label>Lightweight helper model:
+            <input type="text" id="small-model" placeholder="e.g. mistral-7b-instruct" disabled>
+            <small class="status-row">
+                <span class="status-icon" id="small-status"></span>
+                <span class="hint">Used for cheap tasks (spell‑check, prompt rewrites…)</span>
+            </small>
+        </label>
+
+        <!-- FLAGSHIP MODEL -->
+        <label>Flagship narrative model:
+            <input type="text" id="main-model" placeholder="e.g. openai/gpt-4o" disabled>
+            <small class="status-row">
+                <span class="status-icon" id="main-status"></span>
+                <span class="hint">Drives the main story dialogue.</span>
+            </small>
+        </label>
+
+        <p></p>
+
+        <!-- quick-links -->
+        <div class="llm-links-wrapper">
+        <span class="llm-links-label">OpenRouter links:</span>
+        <div class="llm-links">
+            <a href="https://openrouter.ai/"
+                class="btn-info"   target="_blank" title="Go to the OpenRouter homepage.">Home</a>
+            <a href="https://openrouter.ai/models?context=1000000"
+                class="btn-warning" target="_blank" title="Find large context models (up to 1M tokens) on OpenRouter, suitable for narrative tasks.">Large&nbsp;Models</a>
+            <a href="https://openrouter.ai/models?context=1000000&max_price=0.1"
+                class="btn-warning" target="_blank" title="Find small, cost-effective models (up to 1M tokens, under $0.1/1M prompt tokens) on OpenRouter, suitable for utility tasks.">Small&nbsp;Models</a>
+        </div>
+        </div>
+
+        <button type="button" class="btn-primary" id="save-llm-config" disabled>
+            Save LLM Settings
+        </button>
+        <button type="button" class="btn-success" id="clear-llm-config">
+            Clear Saved Settings
+        </button>
+        <p id="save-msg" class="save-msg"></p>
+
+        <form action="{{ url_for('start_personal') }}" method="get" style="display:inline;">
+            <!-- Removed "hidden" attribute from Continue button -->
+            <button type="submit"
+                    id="continue-btn"
+                    class="btn-primary"
+                    disabled> <!-- Default to disabled -->
+                Continue ➜
+            </button>
+        </form>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='javascript/llm_setup.js') }}"></script>
+</body>
+</html>

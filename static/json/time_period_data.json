@@ -1,0 +1,914 @@
+{
+  "World": [
+    {
+      "name": "Early Global Civilizations and Transcontinental Networks",
+      "start_year": -2000,
+      "end_year": 500,
+      "is_usable": true
+    },
+    {
+      "name": "Post-Classical Transformations and Flourishing Regional Powers",
+      "start_year": 501,
+      "end_year": 1300,
+      "is_usable": true
+    },
+    {
+      "name": "Age of Global Interconnectivity and Early Modern Foundations",
+      "start_year": 1301,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Africa": [
+    {
+      "name": "Ancient African Societies and Early Iron Age",
+      "start_year": -2000,
+      "end_year": -601,
+      "is_usable": true
+    },
+    {
+      "name": "Classical Influence and Emerging Regional Powers",
+      "start_year": -600,
+      "end_year": 300,
+      "is_usable": true
+    },
+    {
+      "name": "Transformations and Religious Diffusion",
+      "start_year": 301,
+      "end_year": 700,
+      "is_usable": true
+    },
+    {
+      "name": "Medieval Empires and Trans-Regional Trade",
+      "start_year": 701,
+      "end_year": 1200,
+      "is_usable": true
+    },
+    {
+      "name": "Consolidation and Early Global Interaction",
+      "start_year": 1201,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "East Africa": [
+    {
+      "name": "Early Agricultural and Pastoral Societies",
+      "start_year": -2000,
+      "end_year": -801,
+      "is_usable": false
+    },
+    {
+      "name": "Iron Age Development and Proto-Urbanization",
+      "start_year": -800,
+      "end_year": 100,
+      "is_usable": true
+    },
+    {
+      "name": "Aksumite Influence and Indian Ocean Trade Expansion",
+      "start_year": 101,
+      "end_year": 700,
+      "is_usable": true
+    },
+    {
+      "name": "Swahili City-States Emergence and Islamic Influence",
+      "start_year": 701,
+      "end_year": 1200,
+      "is_usable": true
+    },
+    {
+      "name": "Flourishing Trade and Interior Kingdoms Consolidation",
+      "start_year": 1201,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Horn of Africa": [
+    {
+      "name": "Early Agricultural Societies and Proto-States",
+      "start_year": -2000,
+      "end_year": -701,
+      "is_usable": false
+    },
+    {
+      "name": "Pre-Aksumite Civilizations and Emerging Networks",
+      "start_year": -700,
+      "end_year": 300,
+      "is_usable": false
+    },
+    {
+      "name": "Aksumite Hegemony and Christianization",
+      "start_year": 301,
+      "end_year": 700,
+      "is_usable": false
+    },
+    {
+      "name": "Post-Aksumite Era and Formation of Islamic Sultanates",
+      "start_year": 701,
+      "end_year": 1200,
+      "is_usable": false
+    },
+    {
+      "name": "Medieval Christian Empire and Coastal Trade States",
+      "start_year": 1201,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "North Africa": [
+    {
+      "name": "Early Indigenous Societies and Mediterranean Engagements",
+      "start_year": -2000,
+      "end_year": -801,
+      "is_usable": true
+    },
+    {
+      "name": "Phoenician/Punic Dominance and Roman Republican Expansion",
+      "start_year": -800,
+      "end_year": -147,
+      "is_usable": true
+    },
+    {
+      "name": "Roman Imperial Rule and Late Antique Transformations",
+      "start_year": -146,
+      "end_year": 700,
+      "is_usable": true
+    },
+    {
+      "name": "Early Islamic Caliphates and Regional Powers",
+      "start_year": 701,
+      "end_year": 1200,
+      "is_usable": true
+    },
+    {
+      "name": "Medieval Islamic Dynasties and Emerging Global Interconnections",
+      "start_year": 1201,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Sub-Saharan Africa": [
+    {
+      "name": "Early Agricultural Spread and Proto-Bantu Migrations",
+      "start_year": -2000,
+      "end_year": -501,
+      "is_usable": false
+    },
+    {
+      "name": "Iron Age Development and Early Urbanization",
+      "start_year": -500,
+      "end_year": 300,
+      "is_usable": true
+    },
+    {
+      "name": "Rise of Trans-Saharan Trade and First Major Empires",
+      "start_year": 301,
+      "end_year": 1000,
+      "is_usable": true
+    },
+    {
+      "name": "Medieval African Apex and Expanding Trade Networks",
+      "start_year": 1001,
+      "end_year": 1400,
+      "is_usable": true
+    },
+    {
+      "name": "Diverse State Formations and Initial European Encounters",
+      "start_year": 1401,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "West Africa": [
+    {
+      "name": "Early Agricultural Development and Sahelian Societies",
+      "start_year": -2000,
+      "end_year": -501,
+      "is_usable": false
+    },
+    {
+      "name": "Iron Age Emergence and Early Urban Centers",
+      "start_year": -500,
+      "end_year": 300,
+      "is_usable": false
+    },
+    {
+      "name": "Trans-Saharan Trade Origins and Proto-States",
+      "start_year": 301,
+      "end_year": 1000,
+      "is_usable": false
+    },
+    {
+      "name": "Medieval Imperial Growth and Islamic Influence",
+      "start_year": 1001,
+      "end_year": 1400,
+      "is_usable": true
+    },
+    {
+      "name": "Apex of Regional Powers and Initial Atlantic Encounters",
+      "start_year": 1401,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Americas": [
+    {
+      "name": "Early Complex Societies and Agricultural Innovations",
+      "start_year": -2000,
+      "end_year": -801,
+      "is_usable": false
+    },
+    {
+      "name": "Regional Formative Cultures and Urban Precursors",
+      "start_year": -800,
+      "end_year": 200,
+      "is_usable": false
+    },
+    {
+      "name": "Classic Civilizations and Pan-Regional Influence",
+      "start_year": 201,
+      "end_year": 900,
+      "is_usable": false
+    },
+    {
+      "name": "Post-Classic Resurgence and Consolidating Kingdoms",
+      "start_year": 901,
+      "end_year": 1400,
+      "is_usable": false
+    },
+    {
+      "name": "Imperial Apex and European Contact",
+      "start_year": 1401,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Caribbean": [
+    {
+      "name": "Early Pre-Ceramic and Archaic Cultures",
+      "start_year": -2000,
+      "end_year": -501,
+      "is_usable": false
+    },
+    {
+      "name": "Ceramic Age Migrations and Agricultural Development",
+      "start_year": -500,
+      "end_year": 800,
+      "is_usable": false
+    },
+    {
+      "name": "Late Indigenous Societies and Chiefdom Emergence",
+      "start_year": 801,
+      "end_year": 1492,
+      "is_usable": true
+    },
+    {
+      "name": "European Contact and Early Colonial Restructuring",
+      "start_year": 1493,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Central America": [
+    {
+      "name": "Early Agricultural Societies and Sedentary Life",
+      "start_year": -2000,
+      "end_year": -801,
+      "is_usable": false
+    },
+    {
+      "name": "Formative Period: Emergence of Complex Societies",
+      "start_year": -800,
+      "end_year": 250,
+      "is_usable": true
+    },
+    {
+      "name": "Classic Period: Regional Cultural Florescence",
+      "start_year": 251,
+      "end_year": 900,
+      "is_usable": true
+    },
+    {
+      "name": "Postclassic Period: Political Restructuring and Trade",
+      "start_year": 901,
+      "end_year": 1500,
+      "is_usable": true
+    },
+    {
+      "name": "European Contact and Early Colonial Establishment",
+      "start_year": 1501,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "North America": [
+    {
+      "name": "Late Archaic and Early Horticultural Developments",
+      "start_year": -2000,
+      "end_year": -801,
+      "is_usable": false
+    },
+    {
+      "name": "Formative and Early Woodland Cultures",
+      "start_year": -800,
+      "end_year": 200,
+      "is_usable": false
+    },
+    {
+      "name": "Regional Cultural Florescence and Agricultural Expansion",
+      "start_year": 201,
+      "end_year": 1000,
+      "is_usable": true
+    },
+    {
+      "name": "Rise of Complex Societies and Interregional Networks",
+      "start_year": 1001,
+      "end_year": 1400,
+      "is_usable": true
+    },
+    {
+      "name": "Late Pre-Contact Societies and Early European Encounters",
+      "start_year": 1401,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "South America": [
+    {
+      "name": "Early Complex Societies and Agricultural Innovations",
+      "start_year": -2000,
+      "end_year": -801,
+      "is_usable": false
+    },
+    {
+      "name": "Regional Cultural Diversification and Formative Centers",
+      "start_year": -800,
+      "end_year": 200,
+      "is_usable": false
+    },
+    {
+      "name": "Classical Regional States and Pan-Andean Influence",
+      "start_year": 201,
+      "end_year": 1000,
+      "is_usable": false
+    },
+    {
+      "name": "Late Pre-Columbian Empires and Diverse Confederations",
+      "start_year": 1001,
+      "end_year": 1532,
+      "is_usable": true
+    },
+    {
+      "name": "European Conquest and Early Colonial Administration",
+      "start_year": 1533,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Asia": [
+    {
+      "name": "Early Civilizations and Bronze Age Foundations",
+      "start_year": -2000,
+      "end_year": -601,
+      "is_usable": true
+    },
+    {
+      "name": "Classical Empires and the Axial Age",
+      "start_year": -600,
+      "end_year": 200,
+      "is_usable": true
+    },
+    {
+      "name": "Post-Classical Transformations and Religious Expansions",
+      "start_year": 201,
+      "end_year": 700,
+      "is_usable": true
+    },
+    {
+      "name": "Medieval Flourishing and Inter-regional Networks",
+      "start_year": 701,
+      "end_year": 1200,
+      "is_usable": true
+    },
+    {
+      "name": "Pax Mongolica and the Rise of New Empires",
+      "start_year": 1201,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Central Asia": [
+    {
+      "name": "Bronze Age Cultures and Early Steppe Nomads",
+      "start_year": -2000,
+      "end_year": -601,
+      "is_usable": false
+    },
+    {
+      "name": "Classical Empires' Outreach and Nomadic Confederations",
+      "start_year": -600,
+      "end_year": 200,
+      "is_usable": true
+    },
+    {
+      "name": "Early Turkic Hegemony and Silk Road Networks",
+      "start_year": 201,
+      "end_year": 600,
+      "is_usable": true
+    },
+    {
+      "name": "Islamic Expansion and Turkic Dynasties",
+      "start_year": 601,
+      "end_year": 1200,
+      "is_usable": true
+    },
+    {
+      "name": "Mongol Ascendancy and Post-Mongol States",
+      "start_year": 1201,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "East Asia": [
+    {
+      "name": "Early Dynastic Foundations and Bronze Age Development",
+      "start_year": -2000,
+      "end_year": -501,
+      "is_usable": true
+    },
+    {
+      "name": "Classical Imperial Formation and Philosophical Age",
+      "start_year": -500,
+      "end_year": 220,
+      "is_usable": true
+    },
+    {
+      "name": "Period of Disunity and Early Buddhist Integration",
+      "start_year": 221,
+      "end_year": 580,
+      "is_usable": true
+    },
+    {
+      "name": "Imperial Re-unification and Cosmopolitan Empires",
+      "start_year": 581,
+      "end_year": 907,
+      "is_usable": true
+    },
+    {
+      "name": "Post-Tang Regional States and Flourishing Cultures",
+      "start_year": 908,
+      "end_year": 1279,
+      "is_usable": true
+    },
+    {
+      "name": "Late Imperial Transformations and Early European Contact",
+      "start_year": 1280,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Middle East": [
+    {
+      "name": "Late Bronze Age Civilizations and Networks",
+      "start_year": -2000,
+      "end_year": -1201,
+      "is_usable": true
+    },
+    {
+      "name": "Iron Age Transformations and Neo-Empires",
+      "start_year": -1200,
+      "end_year": -551,
+      "is_usable": true
+    },
+    {
+      "name": "Achaemenid Imperial Consolidation",
+      "start_year": -550,
+      "end_year": -331,
+      "is_usable": true
+    },
+    {
+      "name": "Hellenistic Kingdoms and Roman/Parthian Rivalry",
+      "start_year": -330,
+      "end_year": 223,
+      "is_usable": true
+    },
+    {
+      "name": "Sasanian Persia and Byzantine Empire",
+      "start_year": 224,
+      "end_year": 631,
+      "is_usable": true
+    },
+    {
+      "name": "Early Islamic Caliphates and Successor States",
+      "start_year": 632,
+      "end_year": 1258,
+      "is_usable": true
+    },
+    {
+      "name": "Post-Mongol Dynasties and Ottoman/Safavid Emergence",
+      "start_year": 1259,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "South Asia": [
+    {
+      "name": "Late Harappan and Early Vedic Developments",
+      "start_year": -2000,
+      "end_year": -801,
+      "is_usable": true
+    },
+    {
+      "name": "Second Urbanization and Early Imperial Formations",
+      "start_year": -800,
+      "end_year": -201,
+      "is_usable": true
+    },
+    {
+      "name": "Classical Age and Regional Dynasties",
+      "start_year": -200,
+      "end_year": 749,
+      "is_usable": true
+    },
+    {
+      "name": "Early Medieval Regional States",
+      "start_year": 750,
+      "end_year": 1199,
+      "is_usable": true
+    },
+    {
+      "name": "Sultanate Period and Emergence of New Empires",
+      "start_year": 1200,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Southeast Asia": [
+    {
+      "name": "Early Agricultural and Metal Age Societies",
+      "start_year": -2000,
+      "end_year": -501,
+      "is_usable": false
+    },
+    {
+      "name": "Iron Age and Proto-State Formations",
+      "start_year": -500,
+      "end_year": 100,
+      "is_usable": false
+    },
+    {
+      "name": "Early States and Indianization",
+      "start_year": 101,
+      "end_year": 800,
+      "is_usable": false
+    },
+    {
+      "name": "Classical Empires and Regional Powers",
+      "start_year": 801,
+      "end_year": 1400,
+      "is_usable": true
+    },
+    {
+      "name": "Maritime Trading Networks and Early European Contact",
+      "start_year": 1401,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Europe": [
+    {
+      "name": "European Bronze Age and Early Iron Age Societies",
+      "start_year": -2000,
+      "end_year": -801,
+      "is_usable": true
+    },
+    {
+      "name": "Classical Greek and Roman Republican Eras",
+      "start_year": -800,
+      "end_year": -28,
+      "is_usable": true
+    },
+    {
+      "name": "Roman Imperial Age and Late Antiquity",
+      "start_year": -27,
+      "end_year": 500,
+      "is_usable": true
+    },
+    {
+      "name": "Early Medieval Period and Germanic Transformations",
+      "start_year": 501,
+      "end_year": 1000,
+      "is_usable": true
+    },
+    {
+      "name": "High Middle Ages and Feudal Consolidation",
+      "start_year": 1001,
+      "end_year": 1300,
+      "is_usable": true
+    },
+    {
+      "name": "Late Medieval, Renaissance, and Early Modern Transition",
+      "start_year": 1301,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Balkans": [
+    {
+      "name": "Bronze Age and Early Iron Age Tribal Societies",
+      "start_year": -2000,
+      "end_year": -801,
+      "is_usable": false
+    },
+    {
+      "name": "Classical and Hellenistic Influence with Indigenous Kingdoms",
+      "start_year": -800,
+      "end_year": -150,
+      "is_usable": false
+    },
+    {
+      "name": "Roman Annexation and Imperial Rule",
+      "start_year": -149,
+      "end_year": 395,
+      "is_usable": false
+    },
+    {
+      "name": "Late Antiquity, Migrations, and Byzantine Emergence",
+      "start_year": 396,
+      "end_year": 600,
+      "is_usable": false
+    },
+    {
+      "name": "Slavic Settlement and Formation of Early Medieval States",
+      "start_year": 601,
+      "end_year": 1018,
+      "is_usable": false
+    },
+    {
+      "name": "High Medieval Empires and Regional Fragmentation",
+      "start_year": 1019,
+      "end_year": 1389,
+      "is_usable": true
+    },
+    {
+      "name": "Ottoman Conquest and Early Rule",
+      "start_year": 1390,
+      "end_year": 1600,
+      "is_usable": false
+    }
+  ],
+  "Central Europe": [
+    {
+      "name": "Bronze Age and Early Iron Age Cultures",
+      "start_year": -2000,
+      "end_year": -801,
+      "is_usable": false
+    },
+    {
+      "name": "Celtic Dominance and Roman Frontier Interactions",
+      "start_year": -800,
+      "end_year": -51,
+      "is_usable": false
+    },
+    {
+      "name": "Roman Influence and Germanic Migrations",
+      "start_year": -50,
+      "end_year": 450,
+      "is_usable": false
+    },
+    {
+      "name": "Early Medieval Transformations and Slavic Settlements",
+      "start_year": 451,
+      "end_year": 900,
+      "is_usable": true
+    },
+    {
+      "name": "High Medieval Kingdoms and Holy Roman Empire",
+      "start_year": 901,
+      "end_year": 1300,
+      "is_usable": true
+    },
+    {
+      "name": "Late Medieval and Early Modern States Formation",
+      "start_year": 1301,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Eastern Europe": [
+    {
+      "name": "Bronze Age Cultures and Early Steppe Interactions",
+      "start_year": -2000,
+      "end_year": -801,
+      "is_usable": false
+    },
+    {
+      "name": "Iron Age Tribal Societies and Greek Colonization",
+      "start_year": -800,
+      "end_year": -300,
+      "is_usable": false
+    },
+    {
+      "name": "Classical and Late Antiquity: Nomadic Incursions and Roman Influence",
+      "start_year": -299,
+      "end_year": 400,
+      "is_usable": false
+    },
+    {
+      "name": "Migration Period and Slavic Settlement",
+      "start_year": 401,
+      "end_year": 900,
+      "is_usable": true
+    },
+    {
+      "name": "Emergence of Slavic and Regional States",
+      "start_year": 901,
+      "end_year": 1240,
+      "is_usable": true
+    },
+    {
+      "name": "Mongol Dominance and Re-Emergence of States",
+      "start_year": 1241,
+      "end_year": 1500,
+      "is_usable": true
+    },
+    {
+      "name": "Consolidation of Eastern European Powers",
+      "start_year": 1501,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Northern Europe": [
+    {
+      "name": "Bronze Age and Pre-Roman Iron Age Societies",
+      "start_year": -2000,
+      "end_year": -501,
+      "is_usable": false
+    },
+    {
+      "name": "Roman Iron Age and Migration Period Influences",
+      "start_year": -500,
+      "end_year": 550,
+      "is_usable": false
+    },
+    {
+      "name": "Germanic Iron Age and Pre-Viking Period",
+      "start_year": 551,
+      "end_year": 799,
+      "is_usable": true
+    },
+    {
+      "name": "Viking Age and Early Christianization",
+      "start_year": 800,
+      "end_year": 1050,
+      "is_usable": true
+    },
+    {
+      "name": "High Medieval Nordic Kingdoms and Baltic Expansion",
+      "start_year": 1051,
+      "end_year": 1396,
+      "is_usable": true
+    },
+    {
+      "name": "Kalmar Union and Late Medieval Period",
+      "start_year": 1397,
+      "end_year": 1523,
+      "is_usable": true
+    },
+    {
+      "name": "Reformation and Early Modern State Formation",
+      "start_year": 1524,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Southern Europe": [
+    {
+      "name": "Bronze Age Civilizations and Early Iron Age Cultures",
+      "start_year": -2000,
+      "end_year": -801,
+      "is_usable": true
+    },
+    {
+      "name": "Classical City-States and Early Roman Expansion",
+      "start_year": -800,
+      "end_year": -251,
+      "is_usable": true
+    },
+    {
+      "name": "Roman Hegemony and Imperial Era",
+      "start_year": -250,
+      "end_year": 476,
+      "is_usable": true
+    },
+    {
+      "name": "Post-Roman Kingdoms and Byzantine Influence",
+      "start_year": 477,
+      "end_year": 1000,
+      "is_usable": true
+    },
+    {
+      "name": "High Medieval Regional Powers and Maritime Republics",
+      "start_year": 1001,
+      "end_year": 1400,
+      "is_usable": true
+    },
+    {
+      "name": "Renaissance, Maritime Empires, and Ottoman Challenges",
+      "start_year": 1401,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Western Europe": [
+    {
+      "name": "Bronze Age and Pre-Roman Iron Age Cultures",
+      "start_year": -2000,
+      "end_year": -501,
+      "is_usable": false
+    },
+    {
+      "name": "Roman Hegemony and Provincial Integration",
+      "start_year": -500,
+      "end_year": 476,
+      "is_usable": true
+    },
+    {
+      "name": "Post-Roman Kingdoms and Early Medieval Development",
+      "start_year": 477,
+      "end_year": 1000,
+      "is_usable": true
+    },
+    {
+      "name": "High Middle Ages and Feudal Consolidation",
+      "start_year": 1001,
+      "end_year": 1300,
+      "is_usable": true
+    },
+    {
+      "name": "Late Medieval, Renaissance, and Early Modern Period",
+      "start_year": 1301,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Oceania": [
+    {
+      "name": "Early Indigenous Development and Near Oceania Settlement",
+      "start_year": -2000,
+      "end_year": -1501,
+      "is_usable": false
+    },
+    {
+      "name": "Lapita Cultural Complex and Austronesian Expansion",
+      "start_year": -1500,
+      "end_year": -501,
+      "is_usable": false
+    },
+    {
+      "name": "Proto-Polynesian and Early Island Societies",
+      "start_year": -500,
+      "end_year": 299,
+      "is_usable": false
+    },
+    {
+      "name": "Major Polynesian Expansion and Cultural Diversification",
+      "start_year": 300,
+      "end_year": 1199,
+      "is_usable": true
+    },
+    {
+      "name": "Late Polynesian Settlement, Societal Development, and Early European Contact",
+      "start_year": 1200,
+      "end_year": 1600,
+      "is_usable": true
+    }
+  ],
+  "Micronesia": [
+    {
+      "name": "Early Settlement and Initial Cultural Diversification",
+      "start_year": -2000,
+      "end_year": -501,
+      "is_usable": false
+    },
+    {
+      "name": "Proto-Societies and Island Adaptations",
+      "start_year": -500,
+      "end_year": 500,
+      "is_usable": false
+    },
+    {
+      "name": "Development of Complex Societies and Chiefdoms",
+      "start_year": 501,
+      "end_year": 1200,
+      "is_usable": false
+    },
+    {
+      "name": "Late Indigenous Development and Early European Encounters",
+      "start_year": 1201,
+      "end_year": 1600,
+      "is_usable": false
+    }
+  ]
+}
