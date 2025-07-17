@@ -62,10 +62,63 @@ def api_test_key():
             if bal.status_code == 200:
                 d = bal.json().get("data", {})
                 credits = round(d.get("total_credits", 0.0) - d.get("total_usage", 0.0), 2)
+                return jsonify({"valid": True, "balance": credits})
+    except Exception as e:
+        return jsonify({"valid": False, "error": str(e)})
 
-            return jsonify({"valid": True, "balance": credits})
-    except Exception:
-        return jsonify({"valid": False})
+@app.get("/api/openrouter_balance")
+def api_openrouter_balance():
+    """
+    Fetches the current OpenRouter balance using the API key from llm_config.json.
+    Returns { "balance": float } or { "error": str }
+    """
+    cfg = load_llm_config() or {}
+    api_key = cfg.get("api_key", "").strip()
+
+    if not api_key:
+        return jsonify({"error": "OpenRouter API key not configured."}), 400
+
+    try:
+        bal = requests.get(
+            "https://openrouter.ai/api/v1/credits",
+            headers={"Authorization": f"Bearer {api_key}"},
+            timeout=8,
+        )
+        bal.raise_for_status() # Raise an exception for HTTP errors
+        d = bal.json().get("data", {})
+        credits = round(d.get("total_credits", 0.0) - d.get("total_usage", 0.0), 2)
+        return jsonify({"balance": credits})
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Failed to fetch balance: {e}"}), 500
+    except Exception as e:
+        return jsonify({"error": f"An unexpected error occurred: {e}"}), 500
+
+@app.get("/api/openrouter_spent")
+def api_openrouter_spent():
+    """
+    Fetches the total OpenRouter usage (money spent) using the API key from llm_config.json.
+    Returns { "spent": float } or { "error": str }
+    """
+    cfg = load_llm_config() or {}
+    api_key = cfg.get("api_key", "").strip()
+
+    if not api_key:
+        return jsonify({"error": "OpenRouter API key not configured."}), 400
+
+    try:
+        bal = requests.get(
+            "https://openrouter.ai/api/v1/credits",
+            headers={"Authorization": f"Bearer {api_key}"},
+            timeout=8,
+        )
+        bal.raise_for_status() # Raise an exception for HTTP errors
+        d = bal.json().get("data", {})
+        total_usage = round(d.get("total_usage", 0.0), 2)
+        return jsonify({"spent": total_usage})
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Failed to fetch total usage: {e}"}), 500
+    except Exception as e:
+        return jsonify({"error": f"An unexpected error occurred: {e}"}), 500
 
 
 @app.post("/api/test_model")

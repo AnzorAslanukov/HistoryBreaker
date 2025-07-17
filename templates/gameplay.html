@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gameplay</title>
+    <link rel="stylesheet" href="../static/css/gameplay.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <script src="../static/javascript/gameplay.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="top-widgets-bar">
+            <div class="grid-container">
+                <div class="grid-item global-grid-item-styles grid-item-1">
+                    <p>Safety Indicator</p>
+                    <div id="danger-indicator">
+                        <div id="danger-glow"></div>
+                        <span id="danger-emoji" class="emoji">😇</span>
+                    </div>
+                    <p id="danger-label"></p>
+                </div>
+                <div class="grid-item global-grid-item-styles grid-item-2">
+                    <div id="time-of-day-glow"></div>
+                    <div class="grid-item-2-left">Perceived<br>Time of Day</div>
+                    <div class="grid-item-2-right" id="time-of-day-emoji">☀️</div>
+                    <div class="hover-text-container">
+                        <p id="hover-text"></p>
+                    </div>
+                </div>
+                <div class="grid-item global-grid-item-styles grid-item-3">
+                    <div id="environment-glow"></div>
+                    <div class="grid-item-3-left">Environment<br>Accuracy<br>Modifier</div>
+                    <div class="grid-item-3-right">😊</div>
+                    <div class="hover-text-container-3">
+                        <p id="hover-text-3"></p>
+                    </div>
+                </div>
+                <div class="grid-item global-grid-item-styles grid-item-4">
+                    <div class="grid-item-4-top-div" title="T.E.S.A. = Time Elapsed Since Arrival">T.E.S.A.</div>
+                    <div class="grid-item-4-middle-row" title="Amount of time player thinks has passed">
+                        <div class="grid-item-4-left">Perceived<br>Time</div>
+                        <div class="grid-item-4-right" id="perceived-time"></div>
+                    </div>
+                    <div class="grid-item-4-bottom-row" title="Accuracy of perceived time compared to objective time">
+                        <div class="grid-item-4-left">Temporal<br>Drift</div>
+                        <div class="grid-item-4-right" id="temporal-drift"></div>
+                    </div>
+                </div>
+                <div class="grid-item global-grid-item-styles grid-item-5">
+                    <div class="grid-item-5-left">OpenRouter<br>Balance:</div>
+                    <div class="grid-item-5-right"></div>
+                </div>
+                <div class="grid-item global-grid-item-styles grid-item-6">
+                    <div class="grid-item-6-left">Input<br>Tokens</div>
+                    <div class="grid-item-6-right"></div>
+                </div>
+                <div class="grid-item global-grid-item-styles grid-item-7">
+                    <div class="grid-item-7-left">💾</div>
+                    <div class="grid-item-7-right">Save Game</div>
+                </div>
+                <div class="grid-item global-grid-item-styles grid-item-10">
+                    <div id="location-terrain-glow"></div>
+                    <div class="grid-item-10-left">Location/<br>Terrain<br>Category</div>
+                    <div class="grid-item-10-right">😊</div>
+                    <div class="hover-text-container-10">
+                        <p id="hover-text-10"></p>
+                    </div>
+                </div>
+                <div class="grid-item global-grid-item-styles grid-item-11">
+                    <div id="temperature-glow"></div>
+                    <div class="grid-item-11-left">Temperature</div>
+                    <div class="grid-item-11-right" id="temperature-emoji">🧊</div>
+                    <div class="hover-text-container-11">
+                        <p id="hover-text-11"></p>
+                    </div>
+                </div>
+                <div class="grid-item global-grid-item-styles grid-item-13">
+                    <div class="grid-item-13-left">Money<br>Spent:</div>
+                    <div class="grid-item-13-right"></div>
+                </div>
+                <div class="grid-item global-grid-item-styles grid-item-14">
+                    <div class="grid-item-14-left">Output<br>Tokens</div>
+                    <div class="grid-item-14-right"></div>
+                </div>
+                <div class="grid-item global-grid-item-styles grid-item-15">
+                    <div class="grid-item-15-left">🌓</div>
+                    <div class="grid-item-15-right">Toggle<br>Dark/Light<br>Mode</div>
+                    <div class="grid-item-15-dropdown">
+                        <button id="dark-mode-button">🌑 Dark Mode</button>
+                        <button id="light-mode-button">☀️ Light Mode</button>
+                        <button id="auto-mode-button">Auto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-window"></div>
+        <div class="chat-input-container">
+            <textarea id="chat-input" placeholder="Type your message..."></textarea>
+            <button id="send-button">Send</button>
+        </div>
+        <div class="game-controls">
+            <div class="ff-hours">
+                <div class="ff-hours-num-input">
+                    <span id="ff-hours-exclamation">❗</span>
+                    <label id="ff-hours-main-label">Add number of hours to FF...</label>
+                    <div class="unit-input-group">
+                        <div class="unit-input-wrapper active" data-unit="minutes">
+                            <input type="text" id="ff-minutes-input" name="ff-minutes-input" placeholder="Enter minutes...">
+                            <span class="unit-label">Minutes</span>
+                        </div>
+                        <div class="unit-input-wrapper" data-unit="hours">
+                            <input type="text" id="ff-hours-input" name="ff-hours-input" placeholder="Enter hours...">
+                            <span class="unit-label">Hours</span>
+                        </div>
+                    </div>
+                    <span id="ff-hours-warning"></span>
+                </div>
+                <div class="ff-hours-period-selector">
+                    <button class="period-button" data-period="morning">Morning</button>
+                    <button class="period-button" data-period="afternoon">Afternoon</button>
+                    <button class="period-button" data-period="evening">Evening</button>
+                    <button class="period-button" data-period="night">Night</button>
+                </div>
+            </div>
+            <div class="ff-days">
+                <label for="ff-days-input" id="ff-days-label">Add number of days to FF...</label>
+                <span id="ff-days-exclamation" style="display: none;">❗</span>
+                <input type="text" id="ff-days-input" name="ff-days-input" style="display: none;">
+                <span id="ff-days-warning" style="display: none;">Only enter up to 30 days</span>
+            </div>
+            <div class="ff-suggested">
+                <label class="toggle-switch-label">FF to suggested<br>event</label>
+                <label class="switch">
+                    <input type="checkbox" id="ff-suggested-toggle">
+                    <span class="slider round"></span>
+                </label>
+                <span class="ff-special-event-label">FF to special event?</span>
+            </div>
+            <div class="ff-submission">
+                <button id="fast-forward-button">Fast Forward</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

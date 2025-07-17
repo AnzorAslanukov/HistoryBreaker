@@ -1,0 +1,904 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.top-widgets-bar, .chat-window, .game-controls {
+    width: 75%;
+    margin-bottom: 20px; /* Space between divs */
+    border: 1px solid #333; /* Just for visualization */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.top-widgets-bar {
+    height: 120px;
+    padding: 10px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    height: 100px;
+    width: 100%;
+}
+
+.global-grid-item-styles {
+    font-family: 'VT323', monospace;
+}
+
+.grid-item {
+    border: 1px solid #000; /* Border for visualization */
+}
+
+.grid-item-3 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+.grid-item-3-left,
+.grid-item-3-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.grid-item-3-right {
+    font-size: 32px; /* Adjust emoji size */
+}
+
+.grid-item-1 {
+    grid-row: span 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* Keep this for text alignment within the flex item */
+    overflow: hidden; /* Ensure glow does not extend beyond this div */
+}
+
+.grid-item-2 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    position: relative; /* For positioning the hover text container */
+    overflow: hidden; /* Hide overflowing hover text */
+}
+
+.grid-item-2-left,
+.grid-item-2-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.grid-item-2-right {
+    font-size: 32px; /* Adjust emoji size */
+}
+
+.grid-item-2:hover .hover-text-container {
+    transform: translateY(0); /* Slide in on hover */
+}
+
+.hover-text-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(100%); /* Start off-screen below */
+    transition: transform 0.3s ease-in-out; /* Smooth transition */
+    box-sizing: border-box;
+    padding: 10px;
+    z-index: 2; /* Ensure it's above other content in grid-item-2 */
+}
+
+#hover-text {
+    color: white;
+    font-family: 'VT323', monospace;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.grid-item-4 {
+    grid-row: span 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    padding: 1px; /* Add some padding */
+}
+
+.grid-item-4 .grid-item-4-top-div {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease; /* Smooth transition for background */
+}
+
+.grid-item-4 .grid-item-4-top-div:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Darken on hover */
+}
+
+.grid-item-4 .grid-item-4-middle-row,
+.grid-item-4 .grid-item-4-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 1px;
+    transition: background-color 0.3s ease; /* Smooth transition for background */
+}
+
+.grid-item-4 .grid-item-4-middle-row:hover,
+.grid-item-4 .grid-item-4-bottom-row:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Darken on hover */
+}
+
+.grid-item-4 .grid-item-4-middle-row .grid-item-4-left,
+.grid-item-4 .grid-item-4-bottom-row .grid-item-4-left {
+    flex: 1;
+    text-align: left;
+    padding-left: 10px;
+    font-size: 0.9em;
+    line-height: 1.2;
+}
+
+.grid-item-4 .grid-item-4-middle-row .grid-item-4-right,
+.grid-item-4 .grid-item-4-bottom-row .grid-item-4-right {
+    flex: 1;
+    text-align: right;
+    padding-right: 10px;
+    font-size: 1.1em;
+    line-height: 1.2;
+}
+
+.chat-window {
+    height: 520px;
+    background-color: #ffd6a5; /* Example color */
+    padding: 10px;
+    overflow-y: auto; /* Enable scrolling for chat history */
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-message {
+    max-width: 70%;
+    padding: 8px 12px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    font-family: 'VT323', monospace;
+    font-size: 1.1em;
+    word-wrap: break-word;
+}
+
+.user-message {
+    align-self: flex-end; /* Align to the right */
+    background-color: #dcf8c6; /* Light green for user messages */
+    color: #333;
+    border-bottom-right-radius: 2px; /* Sharpen corner for user */
+}
+
+.response-message {
+    align-self: flex-start; /* Align to the left */
+    background-color: #e0e0e0; /* Light grey for response messages */
+    color: #333;
+    border-bottom-left-radius: 2px; /* Sharpen corner for response */
+}
+
+.game-controls {
+    height: 320px;
+    background-color: #fdffb6; /* Example color */
+}
+
+#danger-indicator {
+    position: relative; /* To position the glow relative to this div */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#danger-glow {
+    position: absolute;
+    width: 120px; /* Adjust size as needed */
+    height: 120px; /* Adjust size as needed */
+    border-radius: 50%;
+    background-color: transparent; /* Will be set by JS */
+    filter: blur(20px); /* Adjust blur intensity */
+    opacity: 0.9; /* Adjust opacity */
+    box-shadow: 0 0 20px 10px var(--glow-color, transparent); /* Add a prominent box shadow */
+    z-index: 0; /* Place behind the emoji */
+    transform: translate(-50%, -50%); /* Center the glow */
+    top: 50%;
+    left: 50%;
+}
+
+/* FF Hours Input Group */
+.ff-hours-num-input {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Horizontally center content */
+    gap: 10px;
+    border: 1px solid #333; /* Keep this border */
+}
+
+.ff-hours-num-input label {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.ff-hours-num-input input[type="text"] {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'VT323', monospace;
+    font-size: 1em;
+    width: 100px; /* Adjust as needed */
+}
+
+.unit-input-group {
+    display: flex;
+    border: 1px solid #333; /* Border for the entire switch */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.unit-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: #eee;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+    border-right: 1px solid #333; /* Separator between units */
+}
+
+.unit-input-wrapper:last-child {
+    border-right: none; /* No border on the last one */
+}
+
+.unit-input-wrapper input[type="text"] {
+    border: none; /* Remove individual input borders */
+    text-align: center;
+    background-color: transparent;
+    width: 80px; /* Adjust input width within wrapper */
+}
+
+.unit-input-wrapper .unit-label {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.unit-input-wrapper.active {
+    background-color: #4CAF50; /* Green for active */
+    color: white;
+}
+
+.unit-input-wrapper.active input[type="text"] {
+    color: white;
+}
+
+.unit-input-wrapper.active .unit-label {
+    color: white;
+}
+
+.unit-input-wrapper:not(.active) {
+    opacity: 0.6; /* Grey out inactive */
+}
+
+.unit-input-wrapper:not(.active) input[type="text"] {
+    color: #999; /* Grey out text in inactive input */
+}
+
+.ff-hours-num-input #ff-hours-exclamation {
+    font-size: 1.2em;
+    color: red;
+    visibility: hidden; /* Use visibility to reserve space */
+}
+
+.ff-hours-num-input #ff-hours-warning {
+    font-size: 0.9em;
+    color: #666;
+    visibility: hidden; /* Use visibility to reserve space */
+}
+
+/* Game Controls Styling */
+.game-controls {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #fdffb6; /* Example color, adjust as needed */
+    border: 1px solid #333;
+    box-sizing: border-box;
+    font-family: 'VT323', monospace;
+}
+
+/* FF Hours Section */
+.ff-hours {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #333;
+}
+
+.ff-hours-num-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #333;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.ff-hours-num-input label {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.ff-hours-num-input input[type="text"] {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'VT323', monospace;
+    font-size: 1em;
+    width: 100px; /* Adjust as needed */
+}
+
+.ff-hours-period-selector {
+    display: flex;
+    gap: 10px;
+    border: 1px solid #333;
+    justify-content: center; /* Horizontally center the buttons */
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.period-button {
+    padding: 8px 15px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #eee;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    font-size: 1em;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.period-button:hover {
+    background-color: #ddd;
+}
+
+.period-button.selected {
+    background-color: #4CAF50; /* Green for selected */
+    color: white;
+    border-color: #4CAF50;
+}
+
+/* FF Days Section */
+.ff-days {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #333;
+}
+
+.ff-days label {
+    font-size: 1.1em;
+    color: #333;
+    cursor: pointer; /* Indicate it's clickable */
+}
+
+.ff-days input[type="text"] {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'VT323', monospace;
+    font-size: 1em;
+    width: 100px; /* Adjust as needed */
+}
+
+.ff-days #ff-days-exclamation {
+    font-size: 1.2em;
+    color: red;
+}
+
+.ff-days #ff-days-warning {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* FF Suggested Section (Toggle Switch) */
+.ff-suggested {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid #333;
+}
+
+.toggle-switch-label {
+    font-size: 1.1em;
+    color: #333;
+    line-height: 1.2; /* Adjust line height for multiline text */
+    text-align: right;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px; /* Rounded slider */
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%; /* Rounded handle */
+}
+
+input:checked + .slider {
+    background-color: #4CAF50;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #4CAF50;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.ff-special-event-label {
+    font-size: 1.1em;
+    color: #333;
+    border: 1px solid #333;
+}
+
+/* FF Submission Section */
+.ff-submission button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    font-size: 1.2em;
+    transition: background-color 0.2s;
+}
+
+.ff-submission {
+    border: 1px solid #333;
+}
+
+.ff-submission button:hover {
+    background-color: #0056b3;
+}
+
+.chat-input-container {
+    width: 75%; /* Same width as chat-window */
+    display: flex;
+    padding: 10px;
+    border: 1px solid #333;
+    box-sizing: border-box;
+    margin-top: -20px; /* Overlap with chat-window's margin-bottom */
+    margin-bottom: 20px;
+    background-color: #f0f0f0; /* Match body background or choose a suitable color */
+    position: sticky; /* Make it stick to the bottom */
+    bottom: 20px; /* Adjust as needed to float above game-controls */
+    z-index: 1; /* Ensure it's above other content if needed */
+    min-height: 75px;
+    font-family: 'VT323', monospace;
+    font-size: 1.2em;
+}
+
+#chat-input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'VT323', monospace;
+    font-size: 1em;
+    min-height: 42px; /* Approximately 1.5 lines of text + padding/border */
+    max-height: 138px; /* Approximately 5 lines of text + padding/border */
+    overflow-y: auto; /* Add scrollbar when content exceeds max-height */
+    resize: vertical; /* Allow vertical resizing, but not horizontal */
+}
+
+#send-button {
+    padding: 8px 15px;
+    margin-left: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    font-size: 1em;
+    min-height: 55px;
+    max-height: 55px;
+}
+
+#send-button:hover {
+    background-color: #45a049;
+}
+
+.grid-item-5,
+.grid-item-13 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.grid-item-5-left,
+.grid-item-13-left {
+    flex: 1;
+    text-align: left;
+}
+
+.grid-item-5-right,
+.grid-item-13-right {
+    flex: 1;
+    text-align: right;
+}
+
+.grid-item-6,
+.grid-item-14 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.grid-item-6-left,
+.grid-item-14-left {
+    flex: 1;
+    text-align: left;
+}
+
+.grid-item-6-right,
+.grid-item-14-right {
+    flex: 1;
+    text-align: right;
+}
+
+.grid-item-7 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.grid-item-7-left {
+    flex: 1;
+    text-align: center;
+    font-size: 32px;
+}
+
+.grid-item-7-right {
+    flex: 1;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.grid-item-15 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    position: relative; /* For positioning the dropdown */
+    /* Removed overflow: visible; to prevent layout issues if not needed */
+}
+
+.grid-item-15-left {
+    flex: 1;
+    text-align: center;
+    font-size: 32px;
+}
+
+.grid-item-15-right {
+    flex: 1;
+    text-align: center;
+}
+
+.grid-item-15-dropdown {
+    display: none; /* Hidden by default */
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10; /* Increased z-index to ensure it's on top */
+    top: 100%; /* Position below the grid-item-15 */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    border: 1px solid #000;
+    font-family: 'VT323', monospace;
+    flex-direction: column; /* Stack items vertically */
+}
+
+.grid-item-15-dropdown button {
+    color: black;
+    padding: 6px 8px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    font-size: 1em;
+    text-align: center;
+}
+
+.grid-item-15:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Darken on hover */
+}
+
+.grid-item-15-dropdown button:hover {
+    background-color: #ddd;
+}
+
+.grid-item-15:hover .grid-item-15-dropdown {
+    display: block; /* Show on hover */
+}
+
+#danger-emoji {
+    font-size: 32px; /* Double the default size */
+    line-height: 1;
+    display: block;
+    position: relative; /* Ensure emoji is above the glow */
+    z-index: 1;
+}
+
+#time-of-day-glow {
+    position: absolute;
+    width: 80px; /* Smaller size to fit within grid-item-2 */
+    height: 80px; /* Smaller size to fit within grid-item-2 */
+    border-radius: 50%;
+    background-color: transparent; /* Will be set by JS */
+    filter: blur(15px); /* Adjust blur intensity */
+    opacity: 0.8; /* Adjust opacity */
+    box-shadow: 0 0 15px 8px var(--time-glow-color, transparent); /* Add a prominent box shadow */
+    z-index: 0; /* Place behind the emoji */
+    transform: translate(-50%, -50%); /* Center the glow */
+    top: 50%;
+    left: 50%;
+}
+
+#environment-glow {
+    position: absolute;
+    width: 80px; /* Adjust size as needed */
+    height: 80px; /* Adjust size as needed */
+    border-radius: 50%;
+    background-color: transparent; /* Will be set by JS */
+    filter: blur(15px); /* Adjust blur intensity */
+    opacity: 0.8; /* Adjust opacity */
+    box-shadow: 0 0 15px 8px var(--environment-glow-color, transparent); /* Add a prominent box shadow */
+    z-index: 0; /* Place behind the emoji */
+    transform: translate(-50%, -50%); /* Center the glow */
+    top: 50%;
+    left: 50%;
+}
+
+.grid-item-3 {
+    position: relative; /* To position the glow relative to this div */
+    overflow: hidden; /* Ensure glow does not extend beyond this div */
+}
+
+.grid-item-3:hover .hover-text-container-3 {
+    transform: translateY(0); /* Slide in on hover */
+}
+
+.hover-text-container-3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(100%); /* Start off-screen below */
+    transition: transform 0.3s ease-in-out; /* Smooth transition */
+    box-sizing: border-box;
+    padding: 10px;
+    z-index: 2; /* Ensure it's above other content in grid-item-3 */
+}
+
+#hover-text-3 {
+    color: white;
+    font-family: 'VT323', monospace;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.grid-item-10:hover .hover-text-container-10 {
+    transform: translateY(0); /* Slide in on hover */
+}
+
+.hover-text-container-10 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(100%); /* Start off-screen below */
+    transition: transform 0.3s ease-in-out; /* Smooth transition */
+    box-sizing: border-box;
+    padding: 10px;
+    z-index: 2; /* Ensure it's above other content in grid-item-10 */
+}
+
+#hover-text-10 {
+    color: white;
+    font-family: 'VT323', monospace;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.grid-item-10 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    position: relative; /* To position the glow relative to this div */
+    overflow: hidden; /* Ensure glow does not extend beyond this div */
+}
+
+.grid-item-10-left,
+.grid-item-10-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.grid-item-10-right {
+    font-size: 32px; /* Adjust emoji size */
+}
+
+#location-terrain-glow {
+    position: absolute;
+    width: 80px; /* Adjust size as needed */
+    height: 80px; /* Adjust size as needed */
+    border-radius: 50%;
+    background-color: transparent; /* Will be set by JS */
+    filter: blur(15px); /* Adjust blur intensity */
+    opacity: 0.8; /* Adjust opacity */
+    box-shadow: 0 0 15px 8px var(--location-terrain-glow-color, transparent); /* Add a prominent box shadow */
+    z-index: 0; /* Place behind the emoji */
+    transform: translate(-50%, -50%); /* Center the glow */
+    top: 50%;
+    left: 50%;
+}
+
+.grid-item-11 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    position: relative; /* To position the glow relative to this div */
+    overflow: hidden; /* Ensure glow does not extend beyond this div */
+}
+
+.grid-item-11-left,
+.grid-item-11-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.grid-item-11-right {
+    font-size: 32px; /* Adjust emoji size */
+}
+
+.grid-item-11:hover .hover-text-container-11 {
+    transform: translateY(0); /* Slide in on hover */
+}
+
+.hover-text-container-11 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(100%); /* Start off-screen below */
+    transition: transform 0.3s ease-in-out; /* Smooth transition */
+    box-sizing: border-box;
+    padding: 10px;
+    z-index: 2; /* Ensure it's above other content in grid-item-11 */
+}
+
+#hover-text-11 {
+    color: white;
+    font-family: 'VT323', monospace;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+#temperature-glow {
+    position: absolute;
+    width: 80px; /* Adjust size as needed */
+    height: 80px; /* Adjust size as needed */
+    border-radius: 50%;
+    background-color: transparent; /* Will be set by JS */
+    filter: blur(15px); /* Adjust blur intensity */
+    opacity: 0.8; /* Adjust opacity */
+    box-shadow: 0 0 15px 8px var(--temperature-glow-color, transparent); /* Add a prominent box shadow */
+    z-index: 0; /* Place behind the emoji */
+    transform: translate(-50%, -50%); /* Center the glow */
+    top: 50%;
+    left: 50%;
+}
