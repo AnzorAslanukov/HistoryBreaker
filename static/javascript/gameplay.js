@@ -212,6 +212,7 @@ const temperatureColors = [
 
 // For testing purposes, cycle through indices on page refresh
 document.addEventListener('DOMContentLoaded', () => {
+    // Keep all the existing setup code for grid items 1-15, chat, etc.
     // Danger Indicator (grid-item-1)
     let dangerIndex = sessionStorage.getItem('dangerIndex');
     if (dangerIndex === null || parseInt(dangerIndex) >= dangerIndicatorEmojis.length - 1) {
@@ -428,110 +429,229 @@ document.addEventListener('DOMContentLoaded', () => {
         chatInput.style.height = chatInput.scrollHeight + 'px'; // Set height to scrollHeight
     });
 
-    // Fast Forward Hours Period Selector
-    const periodButtons = document.querySelectorAll('.period-button');
-    periodButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            periodButtons.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-        });
-    });
-
-    // Fast Forward Hours Input and Unit Switch
-    // Fast Forward Hours Input and Unit Switch
-    const ffHoursMainLabel = document.getElementById('ff-hours-main-label');
-    const ffHoursExclamation = document.getElementById('ff-hours-exclamation');
-    const ffHoursWarning = document.getElementById('ff-hours-warning');
+    // --- Fast Forward Elements ---
     const ffMinutesInput = document.getElementById('ff-minutes-input');
     const ffHoursInput = document.getElementById('ff-hours-input');
+    const periodButtons = document.querySelectorAll('.period-button');
+    const ffDaysInput = document.getElementById('ff-days-input');
+    const ffSpecialEventToggle = document.getElementById('ff-special-event-toggle');
+    const fastForwardButton = document.getElementById('fast-forward-button');
+    const ffSpecialEventLabelText = document.getElementById('ff-special-event-label-text');
     const unitInputWrappers = document.querySelectorAll('.unit-input-wrapper');
 
-    let activeUnit = 'minutes'; // Default active unit
+    const allInputs = [ffMinutesInput, ffHoursInput, ffDaysInput];
+    const allGameControlElements = [ffMinutesInput, ffHoursInput, ...periodButtons, ffDaysInput, ffSpecialEventToggle];
 
-    function updateHoursWarningAndActiveInput() {
-        unitInputWrappers.forEach(wrapper => {
-            const input = wrapper.querySelector('input[type="text"]');
-            if (wrapper.dataset.unit === activeUnit) {
-                wrapper.classList.add('active');
-                input.disabled = false;
-                // Do not focus here, let the user click the input to focus
-                if (activeUnit === 'minutes') {
-                    ffHoursMainLabel.textContent = 'Add number of minutes to FF...';
-                    ffHoursWarning.textContent = 'Only enter up to 1440 minutes';
-                } else {
-                    ffHoursMainLabel.textContent = 'Add number of hours to FF...';
-                    ffHoursWarning.textContent = 'Only enter up to 24 hours';
-                }
-            } else {
-                wrapper.classList.remove('active');
-                input.disabled = true;
-                input.value = ''; // Clear value of inactive input
+    // Input validation functions
+    function validateNumericInput(input, min, max) {
+        // Remove any non-numeric characters
+        let value = input.value.replace(/[^0-9]/g, '');
+        
+        // Convert to number and validate range
+        if (value !== '') {
+            let numValue = parseInt(value);
+            if (numValue < min) {
+                value = min.toString();
+            } else if (numValue > max) {
+                value = max.toString();
             }
-        });
-        // ffHoursWarning.style.display is handled by focus/blur listeners
+        }
+        
+        input.value = value;
     }
 
-    // Initial setup
-    updateHoursWarningAndActiveInput();
-    ffHoursWarning.style.visibility = 'hidden'; // Initially hide warning
+    // Add input validation event listeners
+    ffMinutesInput.addEventListener('input', () => {
+        validateNumericInput(ffMinutesInput, 1, 1440);
+        updateUI();
+        updateWrapperStates();
+    });
 
-    unitInputWrappers.forEach(wrapper => {
-        wrapper.addEventListener('click', () => {
-            activeUnit = wrapper.dataset.unit;
-            updateHoursWarningAndActiveInput();
-        });
+    ffHoursInput.addEventListener('input', () => {
+        validateNumericInput(ffHoursInput, 1, 24);
+        updateUI();
+        updateWrapperStates();
+    });
 
-        const input = wrapper.querySelector('input[type="text"]');
+    ffDaysInput.addEventListener('input', () => {
+        validateNumericInput(ffDaysInput, 1, 30);
+        updateUI();
+        updateFFDaysDisplay();
+    });
+
+    // Add click event listener for ff-days-input
+    ffDaysInput.addEventListener('click', () => {
+        updateFFDaysDisplay();
+    });
+
+    // Add focus event listener for ff-days-input
+    ffDaysInput.addEventListener('focus', () => {
+        updateFFDaysDisplay();
+    });
+
+    // Function to update ff-days display elements
+    function updateFFDaysDisplay() {
+        const ffDaysExclamation = document.getElementById('ff-days-exclamation');
+        const ffDaysWarning = document.getElementById('ff-days-warning');
         
-        input.addEventListener('focus', () => {
-            // Set active unit when input gains focus
-            activeUnit = wrapper.dataset.unit;
-            updateHoursWarningAndActiveInput(); // Update active state and warning
-            
-            ffHoursExclamation.style.visibility = 'visible';
-            ffHoursWarning.style.visibility = 'visible'; // Show warning on focus
-        });
-        input.addEventListener('blur', () => {
-            // Only hide exclamation and warning if neither input is focused
-            if (document.activeElement !== ffMinutesInput && document.activeElement !== ffHoursInput) {
-                ffHoursExclamation.style.visibility = 'hidden';
-                ffHoursWarning.style.visibility = 'hidden'; // Hide warning on blur
-            }
-        });
-    });
-
-    // Fast Forward Days Input
-    const ffDaysLabel = document.getElementById('ff-days-label');
-    const ffDaysInput = document.getElementById('ff-days-input');
-    const ffDaysExclamation = document.getElementById('ff-days-exclamation');
-    const ffDaysWarning = document.getElementById('ff-days-warning');
-
-    // Initial setup for ffDays elements
-    ffDaysExclamation.style.visibility = 'hidden';
-    ffDaysInput.style.visibility = 'hidden';
-    ffDaysWarning.style.visibility = 'hidden';
-
-    ffDaysLabel.addEventListener('click', () => {
-        ffDaysLabel.style.visibility = 'hidden';
-        ffDaysInput.style.visibility = 'visible';
-        ffDaysExclamation.style.visibility = 'visible';
-        ffDaysWarning.style.visibility = 'visible';
-        ffDaysInput.focus();
-    });
-
-    ffDaysInput.addEventListener('blur', () => {
-        if (ffDaysInput.value.trim() === '') {
-            ffDaysLabel.style.visibility = 'visible';
-            ffDaysInput.style.visibility = 'hidden';
-            ffDaysExclamation.style.visibility = 'hidden';
-            ffDaysWarning.style.visibility = 'hidden';
+        // Show spans if input has content, hide if empty
+        if (ffDaysInput.value.length > 0) {
+            ffDaysExclamation.classList.add('show');
+            ffDaysWarning.classList.add('show');
+        } else {
+            ffDaysExclamation.classList.remove('show');
+            ffDaysWarning.classList.remove('show');
         }
+    }
+
+    // Function to update wrapper active states
+    function updateWrapperStates() {
+        const minutesWrapper = ffMinutesInput.closest('.unit-input-wrapper');
+        const hoursWrapper = ffHoursInput.closest('.unit-input-wrapper');
+        const ffHoursMainLabel = document.getElementById('ff-hours-main-label');
+        const ffHoursExclamation = document.getElementById('ff-hours-exclamation');
+        const ffHoursWarning = document.getElementById('ff-hours-warning');
+        
+        // Remove active class from all wrappers first
+        unitInputWrappers.forEach(wrapper => wrapper.classList.remove('active'));
+        
+        // Hide warning elements by default
+        ffHoursExclamation.style.visibility = 'hidden';
+        ffHoursWarning.style.visibility = 'hidden';
+        
+        // Add active class to the wrapper with content and update labels
+        if (ffMinutesInput.value.length > 0) {
+            minutesWrapper.classList.add('active');
+            ffHoursMainLabel.textContent = 'Add number of minutes to FF...';
+            ffHoursExclamation.style.visibility = 'visible';
+            ffHoursWarning.textContent = 'Only enter up to 1440 minutes';
+            ffHoursWarning.style.visibility = 'visible';
+        } else if (ffHoursInput.value.length > 0) {
+            hoursWrapper.classList.add('active');
+            ffHoursMainLabel.textContent = 'Add number of hours to FF...';
+            ffHoursExclamation.style.visibility = 'visible';
+            ffHoursWarning.textContent = 'Only enter up to 24 hours';
+            ffHoursWarning.style.visibility = 'visible';
+        } else {
+            // Reset to default when no input
+            ffHoursMainLabel.textContent = 'Add amount of time to FF...';
+        }
+    }
+
+    // Test array of lorem ipsum samples (20-70 characters)
+    const loremIpsumSamples = [
+        "Lorem ipsum dolor sit", // 20 characters
+        "Lorem ipsum dolor sit amet, consectetur", // 39 characters  
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit", // 56 characters
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do", // 65 characters
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do ei" // 70 characters
+    ];
+
+    function updateUI() {
+        const minutesActive = ffMinutesInput.value.length > 0;
+        const hoursActive = ffHoursInput.value.length > 0;
+        const periodActive = Array.from(periodButtons).some(b => b.classList.contains('selected'));
+        const daysActive = ffDaysInput.value.length > 0;
+        const specialEventActive = ffSpecialEventToggle.classList.contains('active');
+
+        const anyInputActive = minutesActive || hoursActive || periodActive || daysActive || specialEventActive;
+
+        // Fast forward button state - disabled by default, only enabled when inputs are used
+        if (fastForwardButton.disabled && anyInputActive) {
+            fastForwardButton.disabled = false;
+            fastForwardButton.classList.remove('disabled');
+        } else if (!fastForwardButton.disabled && !anyInputActive) {
+            fastForwardButton.disabled = true;
+            fastForwardButton.classList.add('disabled');
+        }
+
+        // When any input is active, grey out and disable all other elements
+        if (anyInputActive) {
+            allGameControlElements.forEach(element => {
+                const isCurrentlyActive = 
+                    (element === ffMinutesInput && minutesActive) ||
+                    (element === ffHoursInput && hoursActive) ||
+                    (Array.from(periodButtons).includes(element) && element.classList.contains('selected')) ||
+                    (element === ffDaysInput && daysActive) ||
+                    (element === ffSpecialEventToggle && specialEventActive);
+
+                if (!isCurrentlyActive) {
+                    element.disabled = true;
+                    element.classList.add('disabled');
+                    
+                    // Handle parent wrapper styling for unit inputs
+                    const wrapper = element.closest('.unit-input-wrapper');
+                    if (wrapper) {
+                        wrapper.classList.add('disabled');
+                    }
+                }
+            });
+        } else {
+            // Re-enable all elements when no inputs are active
+            allGameControlElements.forEach(element => {
+                element.disabled = false;
+                element.classList.remove('disabled');
+                
+                // Handle parent wrapper styling for unit inputs
+                const wrapper = element.closest('.unit-input-wrapper');
+                if (wrapper) {
+                    wrapper.classList.remove('disabled');
+                }
+            });
+        }
+    }
+
+    // Event Listeners
+    allInputs.forEach(input => {
+        input.addEventListener('input', updateUI);
     });
 
-    // Fast Forward Button
-    const fastForwardButton = document.getElementById('fast-forward-button');
-    fastForwardButton.addEventListener('click', () => {
-        console.log('Fast Forward button clicked!');
-        // For now, this button does nothing.
+    // Toggle button functionality for period selector - only one can be active at a time
+    periodButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (button.disabled) return;
+            
+            const isSelected = button.classList.contains('selected');
+            
+            // Remove selected class from all buttons
+            periodButtons.forEach(btn => btn.classList.remove('selected'));
+            
+            // Toggle the clicked button (turn on if off, turn off if on)
+            if (!isSelected) {
+                button.classList.add('selected');
+            }
+            
+            updateUI();
+        });
     });
+
+    // Special event toggle functionality
+    ffSpecialEventToggle.addEventListener('click', () => {
+        if (ffSpecialEventToggle.disabled) return;
+        ffSpecialEventToggle.classList.toggle('active');
+        updateUI();
+    });
+
+    // Fast forward button functionality
+    fastForwardButton.addEventListener('click', () => {
+        if (fastForwardButton.disabled) return;
+        console.log("Fast Forwarding...");
+        
+        // Reset all inputs and states
+        allInputs.forEach(input => input.value = '');
+        periodButtons.forEach(btn => btn.classList.remove('selected'));
+        ffSpecialEventToggle.classList.remove('active');
+        
+        updateUI();
+        updateWrapperStates();
+        updateFFDaysDisplay();
+    });
+
+    // Set random lorem ipsum text for special event label on page load
+    ffSpecialEventLabelText.textContent = loremIpsumSamples[Math.floor(Math.random() * loremIpsumSamples.length)];
+
+    // Initial UI state - fast forward button should be disabled by default
+    fastForwardButton.disabled = true;
+    fastForwardButton.classList.add('disabled');
+    updateUI();
 });

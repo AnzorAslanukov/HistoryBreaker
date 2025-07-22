@@ -103,9 +103,9 @@
             <div class="ff-hours">
                 <div class="ff-hours-num-input">
                     <span id="ff-hours-exclamation">❗</span>
-                    <label id="ff-hours-main-label">Add number of hours to FF...</label>
+                    <label id="ff-hours-main-label">Add amount of time to FF...</label>
                     <div class="unit-input-group">
-                        <div class="unit-input-wrapper active" data-unit="minutes">
+                        <div class="unit-input-wrapper" data-unit="minutes">
                             <input type="text" id="ff-minutes-input" name="ff-minutes-input" placeholder="Enter minutes...">
                             <span class="unit-label">Minutes</span>
                         </div>
@@ -124,18 +124,14 @@
                 </div>
             </div>
             <div class="ff-days">
+                <span id="ff-days-exclamation">❗</span>
                 <label for="ff-days-input" id="ff-days-label">Add number of days to FF...</label>
-                <span id="ff-days-exclamation" style="display: none;">❗</span>
-                <input type="text" id="ff-days-input" name="ff-days-input" style="display: none;">
-                <span id="ff-days-warning" style="display: none;">Only enter up to 30 days</span>
+                <input type="text" id="ff-days-input" name="ff-days-input">
+                <span id="ff-days-warning">Only enter up to 30 days</span>
             </div>
             <div class="ff-suggested">
-                <label class="toggle-switch-label">FF to suggested<br>event</label>
-                <label class="switch">
-                    <input type="checkbox" id="ff-suggested-toggle">
-                    <span class="slider round"></span>
-                </label>
-                <span class="ff-special-event-label">FF to special event?</span>
+                <button id="ff-special-event-toggle">FF to<br>Special Event?</button>
+                <label id="ff-special-event-label-text"></label>
             </div>
             <div class="ff-submission">
                 <button id="fast-forward-button">Fast Forward</button>
