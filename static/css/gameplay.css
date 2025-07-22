@@ -1,10 +1,63 @@
+:root {
+    /* Light mode colors */
+    --bg-color: #f0f0f0;
+    --container-bg: #E0E0E0;
+    --widget-bg: #FFF8E1;
+    --border-color: #333;
+    --text-color: #333;
+    --input-border: #ccc;
+    --button-bg: #eee;
+    --button-hover: #ddd;
+    --green-color: #4CAF50;
+    --green-hover: #45a049;
+    --green-light: #dcf8c6;
+    --blue-light: #ADD8E6;
+    --submission-blue: #007bff;
+    --submission-blue-hover: #0056b3;
+    --warning-red: red;
+    --disabled-color: #666;
+    --disabled-bg: #cccccc;
+    --dropdown-bg: #f9f9f9;
+    --chat-input-bg: #f0f0f0;
+    --unit-disabled-bg: #f5f5f5;
+    --unit-disabled-text: #999;
+    --timestamp-color: black;
+}
+
+body.dark-mode {
+    /* Dark mode colors - Dark Reader inspired */
+    --bg-color: #0f0f0f;
+    --container-bg: #1f1f1f;
+    --widget-bg: #00071e;
+    --border-color: #cccccc;
+    --text-color: #cccccc;
+    --input-border: #333333;
+    --button-bg: #111111;
+    --button-hover: #222222;
+    --green-color: #b04f51;
+    --green-hover: #ba5b56;
+    --green-light: #270739;
+    --blue-light: #522419;
+    --submission-blue: #ff8400;
+    --submission-blue-hover: #ffa94c;
+    --warning-red: #ff0000;
+    --disabled-color: #999999;
+    --disabled-bg: #333333;
+    --dropdown-bg: #060606;
+    --chat-input-bg: #0f0f0f;
+    --unit-disabled-bg: #0a0a0a;
+    --unit-disabled-text: #666666;
+    --timestamp-color: #cccccc;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
     margin: 0;
-    background-color: #f0f0f0;
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease;
 }
 
 .container {
@@ -18,13 +71,18 @@ body {
 .top-widgets-bar, .chat-window, .game-controls {
     width: 75%;
     margin-bottom: 20px; /* Space between divs */
-    border: 1px solid #333; /* Just for visualization */
+    border: 1px solid var(--border-color); /* Just for visualization */
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    transition: border-color 0.3s ease;
 }
 
 .top-widgets-bar {
     height: 120px;
     padding: 10px;
+    border-radius: 15px;
+    background-color: var(--widget-bg);
+    transition: background-color 0.3s ease;
+    color: var(--text-color)
 }
 
 .grid-container {
@@ -68,6 +126,11 @@ body {
     align-items: center;
     text-align: center; /* Keep this for text alignment within the flex item */
     overflow: hidden; /* Ensure glow does not extend beyond this div */
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-left: 1px dashed #333; 
+    border-top: 1px dashed #333; 
+    border-bottom: 1px dashed #333; 
 }
 
 .grid-item-2 {
@@ -77,6 +140,7 @@ body {
     text-align: center;
     position: relative; /* For positioning the hover text container */
     overflow: hidden; /* Hide overflowing hover text */
+    border-top: 1px dashed #333;
 }
 
 .grid-item-2-left,
@@ -176,40 +240,76 @@ body {
 
 .chat-window {
     height: 520px;
-    background-color: #ffd6a5; /* Example color */
+    background-color: var(--container-bg);
     padding: 10px;
     overflow-y: auto; /* Enable scrolling for chat history */
     display: flex;
     flex-direction: column;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    transition: background-color 0.3s ease;
 }
 
 .chat-message {
     max-width: 70%;
-    padding: 8px 12px;
-    border-radius: 15px;
     margin-bottom: 10px;
     font-family: 'VT323', monospace;
     font-size: 1.1em;
     word-wrap: break-word;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.message-content {
+    padding: 8px 12px;
+    border-radius: 15px;
+    word-wrap: break-word;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.message-timestamp {
+    font-size: 0.8em;
+    color: var(--timestamp-color);
+    margin-top: 2px;
+    font-family: 'VT323', monospace;
+    transition: color 0.3s ease;
 }
 
 .user-message {
     align-self: flex-end; /* Align to the right */
-    background-color: #dcf8c6; /* Light green for user messages */
-    color: #333;
+}
+
+.user-message .message-content {
+    background-color: var(--green-light);
+    color: var(--text-color);
     border-bottom-right-radius: 2px; /* Sharpen corner for user */
+}
+
+.user-message .message-timestamp {
+    align-self: flex-end; /* Position timestamp at bottom right */
+    text-align: right;
 }
 
 .response-message {
     align-self: flex-start; /* Align to the left */
-    background-color: #e0e0e0; /* Light grey for response messages */
-    color: #333;
+}
+
+.response-message .message-content {
+    background-color: var(--blue-light);
+    color: var(--text-color);
     border-bottom-left-radius: 2px; /* Sharpen corner for response */
+}
+
+.response-message .message-timestamp {
+    align-self: flex-start; /* Position timestamp at bottom left */
+    text-align: left;
 }
 
 .game-controls {
     height: 320px;
-    background-color: #fdffb6; /* Example color */
+    background-color: var(--container-bg);
+    transition: background-color 0.3s ease;
 }
 
 #danger-indicator {
@@ -241,28 +341,32 @@ body {
     align-items: center;
     justify-content: center; /* Horizontally center content */
     gap: 10px;
-    border: 1px solid #333; /* Keep this border */
 }
 
 .ff-hours-num-input label {
     font-size: 1.1em;
-    color: #333;
+    color: var(--text-color);
+    transition: color 0.3s ease;
 }
 
 .ff-hours-num-input input[type="text"] {
     padding: 5px 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--input-border);
     border-radius: 4px;
     font-family: 'VT323', monospace;
     font-size: 1em;
     width: 100px; /* Adjust as needed */
+    background-color: var(--chat-input-bg);
+    color: var(--text-color);
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .unit-input-group {
     display: flex;
-    border: 1px solid #333; /* Border for the entire switch */
+    border: 1px solid var(--border-color); /* Border for the entire switch */
     border-radius: 5px;
     overflow: hidden;
+    transition: border-color 0.3s ease;
 }
 
 .unit-input-wrapper {
@@ -270,14 +374,14 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 5px 10px;
-    background-color: #eee;
+    background-color: var(--button-bg);
     cursor: pointer;
     transition: background-color 0.2s, opacity 0.2s;
-    border-right: 1px solid #333; /* Separator between units */
+    border-right: 1px solid var(--border-color); /* Separator between units */
 }
 
 .unit-input-wrapper:hover {
-    background-color: #ddd; /* Darken on hover */
+    background-color: var(--button-hover); /* Darken on hover */
 }
 
 .unit-input-wrapper:last-child {
@@ -293,11 +397,12 @@ body {
 
 .unit-input-wrapper .unit-label {
     font-size: 0.9em;
-    color: #333; /* Make labels black and visible by default */
+    color: var(--text-color); /* Make labels use theme color */
+    transition: color 0.3s ease;
 }
 
 .unit-input-wrapper.active {
-    background-color: #4CAF50; /* Green for active */
+    background-color: var(--green-color); /* Green for active */
     color: white;
 }
 
@@ -311,19 +416,21 @@ body {
 
 /* Remove the opacity rule for inactive wrappers - they should be fully visible */
 .unit-input-wrapper:not(.active) input[type="text"] {
-    color: #333; /* Keep text black and visible for inactive inputs */
+    color: var(--text-color); /* Keep text themed for inactive inputs */
 }
 
 .ff-hours-num-input #ff-hours-exclamation {
     font-size: 1.2em;
-    color: red;
+    color: var(--warning-red);
     visibility: hidden; /* Use visibility to reserve space */
+    transition: color 0.3s ease;
 }
 
 .ff-hours-num-input #ff-hours-warning {
     font-size: 0.9em;
-    color: #666;
+    color: var(--disabled-color);
     visibility: hidden; /* Use visibility to reserve space */
+    transition: color 0.3s ease;
 }
 
 /* Game Controls Styling */
@@ -331,46 +438,49 @@ body {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: #fdffb6; /* Example color, adjust as needed */
-    border: 1px solid #333;
+    background-color: var(--widget-bg);
     box-sizing: border-box;
     font-family: 'VT323', monospace;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    transition: background-color 0.3s ease;
 }
 
 /* FF Hours Section */
 .ff-hours {
     display: flex;
     flex-direction: column;
-    border: 1px solid #333;
 }
 
 .ff-hours-num-input {
     display: flex;
     align-items: center;
     gap: 10px;
-    border: 1px solid #333;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
 .ff-hours-num-input label {
     font-size: 1.1em;
-    color: #333;
+    color: var(--text-color);
+    transition: color 0.3s ease;
 }
 
 .ff-hours-num-input input[type="text"] {
     padding: 5px 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--input-border);
     border-radius: 4px;
     font-family: 'VT323', monospace;
     font-size: 1em;
     width: 100px; /* Adjust as needed */
+    background-color: var(--chat-input-bg);
+    color: var(--text-color);
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .ff-hours-period-selector {
     display: flex;
     gap: 10px;
-    border: 1px solid #333;
     justify-content: center; /* Horizontally center the buttons */
     padding-top: 10px;
     padding-bottom: 10px;
@@ -378,23 +488,24 @@ body {
 
 .period-button {
     padding: 8px 15px;
-    border: 1px solid #333;
+    border: 1px solid var(--border-color);
     border-radius: 5px;
-    background-color: #eee;
+    background-color: var(--button-bg);
     cursor: pointer;
     font-family: 'VT323', monospace;
     font-size: 1em;
-    transition: background-color 0.2s, border-color 0.2s;
+    color: var(--text-color);
+    transition: background-color 0.2s, border-color 0.2s, color 0.3s ease;
 }
 
 .period-button:hover {
-    background-color: #ddd;
+    background-color: var(--button-hover);
 }
 
 .period-button.selected {
-    background-color: #4CAF50; /* Green for selected */
+    background-color: var(--green-color); /* Green for selected */
     color: white;
-    border-color: #4CAF50;
+    border-color: var(--green-color);
 }
 
 /* FF Days Section */
@@ -403,36 +514,42 @@ body {
     align-items: center;
     justify-content: center; /* Horizontally center content */
     gap: 10px;
-    border: 1px solid #333;
     padding-top: 10px;
     padding-bottom: 10px; 
 }
 
 .ff-days label {
     font-size: 1.1em;
-    color: #333;
+    color: var(--text-color);
+    transition: color 0.3s ease;
     /* cursor: pointer; Removed as input is always visible */
 }
 
 .ff-days input[type="text"] {
     padding: 5px 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--input-border);
     border-radius: 4px;
     font-family: 'VT323', monospace;
     font-size: 1em;
     width: 100px; /* Adjust as needed */
+    background-color: var(--chat-input-bg);
+    color: var(--text-color);
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    border-color: var(--border-color);
 }
 
 .ff-days #ff-days-exclamation {
     font-size: 1.2em;
-    color: red;
+    color: var(--warning-red);
     display: none; /* Initially hidden */
+    transition: color 0.3s ease;
 }
 
 .ff-days #ff-days-warning {
     font-size: 0.9em;
-    color: #666;
+    color: var(--disabled-color);
     display: none; /* Initially hidden */
+    transition: color 0.3s ease;
 }
 
 .ff-days #ff-days-exclamation.show {
@@ -449,17 +566,16 @@ body {
     align-items: center;
     justify-content: center; /* Horizontally center content */
     gap: 15px;
-    border: 1px solid #333;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
 #ff-special-event-toggle {
     padding: 8px 15px;
-    border: 1px solid #333;
+    border: 1px solid var(--border-color);
     border-radius: 5px;
-    background-color: #eee; /* Default greyed out */
-    color: #333;
+    background-color: var(--button-bg); /* Default greyed out */
+    color: var(--text-color);
     cursor: pointer;
     font-family: 'VT323', monospace;
     font-size: 1em;
@@ -468,28 +584,29 @@ body {
 }
 
 #ff-special-event-toggle:hover {
-    background-color: #ddd; /* Darken on hover */
+    background-color: var(--button-hover); /* Darken on hover */
 }
 
 #ff-special-event-toggle.active {
-    background-color: #4CAF50; /* Green when active */
+    background-color: var(--green-color); /* Green when active */
     color: white;
-    border-color: #4CAF50;
+    border-color: var(--green-color);
 }
 
 #ff-special-event-label-text {
     font-size: 1.1em;
-    color: #333;
+    color: var(--text-color);
     width: 70ch; /* Fixed width of 70 characters */
     white-space: nowrap; /* Prevent text from wrapping */
     overflow: hidden; /* Hide overflow */
     text-overflow: ellipsis; /* Add ellipsis if text overflows */
+    transition: color 0.3s ease;
 }
 
 /* FF Submission Section */
 .ff-submission button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: var(--submission-blue);
     color: white;
     border: none;
     border-radius: 5px;
@@ -499,18 +616,14 @@ body {
     transition: background-color 0.2s;
 }
 
-.ff-submission {
-    border: 1px solid #333;
-}
-
 .ff-submission button:hover {
-    background-color: #0056b3;
+    background-color: var(--submission-blue-hover);
 }
 
 .ff-submission button.disabled,
 .ff-submission button:disabled {
-    background-color: #cccccc;
-    color: #666666;
+    background-color: var(--disabled-bg);
+    color: var(--disabled-color);
     cursor: not-allowed !important;
 }
 
@@ -564,23 +677,24 @@ input[type="text"].disabled {
     width: 75%; /* Same width as chat-window */
     display: flex;
     padding: 10px;
-    border: 1px solid #333;
+    border: 1px solid var(--border-color);
     box-sizing: border-box;
     margin-top: -20px; /* Overlap with chat-window's margin-bottom */
     margin-bottom: 20px;
-    background-color: #f0f0f0; /* Match body background or choose a suitable color */
+    background-color: var(--chat-input-bg);
     position: sticky; /* Make it stick to the bottom */
     bottom: 20px; /* Adjust as needed to float above game-controls */
     z-index: 1; /* Ensure it's above other content if needed */
     min-height: 75px;
     font-family: 'VT323', monospace;
     font-size: 1.2em;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 #chat-input {
     flex-grow: 1;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--input-border);
     border-radius: 4px;
     font-family: 'VT323', monospace;
     font-size: 1em;
@@ -588,12 +702,15 @@ input[type="text"].disabled {
     max-height: 138px; /* Approximately 5 lines of text + padding/border */
     overflow-y: auto; /* Add scrollbar when content exceeds max-height */
     resize: vertical; /* Allow vertical resizing, but not horizontal */
+    background-color: var(--chat-input-bg);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 #send-button {
     padding: 8px 15px;
     margin-left: 10px;
-    background-color: #4CAF50;
+    background-color: var(--green-color);
     color: white;
     border: none;
     border-radius: 4px;
@@ -602,10 +719,11 @@ input[type="text"].disabled {
     font-size: 1em;
     min-height: 55px;
     max-height: 55px;
+    transition: background-color 0.3s ease;
 }
 
 #send-button:hover {
-    background-color: #45a049;
+    background-color: var(--green-hover);
 }
 
 .grid-item-5,
@@ -690,20 +808,21 @@ input[type="text"].disabled {
 .grid-item-15-dropdown {
     display: none; /* Hidden by default */
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: var(--dropdown-bg);
     min-width: 120px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 10; /* Increased z-index to ensure it's on top */
     top: 100%; /* Position below the grid-item-15 */
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Adjust for centering */
-    border: 1px solid #000;
+    border: 1px solid var(--border-color);
     font-family: 'VT323', monospace;
     flex-direction: column; /* Stack items vertically */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .grid-item-15-dropdown button {
-    color: black;
+    color: var(--text-color);
     padding: 6px 8px;
     text-decoration: none;
     display: block;
@@ -715,6 +834,7 @@ input[type="text"].disabled {
     font-family: 'VT323', monospace;
     font-size: 1em;
     text-align: center;
+    transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 .grid-item-15:hover {
@@ -722,7 +842,12 @@ input[type="text"].disabled {
 }
 
 .grid-item-15-dropdown button:hover {
-    background-color: #ddd;
+    background-color: var(--button-hover);
+}
+
+.grid-item-15-dropdown button.active {
+    background-color: var(--green-color);
+    color: white;
 }
 
 .grid-item-15:hover .grid-item-15-dropdown {
@@ -770,6 +895,9 @@ input[type="text"].disabled {
 .grid-item-3 {
     position: relative; /* To position the glow relative to this div */
     overflow: hidden; /* Ensure glow does not extend beyond this div */
+    border-top-right-radius: 10px;
+    border-top: 1px dashed #333; 
+    border-right: 1px dashed #333;
 }
 
 .grid-item-3:hover .hover-text-container-3 {
@@ -791,6 +919,7 @@ input[type="text"].disabled {
     box-sizing: border-box;
     padding: 10px;
     z-index: 2; /* Ensure it's above other content in grid-item-3 */
+    border-top-right-radius: 10px;
 }
 
 #hover-text-3 {
@@ -835,6 +964,7 @@ input[type="text"].disabled {
     text-align: center;
     position: relative; /* To position the glow relative to this div */
     overflow: hidden; /* Ensure glow does not extend beyond this div */
+    border-bottom: 1px dashed #333;
 }
 
 .grid-item-10-left,
@@ -873,6 +1003,9 @@ input[type="text"].disabled {
     text-align: center;
     position: relative; /* To position the glow relative to this div */
     overflow: hidden; /* Ensure glow does not extend beyond this div */
+    border-bottom-right-radius: 10px;
+    border-right: 1px dashed #333;
+    border-bottom: 1px dashed #333;
 }
 
 .grid-item-11-left,

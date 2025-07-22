@@ -371,19 +371,96 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightModeButton = document.getElementById("light-mode-button");
     const autoModeButton = document.getElementById("auto-mode-button");
 
+    // Dark mode functionality
+    function enableDarkMode() {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'enabled');
+        console.log("Dark mode enabled");
+    }
+
+    function disableDarkMode() {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'disabled');
+        console.log("Light mode enabled");
+    }
+
+    // Auto mode functionality
+    function enableAutoMode() {
+        autoModeButton.classList.add('active');
+        darkModeButton.disabled = true;
+        lightModeButton.disabled = true;
+        darkModeButton.style.opacity = '0.5';
+        lightModeButton.style.opacity = '0.5';
+        darkModeButton.style.cursor = 'not-allowed';
+        lightModeButton.style.cursor = 'not-allowed';
+        localStorage.setItem('autoMode', 'enabled');
+        
+        // Detect browser preference and apply it
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            enableDarkMode();
+        } else {
+            disableDarkMode();
+        }
+        console.log("Auto mode enabled");
+    }
+
+    function disableAutoMode() {
+        autoModeButton.classList.remove('active');
+        darkModeButton.disabled = false;
+        lightModeButton.disabled = false;
+        darkModeButton.style.opacity = '1';
+        lightModeButton.style.opacity = '1';
+        darkModeButton.style.cursor = 'pointer';
+        lightModeButton.style.cursor = 'pointer';
+        localStorage.setItem('autoMode', 'disabled');
+        console.log("Auto mode disabled");
+    }
+
+    // Check for saved preferences on page load
+    const autoMode = localStorage.getItem('autoMode');
+    const darkMode = localStorage.getItem('darkMode');
+    
+    if (autoMode === 'enabled') {
+        enableAutoMode();
+    } else {
+        // Only apply manual dark mode setting if auto mode is not enabled
+        if (darkMode === 'enabled') {
+            enableDarkMode();
+        }
+    }
+
+    // Listen for browser theme changes when auto mode is active
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (localStorage.getItem('autoMode') === 'enabled') {
+                if (e.matches) {
+                    enableDarkMode();
+                } else {
+                    disableDarkMode();
+                }
+            }
+        });
+    }
+
     darkModeButton.addEventListener("click", () => {
+        if (darkModeButton.disabled) return;
         console.log("Dark Mode button clicked!");
-        // Add dark mode logic here
+        enableDarkMode();
     });
 
     lightModeButton.addEventListener("click", () => {
+        if (lightModeButton.disabled) return;
         console.log("Light Mode button clicked!");
-        // Add light mode logic here
+        disableDarkMode();
     });
 
     autoModeButton.addEventListener("click", () => {
         console.log("Auto Mode button clicked!");
-        // Add auto mode logic here
+        if (autoModeButton.classList.contains('active')) {
+            disableAutoMode();
+        } else {
+            enableAutoMode();
+        }
     });
 
     const chatInput = document.getElementById("chat-input");
@@ -394,7 +471,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const messageElement = document.createElement("div");
         messageElement.classList.add("chat-message");
         messageElement.classList.add(`${type}-message`);
-        messageElement.textContent = message;
+        
+        // Create message content container
+        const messageContent = document.createElement("div");
+        messageContent.classList.add("message-content");
+        messageContent.textContent = message;
+        
+        // Create timestamp
+        const timestamp = document.createElement("div");
+        timestamp.classList.add("message-timestamp");
+        
+        // Format timestamp as HH:MM MM/DD/YYYY
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const month = (now.getMonth() + 1).toString().padStart(2, '0');
+        const day = now.getDate().toString().padStart(2, '0');
+        const year = now.getFullYear();
+        
+        timestamp.textContent = `${hours}:${minutes} ${month}/${day}/${year}`;
+        
+        // Append content and timestamp to message element
+        messageElement.appendChild(messageContent);
+        messageElement.appendChild(timestamp);
+        
         chatWindow.appendChild(messageElement);
         // Scroll to the bottom of the chat window
         chatWindow.scrollTop = chatWindow.scrollHeight;
