@@ -406,14 +406,6 @@ body {
     color: white;
 }
 
-.unit-input-wrapper.active input[type="text"] {
-    color: white;
-}
-
-.unit-input-wrapper.active .unit-label {
-    color: white;
-}
-
 /* Remove the opacity rule for inactive wrappers - they should be fully visible */
 .unit-input-wrapper:not(.active) input[type="text"] {
     color: var(--text-color); /* Keep text themed for inactive inputs */
