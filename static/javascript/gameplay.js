@@ -1,29 +1,4 @@
-const indicator = document.getElementById("danger-indicator");
-const glow      = document.getElementById("danger-glow");
-const emoji     = document.getElementById("danger-emoji");
-const label     = document.getElementById("danger-label");
-const timeOfDayEmoji = document.getElementById("time-of-day-emoji");
-const timeOfDayGlow = document.getElementById("time-of-day-glow");
-const gridItem2 = document.querySelector(".grid-item-2");
-const hoverText = document.getElementById("hover-text");
-const gridItem3Right = document.querySelector(".grid-item-3-right");
-const environmentGlow = document.getElementById("environment-glow");
-const gridItem3 = document.querySelector(".grid-item-3");
-const hoverText3 = document.getElementById("hover-text-3");
-const locationTerrainGlow = document.getElementById("location-terrain-glow");
-const gridItem10Left = document.querySelector(".grid-item-10-left");
-const gridItem10Right = document.querySelector(".grid-item-10-right");
-const gridItem10 = document.querySelector(".grid-item-10");
-const hoverText10 = document.getElementById("hover-text-10");
-const temperatureEmoji = document.getElementById("temperature-emoji");
-const temperatureGlow = document.getElementById("temperature-glow");
-const gridItem11 = document.querySelector(".grid-item-11");
-const hoverText11 = document.getElementById("hover-text-11");
-const gridItem5Right = document.querySelector(".grid-item-5-right");
-const gridItem13Right = document.querySelector(".grid-item-13-right");
-const gridItem6Right = document.querySelector(".grid-item-6-right");
-const gridItem14Right = document.querySelector(".grid-item-14-right");
-
+// Game State Constants
 const dangerIndicatorcolors = [
   "#4caf50",  // Tier 0  (Peaceful)
   "#ffc107",  // Tier 1  (Cautious)
@@ -210,106 +185,353 @@ const temperatureColors = [
   "#35b2d0"
 ];
 
-// For testing purposes, cycle through indices on page refresh
-document.addEventListener('DOMContentLoaded', () => {
-    // Keep all the existing setup code for grid items 1-15, chat, etc.
-    // Danger Indicator (grid-item-1)
-    let dangerIndex = sessionStorage.getItem('dangerIndex');
-    if (dangerIndex === null || parseInt(dangerIndex) >= dangerIndicatorEmojis.length - 1) {
-        dangerIndex = 0;
-    } else {
-        dangerIndex = parseInt(dangerIndex) + 1;
+// DOM State Controller Class
+class GameStateController {
+    constructor() {
+        // Cache DOM elements
+        this.elements = {
+            // Danger indicator elements
+            dangerEmoji: document.getElementById("danger-emoji"),
+            dangerLabel: document.getElementById("danger-label"),
+            dangerGlow: document.getElementById("danger-glow"),
+            
+            // Time of day elements
+            timeOfDayEmoji: document.getElementById("time-of-day-emoji"),
+            timeOfDayGlow: document.getElementById("time-of-day-glow"),
+            gridItem2: document.querySelector(".grid-item-2"),
+            hoverText: document.getElementById("hover-text"),
+            
+            // Environment elements
+            gridItem3Right: document.querySelector(".grid-item-3-right"),
+            environmentGlow: document.getElementById("environment-glow"),
+            gridItem3: document.querySelector(".grid-item-3"),
+            hoverText3: document.getElementById("hover-text-3"),
+            
+            // Location/terrain elements
+            locationTerrainGlow: document.getElementById("location-terrain-glow"),
+            gridItem10Right: document.querySelector(".grid-item-10-right"),
+            gridItem10: document.querySelector(".grid-item-10"),
+            hoverText10: document.getElementById("hover-text-10"),
+            
+            // Temperature elements
+            temperatureEmoji: document.getElementById("temperature-emoji"),
+            temperatureGlow: document.getElementById("temperature-glow"),
+            gridItem11: document.querySelector(".grid-item-11"),
+            hoverText11: document.getElementById("hover-text-11"),
+            
+            // TESA elements
+            perceivedTime: document.getElementById("perceived-time"),
+            temporalDrift: document.getElementById("temporal-drift"),
+            
+            // Other UI elements
+            gridItem5Right: document.querySelector(".grid-item-5-right"),
+            gridItem13Right: document.querySelector(".grid-item-13-right"),
+            gridItem6Right: document.querySelector(".grid-item-6-right"),
+            gridItem14Right: document.querySelector(".grid-item-14-right")
+        };
+        
+        // Organize constants
+        this.constants = {
+            danger: {
+                colors: dangerIndicatorcolors,
+                emojis: dangerIndicatorEmojis,
+                labels: dangerIndicatorLabels
+            },
+            timeOfDay: {
+                labels: timeOfDayLabels,
+                symbols: timeOfDaySymbols,
+                colors: timeOfDayColors
+            },
+            environment: {
+                conditions: environmentAccuracyModConditions,
+                accuracyImpact: environmentAccuracyModAccuracyImpact,
+                symbols: environmentAccuracyModSymbols,
+                colors: environmentAccuracyModColors
+            },
+            location: {
+                labels: locationTerrainLabels,
+                symbols: locationTerrainSymbols,
+                colors: locationTerrainColors
+            },
+            temperature: {
+                names: temperatureTierNames,
+                symbols: temperatureSymbols,
+                colors: temperatureColors
+            }
+        };
+        
+        this.setupHoverEvents();
     }
-    sessionStorage.setItem('dangerIndex', dangerIndex);
-    emoji.textContent = dangerIndicatorEmojis[dangerIndex];
-    label.textContent = dangerIndicatorLabels[dangerIndex];
-    glow.style.setProperty('--glow-color', dangerIndicatorcolors[dangerIndex]);
     
-    // Time of Day (grid-item-2)
-    let timeOfDayIndex = sessionStorage.getItem('timeOfDayIndex');
-    if (timeOfDayIndex === null || parseInt(timeOfDayIndex) >= timeOfDaySymbols.length - 1) {
-        timeOfDayIndex = 0;
-    } else {
-        timeOfDayIndex = parseInt(timeOfDayIndex) + 1;
+    // Danger Indicator Methods
+    setDangerIndex(index) {
+        if (index < 0 || index >= this.constants.danger.emojis.length) {
+            console.error(`Invalid danger index: ${index}`);
+            return false;
+        }
+        
+        this.elements.dangerEmoji.textContent = this.constants.danger.emojis[index];
+        this.elements.dangerLabel.textContent = this.constants.danger.labels[index];
+        this.elements.dangerGlow.style.setProperty('--glow-color', this.constants.danger.colors[index]);
+        sessionStorage.setItem('dangerIndex', index);
+        return true;
     }
-    sessionStorage.setItem('timeOfDayIndex', timeOfDayIndex);
-    timeOfDayEmoji.textContent = timeOfDaySymbols[timeOfDayIndex];
-    timeOfDayGlow.style.setProperty('--time-glow-color', timeOfDayColors[timeOfDayIndex]);
-
-    // Environment Accuracy Modifier (grid-item-3)
-    let environmentAccuracyModIndex = sessionStorage.getItem('envModIndex');
-    if (environmentAccuracyModIndex === null || parseInt(environmentAccuracyModIndex) >= environmentAccuracyModSymbols.length - 1) {
-        environmentAccuracyModIndex = 0;
-    } else {
-        environmentAccuracyModIndex = parseInt(environmentAccuracyModIndex) + 1;
+    
+    getDangerIndex() {
+        return parseInt(sessionStorage.getItem('dangerIndex')) || 0;
     }
-    sessionStorage.setItem('envModIndex', environmentAccuracyModIndex);
-    gridItem3Right.textContent = environmentAccuracyModSymbols[environmentAccuracyModIndex];
-    environmentGlow.style.setProperty('--environment-glow-color', environmentAccuracyModColors[environmentAccuracyModIndex]);
-
-    // Location/Terrain Category (grid-item-10)
-    let locationTerrainIndex = sessionStorage.getItem('locationTerrainIndex');
-    if (locationTerrainIndex === null || parseInt(locationTerrainIndex) >= locationTerrainSymbols.length - 1) {
-        locationTerrainIndex = 0;
-    } else {
-        locationTerrainIndex = parseInt(locationTerrainIndex) + 1;
+    
+    getDangerData() {
+        const index = this.getDangerIndex();
+        return {
+            index: index,
+            emoji: this.constants.danger.emojis[index],
+            label: this.constants.danger.labels[index],
+            color: this.constants.danger.colors[index]
+        };
     }
-    sessionStorage.setItem('locationTerrainIndex', locationTerrainIndex);
-    gridItem10Right.textContent = locationTerrainSymbols[locationTerrainIndex];
-    locationTerrainGlow.style.setProperty('--location-terrain-glow-color', locationTerrainColors[locationTerrainIndex]);
-
-    // Temperature (grid-item-11)
-    let temperatureIndex = sessionStorage.getItem('temperatureIndex');
-    if (temperatureIndex === null || parseInt(temperatureIndex) >= temperatureSymbols.length - 1) {
-        temperatureIndex = 0;
-    } else {
-        temperatureIndex = parseInt(temperatureIndex) + 1;
+    
+    // Time of Day Methods
+    setTimeOfDayIndex(index) {
+        if (index < 0 || index >= this.constants.timeOfDay.symbols.length) {
+            console.error(`Invalid time of day index: ${index}`);
+            return false;
+        }
+        
+        this.elements.timeOfDayEmoji.textContent = this.constants.timeOfDay.symbols[index];
+        this.elements.timeOfDayGlow.style.setProperty('--time-glow-color', this.constants.timeOfDay.colors[index]);
+        sessionStorage.setItem('timeOfDayIndex', index);
+        return true;
     }
-    sessionStorage.setItem('temperatureIndex', temperatureIndex);
-    temperatureEmoji.textContent = temperatureSymbols[temperatureIndex];
-    temperatureGlow.style.setProperty('--temperature-glow-color', temperatureColors[temperatureIndex]);
-
-    // Set hover text for grid-item-2
-    gridItem2.addEventListener('mouseover', () => {
-        hoverText.textContent = timeOfDayLabels[timeOfDayIndex];
-    });
-
-    gridItem2.addEventListener('mouseout', () => {
-        hoverText.textContent = '';
-    });
-
-    // Set hover text for grid-item-3
-    gridItem3.addEventListener('mouseover', () => {
-        hoverText3.innerHTML = environmentAccuracyModConditions[environmentAccuracyModIndex] + "<br>" + environmentAccuracyModAccuracyImpact[environmentAccuracyModIndex];
-    });
-
-    gridItem3.addEventListener('mouseout', () => {
-        hoverText3.textContent = '';
-    });
-
-    // Set hover text for grid-item-10
-    gridItem10.addEventListener('mouseover', () => {
-        hoverText10.textContent = locationTerrainLabels[locationTerrainIndex];
-    });
-
-    gridItem10.addEventListener('mouseout', () => {
-        hoverText10.textContent = '';
-    });
-
-    // Set hover text for grid-item-11
-    gridItem11.addEventListener('mouseover', () => {
-        hoverText11.textContent = temperatureTierNames[temperatureIndex];
-    });
-
-    gridItem11.addEventListener('mouseout', () => {
-        hoverText11.textContent = '';
-    });
-
-    // Perceived Time and Temporal Drift (grid-item-4)
-    const perceivedTimeElement = document.getElementById("perceived-time");
-    const temporalDriftElement = document.getElementById("temporal-drift");
-
-    function getRandomTime() {
+    
+    getTimeOfDayIndex() {
+        return parseInt(sessionStorage.getItem('timeOfDayIndex')) || 0;
+    }
+    
+    getTimeOfDayData() {
+        const index = this.getTimeOfDayIndex();
+        return {
+            index: index,
+            label: this.constants.timeOfDay.labels[index],
+            symbol: this.constants.timeOfDay.symbols[index],
+            color: this.constants.timeOfDay.colors[index]
+        };
+    }
+    
+    // Environment Methods
+    setEnvironmentIndex(index) {
+        if (index < 0 || index >= this.constants.environment.symbols.length) {
+            console.error(`Invalid environment index: ${index}`);
+            return false;
+        }
+        
+        this.elements.gridItem3Right.textContent = this.constants.environment.symbols[index];
+        this.elements.environmentGlow.style.setProperty('--environment-glow-color', this.constants.environment.colors[index]);
+        sessionStorage.setItem('envModIndex', index);
+        return true;
+    }
+    
+    getEnvironmentIndex() {
+        return parseInt(sessionStorage.getItem('envModIndex')) || 0;
+    }
+    
+    getEnvironmentData() {
+        const index = this.getEnvironmentIndex();
+        return {
+            index: index,
+            condition: this.constants.environment.conditions[index],
+            accuracyImpact: this.constants.environment.accuracyImpact[index],
+            symbol: this.constants.environment.symbols[index],
+            color: this.constants.environment.colors[index]
+        };
+    }
+    
+    // Location/Terrain Methods
+    setLocationIndex(index) {
+        if (index < 0 || index >= this.constants.location.symbols.length) {
+            console.error(`Invalid location index: ${index}`);
+            return false;
+        }
+        
+        this.elements.gridItem10Right.textContent = this.constants.location.symbols[index];
+        this.elements.locationTerrainGlow.style.setProperty('--location-terrain-glow-color', this.constants.location.colors[index]);
+        sessionStorage.setItem('locationTerrainIndex', index);
+        return true;
+    }
+    
+    getLocationIndex() {
+        return parseInt(sessionStorage.getItem('locationTerrainIndex')) || 0;
+    }
+    
+    getLocationData() {
+        const index = this.getLocationIndex();
+        return {
+            index: index,
+            label: this.constants.location.labels[index],
+            symbol: this.constants.location.symbols[index],
+            color: this.constants.location.colors[index]
+        };
+    }
+    
+    // Temperature Methods
+    setTemperatureIndex(index) {
+        if (index < 0 || index >= this.constants.temperature.symbols.length) {
+            console.error(`Invalid temperature index: ${index}`);
+            return false;
+        }
+        
+        this.elements.temperatureEmoji.textContent = this.constants.temperature.symbols[index];
+        this.elements.temperatureGlow.style.setProperty('--temperature-glow-color', this.constants.temperature.colors[index]);
+        sessionStorage.setItem('temperatureIndex', index);
+        return true;
+    }
+    
+    getTemperatureIndex() {
+        return parseInt(sessionStorage.getItem('temperatureIndex')) || 0;
+    }
+    
+    getTemperatureData() {
+        const index = this.getTemperatureIndex();
+        return {
+            index: index,
+            name: this.constants.temperature.names[index],
+            symbol: this.constants.temperature.symbols[index],
+            color: this.constants.temperature.colors[index]
+        };
+    }
+    
+    // TESA Methods
+    setPerceivedTime(timeString) {
+        this.elements.perceivedTime.textContent = timeString;
+        sessionStorage.setItem('perceivedTime', timeString);
+        return true;
+    }
+    
+    getPerceivedTime() {
+        return sessionStorage.getItem('perceivedTime') || this.elements.perceivedTime.textContent;
+    }
+    
+    setTemporalDrift(driftString) {
+        this.elements.temporalDrift.textContent = driftString;
+        sessionStorage.setItem('temporalDrift', driftString);
+        return true;
+    }
+    
+    getTemporalDrift() {
+        return sessionStorage.getItem('temporalDrift') || this.elements.temporalDrift.textContent;
+    }
+    
+    setTESAData(perceivedTime, temporalDrift) {
+        this.setPerceivedTime(perceivedTime);
+        this.setTemporalDrift(temporalDrift);
+        return true;
+    }
+    
+    getTESAData() {
+        return {
+            perceivedTime: this.getPerceivedTime(),
+            temporalDrift: this.getTemporalDrift()
+        };
+    }
+    
+    // Batch Operations
+    updateAllNodes(nodeData) {
+        let success = true;
+        
+        if (nodeData.danger !== undefined) {
+            success &= this.setDangerIndex(nodeData.danger);
+        }
+        if (nodeData.timeOfDay !== undefined) {
+            success &= this.setTimeOfDayIndex(nodeData.timeOfDay);
+        }
+        if (nodeData.environment !== undefined) {
+            success &= this.setEnvironmentIndex(nodeData.environment);
+        }
+        if (nodeData.location !== undefined) {
+            success &= this.setLocationIndex(nodeData.location);
+        }
+        if (nodeData.temperature !== undefined) {
+            success &= this.setTemperatureIndex(nodeData.temperature);
+        }
+        if (nodeData.tesa) {
+            if (nodeData.tesa.perceivedTime !== undefined) {
+                success &= this.setPerceivedTime(nodeData.tesa.perceivedTime);
+            }
+            if (nodeData.tesa.temporalDrift !== undefined) {
+                success &= this.setTemporalDrift(nodeData.tesa.temporalDrift);
+            }
+        }
+        
+        return success;
+    }
+    
+    getAllNodeData() {
+        return {
+            danger: this.getDangerData(),
+            timeOfDay: this.getTimeOfDayData(),
+            environment: this.getEnvironmentData(),
+            location: this.getLocationData(),
+            temperature: this.getTemperatureData(),
+            tesa: this.getTESAData()
+        };
+    }
+    
+    resetAllNodes() {
+        this.setDangerIndex(0);
+        this.setTimeOfDayIndex(0);
+        this.setEnvironmentIndex(0);
+        this.setLocationIndex(0);
+        this.setTemperatureIndex(0);
+        this.setPerceivedTime("0.0d");
+        this.setTemporalDrift("±0.0d");
+        return true;
+    }
+    
+    // Setup hover events
+    setupHoverEvents() {
+        // Time of day hover
+        this.elements.gridItem2.addEventListener('mouseover', () => {
+            const timeData = this.getTimeOfDayData();
+            this.elements.hoverText.textContent = timeData.label;
+        });
+        
+        this.elements.gridItem2.addEventListener('mouseout', () => {
+            this.elements.hoverText.textContent = '';
+        });
+        
+        // Environment hover
+        this.elements.gridItem3.addEventListener('mouseover', () => {
+            const envData = this.getEnvironmentData();
+            this.elements.hoverText3.innerHTML = envData.condition + "<br>" + envData.accuracyImpact;
+        });
+        
+        this.elements.gridItem3.addEventListener('mouseout', () => {
+            this.elements.hoverText3.textContent = '';
+        });
+        
+        // Location hover
+        this.elements.gridItem10.addEventListener('mouseover', () => {
+            const locationData = this.getLocationData();
+            this.elements.hoverText10.textContent = locationData.label;
+        });
+        
+        this.elements.gridItem10.addEventListener('mouseout', () => {
+            this.elements.hoverText10.textContent = '';
+        });
+        
+        // Temperature hover
+        this.elements.gridItem11.addEventListener('mouseover', () => {
+            const tempData = this.getTemperatureData();
+            this.elements.hoverText11.textContent = tempData.name;
+        });
+        
+        this.elements.gridItem11.addEventListener('mouseout', () => {
+            this.elements.hoverText11.textContent = '';
+        });
+    }
+    
+    // Utility methods for random generation (for testing)
+    generateRandomTime() {
         const units = [
             { name: "m", max: 60 }, // minutes
             { name: "h", max: 24 }, // hours
@@ -322,8 +544,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const value = (Math.random() * unit.max).toFixed(1);
         return `${value}${unit.name}`;
     }
-
-    function getRandomTemporalDrift() {
+    
+    generateRandomTemporalDrift() {
         const units = [
             { name: "m", max: 60 }, // minutes
             { name: "h", max: 24 }, // hours
@@ -336,21 +558,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const value = (Math.random() * unit.max).toFixed(1);
         return `±${value}${unit.name}`;
     }
-
-    perceivedTimeElement.textContent = getRandomTime();
-    temporalDriftElement.textContent = getRandomTemporalDrift();
-
-    function generateRandomDollarAmount() {
+    
+    generateRandomDollarAmount() {
         const min = 1.00;
         const max = 20.00;
         const randomValue = Math.random() * (max - min) + min;
         return randomValue.toFixed(2);
     }
-
-    gridItem5Right.textContent = `$${generateRandomDollarAmount()}`;
-    gridItem13Right.textContent = `$${generateRandomDollarAmount()}`;
-
-    function generateRandomTokenAmount() {
+    
+    generateRandomTokenAmount() {
         const min = 1000; // 1K
         const max = 2000000; // 2M
         const randomValue = Math.random() * (max - min) + min;
@@ -362,9 +578,74 @@ document.addEventListener('DOMContentLoaded', () => {
             return randomValue.toFixed(2);
         }
     }
+}
 
-    gridItem6Right.textContent = generateRandomTokenAmount();
-    gridItem14Right.textContent = generateRandomTokenAmount();
+// Initialize the DOM State Controller and make it globally accessible
+let gameState;
+
+// For testing purposes, cycle through indices on page refresh
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize the GameStateController
+    gameState = new GameStateController();
+    
+    // Make it globally accessible
+    window.HistoryBreakerState = gameState;
+    
+    // For testing purposes, cycle through indices on page refresh
+    // Danger Indicator (grid-item-1)
+    let dangerIndex = sessionStorage.getItem('dangerIndex');
+    if (dangerIndex === null || parseInt(dangerIndex) >= dangerIndicatorEmojis.length - 1) {
+        dangerIndex = 0;
+    } else {
+        dangerIndex = parseInt(dangerIndex) + 1;
+    }
+    gameState.setDangerIndex(dangerIndex);
+    
+    // Time of Day (grid-item-2)
+    let timeOfDayIndex = sessionStorage.getItem('timeOfDayIndex');
+    if (timeOfDayIndex === null || parseInt(timeOfDayIndex) >= timeOfDaySymbols.length - 1) {
+        timeOfDayIndex = 0;
+    } else {
+        timeOfDayIndex = parseInt(timeOfDayIndex) + 1;
+    }
+    gameState.setTimeOfDayIndex(timeOfDayIndex);
+
+    // Environment Accuracy Modifier (grid-item-3)
+    let environmentAccuracyModIndex = sessionStorage.getItem('envModIndex');
+    if (environmentAccuracyModIndex === null || parseInt(environmentAccuracyModIndex) >= environmentAccuracyModSymbols.length - 1) {
+        environmentAccuracyModIndex = 0;
+    } else {
+        environmentAccuracyModIndex = parseInt(environmentAccuracyModIndex) + 1;
+    }
+    gameState.setEnvironmentIndex(environmentAccuracyModIndex);
+
+    // Location/Terrain Category (grid-item-10)
+    let locationTerrainIndex = sessionStorage.getItem('locationTerrainIndex');
+    if (locationTerrainIndex === null || parseInt(locationTerrainIndex) >= locationTerrainSymbols.length - 1) {
+        locationTerrainIndex = 0;
+    } else {
+        locationTerrainIndex = parseInt(locationTerrainIndex) + 1;
+    }
+    gameState.setLocationIndex(locationTerrainIndex);
+
+    // Temperature (grid-item-11)
+    let temperatureIndex = sessionStorage.getItem('temperatureIndex');
+    if (temperatureIndex === null || parseInt(temperatureIndex) >= temperatureSymbols.length - 1) {
+        temperatureIndex = 0;
+    } else {
+        temperatureIndex = parseInt(temperatureIndex) + 1;
+    }
+    gameState.setTemperatureIndex(temperatureIndex);
+
+    // Perceived Time and Temporal Drift (grid-item-4) - using controller methods
+    gameState.setPerceivedTime(gameState.generateRandomTime());
+    gameState.setTemporalDrift(gameState.generateRandomTemporalDrift());
+
+    // Update other UI elements using controller methods
+    gameState.elements.gridItem5Right.textContent = `$${gameState.generateRandomDollarAmount()}`;
+    gameState.elements.gridItem13Right.textContent = `$${gameState.generateRandomDollarAmount()}`;
+    gameState.elements.gridItem6Right.textContent = gameState.generateRandomTokenAmount();
+    gameState.elements.gridItem14Right.textContent = gameState.generateRandomTokenAmount();
 
     // Handle Dark/Light Mode buttons (grid-item-15)
     const darkModeButton = document.getElementById("dark-mode-button");
