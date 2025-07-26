@@ -227,7 +227,11 @@ class GameStateController {
             gridItem5Right: document.querySelector(".grid-item-5-right"),
             gridItem13Right: document.querySelector(".grid-item-13-right"),
             gridItem6Right: document.querySelector(".grid-item-6-right"),
-            gridItem14Right: document.querySelector(".grid-item-14-right")
+            gridItem14Right: document.querySelector(".grid-item-14-right"),
+            
+            // Chat elements
+            chatInput: document.getElementById("chat-input"),
+            chatWindow: document.querySelector(".chat-window")
         };
         
         // Organize constants
@@ -578,6 +582,60 @@ class GameStateController {
             return randomValue.toFixed(2);
         }
     }
+
+    // Chat Input Methods
+    setChatInput(message) {
+        this.elements.chatInput.value = message;
+        this.elements.chatInput.style.height = 'auto'; // Reset height to recalculate
+        this.elements.chatInput.style.height = this.elements.chatInput.scrollHeight + 'px'; // Set height to scrollHeight
+        return true;
+    }
+
+    getChatInput() {
+        return this.elements.chatInput.value;
+    }
+
+    // Chat Window Methods
+    _addMessageToChatWindow(message, type, timestamp = new Date()) {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("chat-message");
+        messageElement.classList.add(`${type}-message`);
+        
+        // Create message content container
+        const messageContent = document.createElement("div");
+        messageContent.classList.add("message-content");
+        messageContent.textContent = message;
+        
+        // Create timestamp
+        const timestampElement = document.createElement("div");
+        timestampElement.classList.add("message-timestamp");
+        
+        // Format timestamp as HH:MM MM/DD/YYYY
+        const hours = timestamp.getHours().toString().padStart(2, '0');
+        const minutes = timestamp.getMinutes().toString().padStart(2, '0');
+        const month = (timestamp.getMonth() + 1).toString().padStart(2, '0');
+        const day = timestamp.getDate().toString().padStart(2, '0');
+        const year = timestamp.getFullYear();
+        
+        timestampElement.textContent = `${hours}:${minutes} ${month}/${day}/${year}`;
+        
+        // Append content and timestamp to message element
+        messageElement.appendChild(messageContent);
+        messageElement.appendChild(timestampElement);
+        
+        this.elements.chatWindow.appendChild(messageElement);
+        // Scroll to the bottom of the chat window
+        this.elements.chatWindow.scrollTop = this.elements.chatWindow.scrollHeight;
+        return true;
+    }
+
+    addMessageAsUser(message, timestamp = new Date()) {
+        return this._addMessageToChatWindow(message, "user", timestamp);
+    }
+
+    addMessageAsResponse(message, timestamp = new Date()) {
+        return this._addMessageToChatWindow(message, "response", timestamp);
+    }
 }
 
 // Initialize the DOM State Controller and make it globally accessible
@@ -744,60 +802,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const chatInput = document.getElementById("chat-input");
     const sendButton = document.getElementById("send-button");
-    const chatWindow = document.querySelector(".chat-window");
-
-    function addMessageToChatWindow(message, type) {
-        const messageElement = document.createElement("div");
-        messageElement.classList.add("chat-message");
-        messageElement.classList.add(`${type}-message`);
-        
-        // Create message content container
-        const messageContent = document.createElement("div");
-        messageContent.classList.add("message-content");
-        messageContent.textContent = message;
-        
-        // Create timestamp
-        const timestamp = document.createElement("div");
-        timestamp.classList.add("message-timestamp");
-        
-        // Format timestamp as HH:MM MM/DD/YYYY
-        const now = new Date();
-        const hours = now.getHours().toString().padStart(2, '0');
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        const month = (now.getMonth() + 1).toString().padStart(2, '0');
-        const day = now.getDate().toString().padStart(2, '0');
-        const year = now.getFullYear();
-        
-        timestamp.textContent = `${hours}:${minutes} ${month}/${day}/${year}`;
-        
-        // Append content and timestamp to message element
-        messageElement.appendChild(messageContent);
-        messageElement.appendChild(timestamp);
-        
-        chatWindow.appendChild(messageElement);
-        // Scroll to the bottom of the chat window
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-    }
 
     function sendMessage() {
-        const message = chatInput.value.trim();
+        const message = gameState.getChatInput().trim();
         if (message) {
-            addMessageToChatWindow(message, "user");
+            gameState.addMessageAsUser(message);
             console.log("Sending message:", message);
             // Simulate a response after a short delay
             setTimeout(() => {
-                addMessageToChatWindow("Your query has been accepted", "response");
+                gameState.addMessageAsResponse("Your query has been accepted");
             }, 500);
-            chatInput.value = "";
-            chatInput.style.height = 'auto'; // Reset height after sending message
+            gameState.setChatInput(""); // Clear input using the setter
         }
     }
 
     sendButton.addEventListener("click", sendMessage);
 
-    chatInput.addEventListener("keydown", (event) => {
+    gameState.elements.chatInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault(); // Prevent default Enter behavior (new line)
             sendMessage();
@@ -805,9 +827,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Auto-resize textarea based on content
-    chatInput.addEventListener("input", () => {
-        chatInput.style.height = 'auto'; // Reset height to recalculate
-        chatInput.style.height = chatInput.scrollHeight + 'px'; // Set height to scrollHeight
+    gameState.elements.chatInput.addEventListener("input", () => {
+        gameState.setChatInput(gameState.getChatInput()); // Trigger setter to resize
     });
 
     // --- Fast Forward Elements ---
