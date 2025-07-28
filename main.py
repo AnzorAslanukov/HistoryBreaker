@@ -5,6 +5,7 @@ from flask import (Flask,
                    url_for, 
                    session, 
                    jsonify)
+from flask_socketio import SocketIO, send
 from datetime import date as dt_date
 import psycopg2
 from psycopg2.extras import RealDictCursor 
@@ -15,6 +16,7 @@ import json
 from pathlib import Path  # Import Path from pathlib
 
 from prompts import *
+from backend.agents.stateless_nodes import display_openrouter_balance
 
 app = Flask(
     __name__,
@@ -22,6 +24,7 @@ app = Flask(
     static_folder="static"
 )
 app.secret_key = 'your_super_secret_key'  # Required for session management
+socketio = SocketIO(app)
 CONFIG_FILE = os.path.join(os.getcwd(), "static/json/llm_config.json")
 GAME_CONFIG_FILE = Path(os.path.join(os.getcwd(), "static/json/game_config.json"))  # New config file (changed to Path object)
 
@@ -568,6 +571,21 @@ def api_get_llm_config():
             return jsonify(json.load(f))
     return jsonify({}), 204  # no content
 
+@app.get("/api/openrouter_balance")
+def api_get_openrouter_balance():
+    """
+    Get the current OpenRouter balance using the function from test_nodes.py
+    Returns { balance: float } or { error: str }
+    """
+    try:
+        balance = display_openrouter_balance()
+        if balance is not None:
+            return jsonify({"balance": balance})
+        else:
+            return jsonify({"error": "Could not retrieve balance"}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 # =============================================
 # NEW GAME CONFIGURATION ENDPOINTS
@@ -675,6 +693,17 @@ def api_clear_players_data():
     except Exception as exc:
         return jsonify({"cleared": False, "error": str(exc)}), 500
 
+@socketio.on('message')
+def handle_message(message):
+    print('received message: ' + message)
+    send(message, broadcast=True)
+
+@app.route('/update_label', methods=['POST'])
+def update_label():
+    data = request.get_json()
+    socketio.emit('update', data)
+    return jsonify({'status': 'updated'})
+
 @app.post("/api/clear_game_config")
 def api_clear_game_config():
     """Clear only the 'user' and 'players' sections from the game config file."""
@@ -727,341 +756,8 @@ def load_llm_config() -> dict | None:
             return json.load(f)
     return None
 
-
-# =============================================
-# GAMEPLAY DOM STATE API ENDPOINTS
-# These endpoints correspond to GameStateController methods in gameplay.js
-# They accept JSON input and store game state data
-# =============================================
-
-@app.post("/api/set_danger_level")
-def api_set_danger_level():
-    """
-    API endpoint to set danger indicator level.
-    
-    Body: { "danger_index": int } - Index from 0-4 representing danger levels:
-                                   0=Peaceful, 1=Cautious, 2=Wary, 3=Imminent Danger, 4=Critical
-    
-    Returns: { "success": bool, "danger_index": int } or error
-    """
-    data = request.get_json(silent=True) or {}
-    danger_index = data.get("danger_index")
-    
-    if not isinstance(danger_index, int) or danger_index < 0 or danger_index > 4:
-        return jsonify({"success": False, "error": "Invalid danger index. Must be 0-4."}), 400
-    
-    # Store in session for persistence
-    session['game_state'] = session.get('game_state', {})
-    session['game_state']['danger_index'] = danger_index
-    
-    return jsonify({"success": True, "danger_index": danger_index})
-
-@app.post("/api/set_time_of_day")
-def api_set_time_of_day():
-    """
-    API endpoint to set time of day indicator.
-    
-    Body: { "time_index": int } - Index from 0-13 representing time periods:
-                                 0=Just Before Sunrise, 1=Sunrise, 2=Early Morning, etc.
-    
-    Returns: { "success": bool, "time_index": int } or error
-    """
-    data = request.get_json(silent=True) or {}
-    time_index = data.get("time_index")
-    
-    if not isinstance(time_index, int) or time_index < 0 or time_index > 13:
-        return jsonify({"success": False, "error": "Invalid time index. Must be 0-13."}), 400
-    
-    # Store in session for persistence
-    session['game_state'] = session.get('game_state', {})
-    session['game_state']['time_index'] = time_index
-    
-    return jsonify({"success": True, "time_index": time_index})
-
-@app.post("/api/set_environment_conditions")
-def api_set_environment_conditions():
-    """
-    API endpoint to set environment/weather conditions.
-    
-    Body: { "environment_index": int } - Index from 0-5 representing conditions:
-                                        0=Clear skies, 1=Light clouds, 2=Heavy overcast, 
-                                        3=Rain, 4=Snow, 5=Indoors/Dark
-    
-    Returns: { "success": bool, "environment_index": int } or error
-    """
-    data = request.get_json(silent=True) or {}
-    environment_index = data.get("environment_index")
-    
-    if not isinstance(environment_index, int) or environment_index < 0 or environment_index > 5:
-        return jsonify({"success": False, "error": "Invalid environment index. Must be 0-5."}), 400
-    
-    # Store in session for persistence
-    session['game_state'] = session.get('game_state', {})
-    session['game_state']['environment_index'] = environment_index
-    
-    return jsonify({"success": True, "environment_index": environment_index})
-
-@app.post("/api/set_location_terrain")
-def api_set_location_terrain():
-    """
-    API endpoint to set location/terrain type.
-    
-    Body: { "location_index": int } - Index from 0-35 representing terrain types:
-                                     0=Urban/Settlement, 1=Palace/Temple, 2=Farmland, etc.
-    
-    Returns: { "success": bool, "location_index": int } or error
-    """
-    data = request.get_json(silent=True) or {}
-    location_index = data.get("location_index")
-    
-    if not isinstance(location_index, int) or location_index < 0 or location_index > 35:
-        return jsonify({"success": False, "error": "Invalid location index. Must be 0-35."}), 400
-    
-    # Store in session for persistence
-    session['game_state'] = session.get('game_state', {})
-    session['game_state']['location_index'] = location_index
-    
-    return jsonify({"success": True, "location_index": location_index})
-
-@app.post("/api/set_temperature_level")
-def api_set_temperature_level():
-    """
-    API endpoint to set temperature level.
-    
-    Body: { "temperature_index": int } - Index from 0-7 representing temperature tiers:
-                                        0=Frigid, 1=Freezing, 2=Cold, 3=Cool, 
-                                        4=Mild, 5=Warm, 6=Hot, 7=Scorching
-    
-    Returns: { "success": bool, "temperature_index": int } or error
-    """
-    data = request.get_json(silent=True) or {}
-    temperature_index = data.get("temperature_index")
-    
-    if not isinstance(temperature_index, int) or temperature_index < 0 or temperature_index > 7:
-        return jsonify({"success": False, "error": "Invalid temperature index. Must be 0-7."}), 400
-    
-    # Store in session for persistence
-    session['game_state'] = session.get('game_state', {})
-    session['game_state']['temperature_index'] = temperature_index
-    
-    return jsonify({"success": True, "temperature_index": temperature_index})
-
-@app.post("/api/set_tesa_data")
-def api_set_tesa_data():
-    """
-    API endpoint to set TESA (Time Estimation and Synchronization Accuracy) data.
-    
-    Body: { "perceived_time": str, "temporal_drift": str } - Time strings in format like "2.5d", "4.2h", "30m", etc.
-                                                            Drift strings in format like "±1.2d", "±3h", "±15m", etc.
-    
-    Returns: { "success": bool, "perceived_time": str, "temporal_drift": str } or error
-    """
-    data = request.get_json(silent=True) or {}
-    perceived_time = data.get("perceived_time")
-    temporal_drift = data.get("temporal_drift")
-    
-    if not isinstance(perceived_time, str) or not isinstance(temporal_drift, str):
-        return jsonify({"success": False, "error": "Both perceived_time and temporal_drift must be strings."}), 400
-    
-    # Store in session for persistence
-    session['game_state'] = session.get('game_state', {})
-    session['game_state']['perceived_time'] = perceived_time
-    session['game_state']['temporal_drift'] = temporal_drift
-    
-    return jsonify({"success": True, "perceived_time": perceived_time, "temporal_drift": temporal_drift})
-
-@app.post("/api/update_all_game_nodes")
-def api_update_all_game_nodes():
-    """
-    API endpoint to update multiple game state nodes at once.
-    
-    Body: { "node_data": dict } - Dictionary containing any combination of:
-                                 - danger: int (0-4)
-                                 - timeOfDay: int (0-13)
-                                 - environment: int (0-5)
-                                 - location: int (0-35)
-                                 - temperature: int (0-7)
-                                 - tesa: dict with 'perceivedTime' and 'temporalDrift' strings
-    
-    Returns: { "success": bool, "results": dict } or error
-    """
-    data = request.get_json(silent=True) or {}
-    node_data = data.get("node_data")
-    
-    if not isinstance(node_data, dict):
-        return jsonify({"success": False, "error": "node_data must be a dictionary."}), 400
-    
-    results = {}
-    session['game_state'] = session.get('game_state', {})
-    
-    # Process each node type
-    if "danger" in node_data:
-        danger_index = node_data["danger"]
-        if isinstance(danger_index, int) and 0 <= danger_index <= 4:
-            session['game_state']['danger_index'] = danger_index
-            results["danger"] = {"success": True, "danger_index": danger_index}
-        else:
-            results["danger"] = {"success": False, "error": "Invalid danger index. Must be 0-4."}
-    
-    if "timeOfDay" in node_data:
-        time_index = node_data["timeOfDay"]
-        if isinstance(time_index, int) and 0 <= time_index <= 13:
-            session['game_state']['time_index'] = time_index
-            results["timeOfDay"] = {"success": True, "time_index": time_index}
-        else:
-            results["timeOfDay"] = {"success": False, "error": "Invalid time index. Must be 0-13."}
-    
-    if "environment" in node_data:
-        environment_index = node_data["environment"]
-        if isinstance(environment_index, int) and 0 <= environment_index <= 5:
-            session['game_state']['environment_index'] = environment_index
-            results["environment"] = {"success": True, "environment_index": environment_index}
-        else:
-            results["environment"] = {"success": False, "error": "Invalid environment index. Must be 0-5."}
-    
-    if "location" in node_data:
-        location_index = node_data["location"]
-        if isinstance(location_index, int) and 0 <= location_index <= 35:
-            session['game_state']['location_index'] = location_index
-            results["location"] = {"success": True, "location_index": location_index}
-        else:
-            results["location"] = {"success": False, "error": "Invalid location index. Must be 0-35."}
-    
-    if "temperature" in node_data:
-        temperature_index = node_data["temperature"]
-        if isinstance(temperature_index, int) and 0 <= temperature_index <= 7:
-            session['game_state']['temperature_index'] = temperature_index
-            results["temperature"] = {"success": True, "temperature_index": temperature_index}
-        else:
-            results["temperature"] = {"success": False, "error": "Invalid temperature index. Must be 0-7."}
-    
-    if "tesa" in node_data and isinstance(node_data["tesa"], dict):
-        tesa_data = node_data["tesa"]
-        if "perceivedTime" in tesa_data and "temporalDrift" in tesa_data:
-            perceived_time = tesa_data["perceivedTime"]
-            temporal_drift = tesa_data["temporalDrift"]
-            if isinstance(perceived_time, str) and isinstance(temporal_drift, str):
-                session['game_state']['perceived_time'] = perceived_time
-                session['game_state']['temporal_drift'] = temporal_drift
-                results["tesa"] = {"success": True, "perceived_time": perceived_time, "temporal_drift": temporal_drift}
-            else:
-                results["tesa"] = {"success": False, "error": "Both perceived_time and temporal_drift must be strings."}
-    
-    return jsonify({"success": True, "results": results})
-
-@app.post("/api/reset_all_game_nodes")
-def api_reset_all_game_nodes():
-    """
-    API endpoint to reset all game state nodes to default values.
-    
-    Returns: { "success": bool, "results": dict } or error
-    """
-    default_data = {
-        "danger": 0,
-        "timeOfDay": 0,
-        "environment": 0,
-        "location": 0,
-        "temperature": 0,
-        "tesa": {
-            "perceivedTime": "0.0d",
-            "temporalDrift": "±0.0d"
-        }
-    }
-    
-    # Reset session game state
-    session['game_state'] = {
-        'danger_index': 0,
-        'time_index': 0,
-        'environment_index': 0,
-        'location_index': 0,
-        'temperature_index': 0,
-        'perceived_time': "0.0d",
-        'temporal_drift': "±0.0d"
-    }
-    
-    return jsonify({"success": True, "reset_to_defaults": True})
-
-@app.post("/api/add_chat_message")
-def api_add_chat_message():
-    """
-    API endpoint to add a message to the chat window.
-    
-    Body: { "message": str, "message_type": str, "timestamp": str (optional) } - Message content, type ("user" or "response"), optional timestamp
-    
-    Returns: { "success": bool, "message": str, "type": str, "timestamp": str } or error
-    """
-    data = request.get_json(silent=True) or {}
-    message = data.get("message")
-    message_type = data.get("message_type", "user")
-    timestamp = data.get("timestamp")
-    
-    if not isinstance(message, str) or not message.strip():
-        return jsonify({"success": False, "error": "Message must be a non-empty string."}), 400
-    
-    if message_type not in ["user", "response"]:
-        return jsonify({"success": False, "error": "message_type must be 'user' or 'response'."}), 400
-    
-    # Store chat messages in session
-    session['chat_messages'] = session.get('chat_messages', [])
-    
-    # Use current timestamp if none provided
-    if not timestamp:
-        from datetime import datetime
-        timestamp = datetime.now().isoformat()
-    
-    chat_entry = {
-        "message": message,
-        "type": message_type,
-        "timestamp": timestamp
-    }
-    
-    session['chat_messages'].append(chat_entry)
-    
-    return jsonify({"success": True, "message": message, "type": message_type, "timestamp": timestamp})
-
-@app.post("/api/set_chat_input")
-def api_set_chat_input():
-    """
-    API endpoint to set the chat input field value.
-    
-    Body: { "message": str } - The message to set in the chat input field
-    
-    Returns: { "success": bool, "message": str } or error
-    """
-    data = request.get_json(silent=True) or {}
-    message = data.get("message")
-    
-    if not isinstance(message, str):
-        return jsonify({"success": False, "error": "Message must be a string."}), 400
-    
-    # Store current chat input in session
-    session['chat_input'] = message
-    
-    return jsonify({"success": True, "message": message})
-
-@app.get("/api/get_game_state")
-def api_get_game_state():
-    """
-    API endpoint to retrieve current game state.
-    
-    Returns: { "game_state": dict, "chat_messages": list, "chat_input": str }
-    """
-    game_state = session.get('game_state', {})
-    chat_messages = session.get('chat_messages', [])
-    chat_input = session.get('chat_input', "")
-    
-    return jsonify({
-        "game_state": game_state,
-        "chat_messages": chat_messages,
-        "chat_input": chat_input
-    })
-
-# =============================================
-# END OF GAMEPLAY DOM STATE API ENDPOINTS
-# =============================================
-
 if __name__ == "__main__":
     os.makedirs(SAVES_DIR, exist_ok=True)  # ensure saves folder exists
     # Use GAME_CONFIG_FILE.parent for the directory
     os.makedirs(GAME_CONFIG_FILE.parent, exist_ok=True)  # ensure config dir exists
-    app.run(debug=True)
+    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)

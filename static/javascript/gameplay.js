@@ -405,9 +405,48 @@ class GameStateController {
     }
     
     // TESA Methods
-    setPerceivedTime(timeString) {
+    async _syncTESADataWithServer() {
+        try {
+            const response = await fetch('/api/set_tesa_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    perceived_time: this.getPerceivedTime(),
+                    temporal_drift: this.getTemporalDrift()
+                })
+            });
+            if (!response.ok) {
+                console.error("Failed to sync TESA data with server:", response.statusText);
+                return;
+            }
+            const result = await response.json();
+            if (result.success) {
+                console.log("TESA data successfully synced with server.");
+            } else {
+                console.error("Server failed to save TESA data.");
+            }
+        } catch (error) {
+            console.error("Error syncing TESA data with server:", error);
+        }
+    }
+
+    // Internal UI-only update methods
+    _updatePerceivedTimeUI(timeString) {
         this.elements.perceivedTime.textContent = timeString;
         sessionStorage.setItem('perceivedTime', timeString);
+    }
+
+    _updateTemporalDriftUI(driftString) {
+        this.elements.temporalDrift.textContent = driftString; 
+        sessionStorage.setItem('temporalDrift', driftString); 
+    }
+
+    // Public methods that also sync with the server
+    setPerceivedTime(timeString) {
+        this._updatePerceivedTimeUI(timeString);
+        this._syncTESADataWithServer();
         return true;
     }
     
@@ -416,8 +455,8 @@ class GameStateController {
     }
     
     setTemporalDrift(driftString) {
-        this.elements.temporalDrift.textContent = driftString;
-        sessionStorage.setItem('temporalDrift', driftString);
+        this._updateTemporalDriftUI(driftString);
+        this._syncTESADataWithServer();
         return true;
     }
     
@@ -426,8 +465,9 @@ class GameStateController {
     }
     
     setTESAData(perceivedTime, temporalDrift) {
-        this.setPerceivedTime(perceivedTime);
-        this.setTemporalDrift(temporalDrift);
+        this._updatePerceivedTimeUI(perceivedTime);
+        this._updateTemporalDriftUI(temporalDrift);
+        this._syncTESADataWithServer(); // Sync with server
         return true;
     }
     
@@ -648,62 +688,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Make it globally accessible
     window.HistoryBreakerState = gameState;
-    
-    // For testing purposes, cycle through indices on page refresh
-    // Danger Indicator (grid-item-1)
-    let dangerIndex = sessionStorage.getItem('dangerIndex');
-    if (dangerIndex === null || parseInt(dangerIndex) >= dangerIndicatorEmojis.length - 1) {
-        dangerIndex = 0;
-    } else {
-        dangerIndex = parseInt(dangerIndex) + 1;
-    }
-    gameState.setDangerIndex(dangerIndex);
-    
-    // Time of Day (grid-item-2)
-    let timeOfDayIndex = sessionStorage.getItem('timeOfDayIndex');
-    if (timeOfDayIndex === null || parseInt(timeOfDayIndex) >= timeOfDaySymbols.length - 1) {
-        timeOfDayIndex = 0;
-    } else {
-        timeOfDayIndex = parseInt(timeOfDayIndex) + 1;
-    }
-    gameState.setTimeOfDayIndex(timeOfDayIndex);
-
-    // Environment Accuracy Modifier (grid-item-3)
-    let environmentAccuracyModIndex = sessionStorage.getItem('envModIndex');
-    if (environmentAccuracyModIndex === null || parseInt(environmentAccuracyModIndex) >= environmentAccuracyModSymbols.length - 1) {
-        environmentAccuracyModIndex = 0;
-    } else {
-        environmentAccuracyModIndex = parseInt(environmentAccuracyModIndex) + 1;
-    }
-    gameState.setEnvironmentIndex(environmentAccuracyModIndex);
-
-    // Location/Terrain Category (grid-item-10)
-    let locationTerrainIndex = sessionStorage.getItem('locationTerrainIndex');
-    if (locationTerrainIndex === null || parseInt(locationTerrainIndex) >= locationTerrainSymbols.length - 1) {
-        locationTerrainIndex = 0;
-    } else {
-        locationTerrainIndex = parseInt(locationTerrainIndex) + 1;
-    }
-    gameState.setLocationIndex(locationTerrainIndex);
-
-    // Temperature (grid-item-11)
-    let temperatureIndex = sessionStorage.getItem('temperatureIndex');
-    if (temperatureIndex === null || parseInt(temperatureIndex) >= temperatureSymbols.length - 1) {
-        temperatureIndex = 0;
-    } else {
-        temperatureIndex = parseInt(temperatureIndex) + 1;
-    }
-    gameState.setTemperatureIndex(temperatureIndex);
-
-    // Perceived Time and Temporal Drift (grid-item-4) - using controller methods
-    gameState.setPerceivedTime(gameState.generateRandomTime());
-    gameState.setTemporalDrift(gameState.generateRandomTemporalDrift());
-
-    // Update other UI elements using controller methods
-    gameState.elements.gridItem5Right.textContent = `$${gameState.generateRandomDollarAmount()}`;
-    gameState.elements.gridItem13Right.textContent = `$${gameState.generateRandomDollarAmount()}`;
-    gameState.elements.gridItem6Right.textContent = gameState.generateRandomTokenAmount();
-    gameState.elements.gridItem14Right.textContent = gameState.generateRandomTokenAmount();
 
     // Handle Dark/Light Mode buttons (grid-item-15)
     const darkModeButton = document.getElementById("dark-mode-button");
@@ -940,15 +924,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Test array of lorem ipsum samples (20-70 characters)
-    const loremIpsumSamples = [
-        "Lorem ipsum dolor sit", // 20 characters
-        "Lorem ipsum dolor sit amet, consectetur", // 39 characters  
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit", // 56 characters
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do", // 65 characters
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do ei" // 70 characters
-    ];
-
     function updateUI() {
         const minutesActive = ffMinutesInput.value.length > 0;
         const hoursActive = ffHoursInput.value.length > 0;
@@ -1049,11 +1024,90 @@ document.addEventListener('DOMContentLoaded', () => {
         updateFFDaysDisplay();
     });
 
-    // Set random lorem ipsum text for special event label on page load
-    ffSpecialEventLabelText.textContent = loremIpsumSamples[Math.floor(Math.random() * loremIpsumSamples.length)];
-
     // Initial UI state - fast forward button should be disabled by default
     fastForwardButton.disabled = true;
     fastForwardButton.classList.add('disabled');
     updateUI();
+
+    // Function to poll the server for game state updates
+    async function pollGameState() {
+        try {
+            const response = await fetch('/api/get_game_state');
+            if (!response.ok) {
+                console.error('Failed to fetch game state:', response.statusText);
+                return;
+            }
+            const serverState = await response.json();
+
+            if (serverState && serverState.game_state) {
+                const { perceived_time, temporal_drift } = serverState.game_state;
+
+                // Use internal UI-only methods to prevent feedback loop
+                if (perceived_time && gameState.getPerceivedTime() !== perceived_time) {
+                    gameState._updatePerceivedTimeUI(perceived_time);
+                }
+                if (temporal_drift && gameState.getTemporalDrift() !== temporal_drift) {
+                    gameState._updateTemporalDriftUI(temporal_drift);
+                }
+            }
+        } catch (error) {
+            console.error('Error polling game state:', error);
+        }
+    }
+
+    // Poll the server every 2 seconds for updates
+    setInterval(pollGameState, 2000);
+
+    // Perform an initial poll to load the current state from the server
+    pollGameState();
+
+    // Function to fetch and update OpenRouter balance
+    async function updateOpenRouterBalance() {
+        try {
+            const response = await fetch('/api/openrouter_balance');
+            if (!response.ok) {
+                console.error('Failed to fetch OpenRouter balance:', response.statusText);
+                return;
+            }
+            const data = await response.json();
+            
+            const gridItem5Right = document.getElementById('gridItem5Right');
+            if (gridItem5Right) {
+                if (data.balance !== undefined) {
+                    gridItem5Right.textContent = `$${data.balance.toFixed(2)}`;
+                } else if (data.error) {
+                    gridItem5Right.textContent = 'Error';
+                    console.error('OpenRouter balance error:', data.error);
+                } else {
+                    gridItem5Right.textContent = 'N/A';
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching OpenRouter balance:', error);
+            const gridItem5Right = document.getElementById('gridItem5Right');
+            if (gridItem5Right) {
+                gridItem5Right.textContent = 'Error';
+            }
+        }
+    }
+
+    // Update balance immediately on page load
+    updateOpenRouterBalance();
+
+    // Update balance every 30 seconds
+    setInterval(updateOpenRouterBalance, 30000);
+
+    const socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    socket.on('connect', function() {
+        console.log('Websocket connected!');
+    });
+
+    socket.on('update', function(data) {
+        console.log('Received update:', data);
+        const gridItem5Right = document.getElementById('gridItem5Right');
+        if (gridItem5Right) {
+            gridItem5Right.textContent = data.text;
+        }
+    });
 });

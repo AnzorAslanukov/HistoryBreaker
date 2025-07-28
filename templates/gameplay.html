@@ -6,6 +6,7 @@
     <title>Gameplay</title>
     <link rel="stylesheet" href="../static/css/gameplay.css">
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script src="../static/javascript/gameplay.js" defer></script>
 </head>
 <body>
@@ -49,7 +50,7 @@
                 </div>
                 <div class="grid-item global-grid-item-styles grid-item-5">
                     <div class="grid-item-5-left">OpenRouter<br>Balance:</div>
-                    <div class="grid-item-5-right"></div>
+                    <div class="grid-item-5-right" id="gridItem5Right"></div>
                 </div>
                 <div class="grid-item global-grid-item-styles grid-item-6">
                     <div class="grid-item-6-left">Input<br>Tokens</div>
