@@ -788,16 +788,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const sendButton = document.getElementById("send-button");
 
-    function sendMessage() {
+    async function sendMessage() {
         const message = gameState.getChatInput().trim();
         if (message) {
             gameState.addMessageAsUser(message);
             console.log("Sending message:", message);
-            // Simulate a response after a short delay
-            setTimeout(() => {
-                gameState.addMessageAsResponse("Your query has been accepted");
-            }, 500);
             gameState.setChatInput(""); // Clear input using the setter
+
+            try {
+                const response = await fetch('/api/chat_query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                if (!response.ok) {
+                    console.error("Failed to get LLM response:", response.statusText);
+                    gameState.addMessageAsResponse("Error: Could not get a response from the LLM.");
+                    return;
+                }
+
+                const data = await response.json();
+                gameState.addMessageAsResponse(data.response);
+
+            } catch (error) {
+                console.error("Error sending message to LLM:", error);
+                gameState.addMessageAsResponse("Error: An unexpected error occurred while communicating with the LLM.");
+            }
         }
     }
 

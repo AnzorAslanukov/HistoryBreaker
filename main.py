@@ -17,6 +17,7 @@ from pathlib import Path  # Import Path from pathlib
 
 from prompts import *
 from backend.agents.stateless_nodes import display_openrouter_balance
+from backend.langgraph import query_llm # Import query_llm
 
 app = Flask(
     __name__,
@@ -68,8 +69,6 @@ def api_test_key():
                 return jsonify({"valid": True, "balance": credits})
     except Exception as e:
         return jsonify({"valid": False, "error": str(e)})
-
-
 
 @app.post("/api/test_model")
 def api_test_model():
@@ -703,6 +702,18 @@ def update_label():
     data = request.get_json()
     socketio.emit('update', data)
     return jsonify({'status': 'updated'})
+
+@app.post("/api/chat_query")
+def api_chat_query():
+    """
+    Receives a user message, queries the LLM, and returns the response.
+    """
+    user_message = (request.get_json(silent=True) or {}).get("message", "").strip()
+    if not user_message:
+        return jsonify({"response": "No message provided."}), 400
+
+    llm_response = query_llm(user_message)
+    return jsonify({"response": llm_response})
 
 @app.post("/api/clear_game_config")
 def api_clear_game_config():
