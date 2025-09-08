@@ -156,3 +156,154 @@ def get_perceived_time_of_day(conversation_history: list[dict]) -> int:
     except (requests.exceptions.RequestException, KeyError, ValueError, IndexError) as e:
         print(f"Error getting perceived time of day: {e}")
         return 13 # Default to unknown on error
+
+def get_environment_accuracy_modifier(conversation_history: list[dict]) -> int:
+    """
+    Analyzes the conversation history to determine the environment accuracy modifier (weather).
+    Searches backwards in chunks until a weather hint is found.
+    """
+    from prompts import ENVIRONMENT_ACCURACY_SYS, ENVIRONMENT_ACCURACY_USER
+    
+    # Load LLM config to get API key and small model
+    try:
+        with open(LLM_CONFIG_FILE_PATH, 'r') as f:
+            config = json.load(f)
+        api_key = config.get("api_key")
+        small_model = config.get("small_model")
+    except Exception as e:
+        print(f"Error loading LLM config: {e}")
+        return 5 # Default to Indoors/Dark if config is missing
+
+    if not api_key or not small_model:
+        print("API key or small model not found in config.")
+        return 5
+
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+
+    # Iterate backwards through conversation history in chunks of 12
+    # This allows finding the *last* relevant hint
+    history_length = len(conversation_history)
+    for i in range(history_length, 0, -12):
+        start_index = max(0, i - 12)
+        chunk = conversation_history[start_index:i]
+        
+        if not chunk:
+            continue # Skip empty chunks
+
+        formatted_chunk = "\n".join([f"{msg['role']}: {msg['content']}" for msg in chunk])
+
+        payload = {
+            "model": small_model,
+            "messages": [
+                {"role": "system", "content": ENVIRONMENT_ACCURACY_SYS},
+                {"role": "user", "content": ENVIRONMENT_ACCURACY_USER.format(conversation_history=formatted_chunk)}
+            ],
+            "max_tokens": 1
+        }
+
+        try:
+            response = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers=headers,
+                json=payload,
+                timeout=15
+            )
+            response.raise_for_status()
+            result = response.json()
+            environment_index = int(result["choices"][0]["message"]["content"].strip())
+            
+            # If the LLM returns a valid index (0-4), it means a hint was found in this chunk
+            # If it returns 5 (Indoors/Dark), it means no hint was found in this chunk, or it's an enclosed space
+            # We should only return a non-default value if a specific hint was found.
+            if 0 <= environment_index <= 4:
+                return environment_index
+            elif environment_index == 5: # LLM explicitly returned 5 (Indoors/Dark)
+                # If the context of the *current* chunk suggests indoors/dark, return 5
+                # Otherwise, continue searching older chunks
+                # For simplicity, we'll assume if LLM returns 5, it's a valid assessment for the chunk
+                # A more complex check might involve analyzing the chunk for keywords like "cave", "indoors", etc.
+                return 5
+            
+        except (requests.exceptions.RequestException, KeyError, ValueError, IndexError) as e:
+            print(f"Error getting environment accuracy modifier for chunk: {e}")
+            # Continue to next chunk if there's an error with this one
+            
+    # If no specific hint is found after checking all chunks, default to 0 (Clear skies)
+    # This is a fallback if the LLM consistently returns ambiguous or unknown for outdoor settings
+    # or if the conversation is too short.
+    return 0
+
+def get_location_terrain_category(conversation_history: list[dict]) -> int:
+    """
+    Analyzes the conversation history to determine the location/terrain category.
+    Searches backwards in chunks until a location/terrain hint is found.
+    """
+    from prompts import LOCATION_TERRAIN_SYS, LOCATION_TERRAIN_USER
+    
+    # Load LLM config to get API key and small model
+    try:
+        with open(LLM_CONFIG_FILE_PATH, 'r') as f:
+            config = json.load(f)
+        api_key = config.get("api_key")
+        small_model = config.get("small_model")
+    except Exception as e:
+        print(f"Error loading LLM config: {e}")
+        return 19 # Default to Unknown/Obscured if config is missing
+
+    if not api_key or not small_model:
+        print("API key or small model not found in config.")
+        return 19
+
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+
+    # Iterate backwards through conversation history in chunks of 12
+    # This allows finding the *last* relevant hint
+    history_length = len(conversation_history)
+    for i in range(history_length, 0, -12):
+        start_index = max(0, i - 12)
+        chunk = conversation_history[start_index:i]
+        
+        if not chunk:
+            continue # Skip empty chunks
+
+        formatted_chunk = "\n".join([f"{msg['role']}: {msg['content']}" for msg in chunk])
+
+        payload = {
+            "model": small_model,
+            "messages": [
+                {"role": "system", "content": LOCATION_TERRAIN_SYS},
+                {"role": "user", "content": LOCATION_TERRAIN_USER.format(conversation_history=formatted_chunk)}
+            ],
+            "max_tokens": 1
+        }
+
+        try:
+            response = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers=headers,
+                json=payload,
+                timeout=15
+            )
+            response.raise_for_status()
+            result = response.json()
+            location_index = int(result["choices"][0]["message"]["content"].strip())
+            
+            # If the LLM returns a valid index (0-34), it means a hint was found in this chunk
+            # If it returns 19 (Unknown/Obscured), it means no hint was found in this chunk.
+            if 0 <= location_index <= 18 or 20 <= location_index <= 35:
+                return location_index
+            elif location_index == 19: # LLM explicitly returned 19 (Unknown/Obscured)
+                return 19
+            
+        except (requests.exceptions.RequestException, KeyError, ValueError, IndexError) as e:
+            print(f"Error getting location/terrain category for chunk: {e}")
+            # Continue to next chunk if there's an error with this one
+            
+    # If no specific hint is found after checking all chunks, default to 19 (Unknown/Obscured)
+    return 19

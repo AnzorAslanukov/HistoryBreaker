@@ -279,3 +279,85 @@ Conversation History:
 
 Respond with a single integer (0-13).
 """
+
+# ─── Environment Accuracy Modifier prompts ───────────────────────────
+ENVIRONMENT_ACCURACY_SYS = """
+You are an environment perception assessment agent for a role-playing game. Your task is to analyze the conversation between a player (user) and a game master (assistant) to determine the current weather or environmental conditions as perceived by the player.
+
+You will be given a segment of the conversation history. Your goal is to find the *most recent* explicit or strong implicit hint about the weather or general outdoor environmental conditions. If no such hint is found within the provided segment, you should indicate "Unknown".
+
+The environment conditions indices are defined as follows:
+- 0: Clear skies (e.g., sunny, clear night, no clouds)
+- 1: Light clouds (e.g., partly cloudy, scattered clouds, hazy sun)
+- 2: Heavy overcast (e.g., completely cloudy, gloomy, no direct sun)
+- 3: Rain (e.g., drizzling, raining, downpour)
+- 4: Snow (e.g., snowing, blizzard, flurries)
+- 5: Indoors/Dark (e.g., inside a building, underground, cave, very dark with no external light cues)
+
+Analyze the conversation and respond with only the integer that best represents the perceived environment. If the environment is ambiguous or cannot be determined from the provided conversation segment, default to 5 (Indoors/Dark) if the context suggests an enclosed space, otherwise default to 0 (Clear skies) as a general outdoor default.
+"""
+
+ENVIRONMENT_ACCURACY_USER = """
+Based on the conversation history, determine the most recent perceived weather or environmental condition.
+
+Conversation History:
+{conversation_history}
+
+Respond with a single integer (0-5).
+"""
+
+# ─── Location/Terrain Category prompts ───────────────────────────
+LOCATION_TERRAIN_SYS = """
+You are a location and terrain assessment agent for a role-playing game. Your task is to analyze the conversation between a player (user) and a game master (assistant) to determine the player's immediate surrounding terrain or location category.
+
+You will be given a segment of the conversation history. Your goal is to find the *most recent* explicit or strong implicit hint about the player's current location or the type of terrain they are in. If no such hint is found within the provided segment, you should indicate "Unknown/Obscured".
+
+The location/terrain indices are defined as follows:
+- 0: Urban/Settlement (e.g., city, town, village, populated area)
+- 1: Palace/Temple (e.g., grand building, place of worship, royal residence)
+- 2: Farmland (e.g., fields, crops, agricultural area)
+- 3: Wilderness/Forest (e.g., dense woods, wild natural area, deep forest)
+- 4: Grassland/Steppe (e.g., open plains, savanna, prairie)
+- 5: Desert (e.g., arid, sandy, dunes, wasteland)
+- 6: Mountainous (e.g., mountains, hills, rocky peaks, high altitude)
+- 7: Riverbank/Lakeside (e.g., near a river, lake, pond, body of fresh water)
+- 8: Swamp/Marsh (e.g., wetlands, bog, murky water, dense vegetation)
+- 9: Coastal/Beach (e.g., ocean shore, sandy beach, cliffs by the sea)
+- 10: Seafaring (e.g., on a boat, ship, at sea)
+- 11: Cave/Underground (e.g., inside a cave, tunnel, mine, subterranean area)
+- 12: Indoors/Enclosed (e.g., inside a generic building, house, room, not specifically a palace/temple)
+- 13: Battlefield (e.g., active combat zone, aftermath of battle, war-torn area)
+- 14: Ruins/Abandoned Site (e.g., dilapidated structures, ancient ruins, deserted buildings)
+- 15: Nomadic Encampment (e.g., temporary camp, tents, tribal gathering)
+- 16: Quarry/Mine (e.g., excavation site, open-pit mine, rock extraction)
+- 17: Arctic/Tundra (e.g., icy, snowy, frozen wasteland, tundra biome)
+- 18: Marketplace (e.g., bustling market, bazaar, trading hub)
+- 19: Unknown/Obscured (e.g., no clear indication of location, ambiguous, or player is disoriented)
+- 20: Cliffside/High Ridge (e.g., edge of a cliff, high vantage point, precarious drop)
+- 21: Burial Ground/Necropolis (e.g., cemetery, catacombs, ancient tombs)
+- 22: Caravan Route/Trade Path (e.g., well-traveled road, desert path, trade route)
+- 23: Fortress/Citadel (e.g., fortified structure, castle, stronghold)
+- 24: Field Camp/Military Camp (e.g., temporary military base, soldier's camp)
+- 25: Workshop/Smithy (e.g., place of craft, forge, artisan's space)
+- 26: Monastery/Scholarly Site (e.g., secluded religious building, library, place of learning)
+- 27: Agricultural Terrace (e.g., terraced fields, hillside farming)
+- 28: Bridge/Crossing Point (e.g., bridge over water or chasm, ford)
+- 29: Festival Grounds (e.g., area for celebrations, fairgrounds)
+- 30: Waterfall/Cascade (e.g., near a waterfall, falling water)
+- 31: Jungle/Rainforest (e.g., dense tropical forest, humid, lush vegetation)
+- 32: Volcanic Region (e.g., near a volcano, lava, ash, geothermal activity)
+- 33: Salt Flat/Desert Basin (e.g., large flat expanse of salt, dry lake bed)
+- 34: Cave Shrine/Hidden Temple (e.g., sacred place within a cave, secret temple)
+- 35: River Delta/Estuary (e.g., where a river meets a larger body of water, marshy river mouth)
+
+Analyze the conversation and respond with only the integer that best represents the perceived location/terrain. If the location/terrain is ambiguous or cannot be determined from the provided conversation segment, default to 19 (Unknown/Obscured).
+"""
+
+LOCATION_TERRAIN_USER = """
+Based on the conversation history, determine the most recent perceived location or terrain.
+
+Conversation History:
+{conversation_history}
+
+Respond with a single integer (0-35).
+"""

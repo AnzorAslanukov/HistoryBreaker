@@ -16,7 +16,7 @@ import json
 from pathlib import Path  # Import Path from pathlib
 
 from prompts import *
-from backend.agents.basic_nodes import display_openrouter_balance, get_safety_level, get_perceived_time_of_day
+from backend.agents.basic_nodes import display_openrouter_balance, get_safety_level, get_perceived_time_of_day, get_environment_accuracy_modifier, get_location_terrain_category
 from backend.langgraph import query_llm # Import query_llm
 from backend.database.db_manager import ConversationManager # Import ConversationManager
 import uuid # Import uuid for session IDs
@@ -437,6 +437,42 @@ def api_get_perceived_time_of_day():
 
     perceived_time_of_day = get_perceived_time_of_day(conversation_history)
     return jsonify(perceived_time_of_day=perceived_time_of_day)
+
+@app.route('/api/get_environment_accuracy_modifier', methods=['GET'])
+def api_get_environment_accuracy_modifier():
+    """
+    Analyzes the conversation history and returns the environment accuracy modifier.
+    """
+    session_id = request.args.get('session_id')
+    if not session_id:
+        return jsonify({"error": "Session ID is required"}), 400
+    
+    conversation_history = conversation_manager.load_conversation(session_id)
+    
+    # Ensure there's a conversation to analyze
+    if not conversation_history:
+        return jsonify(environment_accuracy_modifier=5) # Default to Indoors/Dark
+
+    environment_accuracy_modifier = get_environment_accuracy_modifier(conversation_history)
+    return jsonify(environment_accuracy_modifier=environment_accuracy_modifier)
+
+@app.route('/api/get_location_terrain_category', methods=['GET'])
+def api_get_location_terrain_category():
+    """
+    Analyzes the conversation history and returns the location/terrain category.
+    """
+    session_id = request.args.get('session_id')
+    if not session_id:
+        return jsonify({"error": "Session ID is required"}), 400
+    
+    conversation_history = conversation_manager.load_conversation(session_id)
+    
+    # Ensure there's a conversation to analyze
+    if not conversation_history:
+        return jsonify(location_terrain_category=19) # Default to Unknown/Obscured
+
+    location_terrain_category = get_location_terrain_category(conversation_history)
+    return jsonify(location_terrain_category=location_terrain_category)
 
 @app.post("/api/save_llm_config")
 def api_save_llm_config():

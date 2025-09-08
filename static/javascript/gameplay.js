@@ -853,6 +853,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateSafetyLevel();
                 // Update perceived time of day after getting a response
                 updatePerceivedTimeOfDay();
+                // Update environment accuracy modifier after getting a response
+                updateEnvironmentAccuracyModifier();
+                // Update location/terrain category after getting a response
+                updateLocationTerrainCategory();
 
             } catch (error) {
                 console.error("Error sending message to LLM:", error);
@@ -1200,6 +1204,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update perceived time of day on page load (once)
     updatePerceivedTimeOfDay();
+
+    // Function to fetch and update environment accuracy modifier
+    async function updateEnvironmentAccuracyModifier() {
+        if (!gameSessionId) return;
+
+        try {
+            const response = await fetch(`/api/get_environment_accuracy_modifier?session_id=${gameSessionId}`);
+            if (!response.ok) {
+                console.error("Failed to fetch environment accuracy modifier:", response.statusText);
+                return;
+            }
+            const data = await response.json();
+            if (data.environment_accuracy_modifier !== undefined) {
+                gameState.setEnvironmentIndex(data.environment_accuracy_modifier);
+            }
+        } catch (error) {
+            console.error("Error fetching environment accuracy modifier:", error);
+        }
+    }
+
+    // Update environment accuracy modifier on page load (once)
+    updateEnvironmentAccuracyModifier();
+
+    // Function to fetch and update location/terrain category
+    async function updateLocationTerrainCategory() {
+        if (!gameSessionId) return;
+
+        try {
+            const response = await fetch(`/api/get_location_terrain_category?session_id=${gameSessionId}`);
+            if (!response.ok) {
+                console.error("Failed to fetch location/terrain category:", response.statusText);
+                return;
+            }
+            const data = await response.json();
+            if (data.location_terrain_category !== undefined) {
+                gameState.setLocationIndex(data.location_terrain_category);
+            }
+        } catch (error) {
+            console.error("Error fetching location/terrain category:", error);
+        }
+    }
+
+    // Update location/terrain category on page load (once)
+    updateLocationTerrainCategory();
 
     const socket = io.connect('http://' + document.domain + ':' + location.port);
 
