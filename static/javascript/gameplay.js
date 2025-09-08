@@ -1174,9 +1174,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Update safety level on page load and then periodically
+    // Update safety level on page load (once)
     updateSafetyLevel();
-    setInterval(updateSafetyLevel, 15000); // Update every 15 seconds
 
     const socket = io.connect('http://' + document.domain + ':' + location.port);
 
