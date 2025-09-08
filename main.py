@@ -16,8 +16,10 @@ import json
 from pathlib import Path  # Import Path from pathlib
 
 from prompts import *
-from backend.agents.stateless_nodes import display_openrouter_balance
+from backend.agents.basic_nodes import display_openrouter_balance, get_safety_level
 from backend.langgraph import query_llm # Import query_llm
+from backend.database.db_manager import ConversationManager # Import ConversationManager
+import uuid # Import uuid for session IDs
 
 app = Flask(
     __name__,
@@ -344,6 +346,12 @@ def civ_lookup():
 
 @app.route('/gameplay', methods=['GET', 'POST'])
 def gameplay():
+    # Generate a unique session ID for the game if not already present
+    if 'game_session_id' not in session:
+        session['game_session_id'] = str(uuid.uuid4())
+    
+    current_session_id = session['game_session_id']
+
     if request.method == 'POST':
         # Process data from civ_lookup form
         selected_civ_name = request.form.get('selected_civ_name')
@@ -379,8 +387,38 @@ def gameplay():
             pass
 
     # For both GET requests and after POST processing, render gameplay.html
-    # gameplay.html would typically load its required data from game_config.json
-    return render_template('gameplay.html')
+    # The conversation history will be loaded dynamically via a separate API call.
+    return render_template('gameplay.html', session_id=current_session_id)
+
+@app.route('/api/get_conversation_history', methods=['GET'])
+def get_conversation_history():
+    """
+    Fetches the conversation history for the current session ID.
+    """
+    session_id = request.args.get('session_id')
+    if not session_id:
+        return jsonify({"error": "Session ID is required"}), 400
+    
+    history = conversation_manager.load_conversation(session_id)
+    return jsonify(history)
+
+@app.route('/api/get_safety_level', methods=['GET'])
+def api_get_safety_level():
+    """
+    Analyzes the conversation history and returns the current safety level.
+    """
+    session_id = request.args.get('session_id')
+    if not session_id:
+        return jsonify({"error": "Session ID is required"}), 400
+    
+    conversation_history = conversation_manager.load_conversation(session_id)
+    
+    # Ensure there's a conversation to analyze
+    if not conversation_history:
+        return jsonify(safety_level=0)
+
+    safety_level = get_safety_level(conversation_history)
+    return jsonify(safety_level=safety_level)
 
 @app.post("/api/save_llm_config")
 def api_save_llm_config():
@@ -570,7 +608,7 @@ def api_get_llm_config():
             return jsonify(json.load(f))
     return jsonify({}), 204  # no content
 
-@app.get("/api/openrouter_balance")
+@app.get("/api/openrouter_balance") 
 def api_get_openrouter_balance():
     """
     Get the current OpenRouter balance using the function from test_nodes.py
@@ -707,12 +745,29 @@ def update_label():
 def api_chat_query():
     """
     Receives a user message, queries the LLM, and returns the response.
+    Also saves the conversation to the database.
     """
-    user_message = (request.get_json(silent=True) or {}).get("message", "").strip()
+    data = request.get_json(silent=True) or {}
+    user_message = data.get("message", "").strip()
+    session_id = data.get("session_id") # Get session_id from frontend
+
     if not user_message:
         return jsonify({"response": "No message provided."}), 400
+    if not session_id:
+        return jsonify({"response": "Session ID missing."}), 400
 
-    llm_response = query_llm(user_message)
+    # Save user message
+    conversation_manager.save_message(session_id, "user", user_message)
+
+    # Load entire conversation history for the session
+    conversation_history = conversation_manager.load_conversation(session_id)
+    
+    # Pass the conversation history to the LLM
+    llm_response = query_llm(conversation_history)
+    
+    # Save assistant response
+    conversation_manager.save_message(session_id, "assistant", llm_response)
+
     return jsonify({"response": llm_response})
 
 @app.post("/api/clear_game_config")
@@ -760,12 +815,37 @@ def reset_start_personal_session():
 # END OF NEW GAME CONFIGURATION ENDPOINTS
 # =============================================
 
+@app.route('/api/get_game_state', methods=['GET'])
+def get_game_state():
+    """
+    Returns the current game state from the session.
+    """
+    game_state = session.get('game_state', {})
+    return jsonify(game_state=game_state)
+
+@app.route('/api/set_tesa_data', methods=['POST'])
+def set_tesa_data():
+    """
+    Saves TESA data to the session.
+    """
+    data = request.get_json()
+    if 'perceived_time' in data and 'temporal_drift' in data:
+        game_state = session.get('game_state', {})
+        game_state['perceived_time'] = data['perceived_time']
+        game_state['temporal_drift'] = data['temporal_drift']
+        session['game_state'] = game_state
+        return jsonify(success=True)
+    return jsonify(success=False, message="Invalid data"), 400
+
 # tiny helper other modules can import
 def load_llm_config() -> dict | None:
     if os.path.exists(CONFIG_FILE):
         with open(CONFIG_FILE, encoding="utf-8") as f:
             return json.load(f)
     return None
+
+# Initialize ConversationManager globally
+conversation_manager = ConversationManager()
 
 if __name__ == "__main__":
     os.makedirs(SAVES_DIR, exist_ok=True)  # ensure saves folder exists

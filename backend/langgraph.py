@@ -22,9 +22,10 @@ def load_llm_config():
         print(f"An unexpected error occurred while loading LLM config: {e}")
         return None
 
-def query_llm(question: str) -> str | None:
+def query_llm(messages: list[dict]) -> str | None:
     """
-    Queries the OpenRouter LLM with the given question using the main model.
+    Queries the OpenRouter LLM with the given conversation history using the main model.
+    Messages should be in the format: [{"role": "user", "content": "..."}]
     """
     config = load_llm_config()
     if not config:
@@ -41,11 +42,14 @@ def query_llm(question: str) -> str | None:
         "Content-Type": "application/json"
     }
 
+    # Ensure messages are in the correct format for the API
+    formatted_messages = []
+    for msg in messages:
+        formatted_messages.append({"role": msg["role"], "content": msg["content"]})
+
     payload = {
         "model": main_model,
-        "messages": [
-            {"role": "user", "content": question}
-        ],
+        "messages": formatted_messages,
         "max_tokens": 500 # Limit response length for basic Q&A
     }
 
@@ -68,14 +72,22 @@ def query_llm(question: str) -> str | None:
         return f"An unexpected error occurred: {e}"
 
 if __name__ == "__main__":
-    print("Testing basic question-answering with OpenRouter LLM...")
-    test_question = "What is the capital of France?"
-    answer = query_llm(test_question)
-    print(f"Question: {test_question}")
+    print("Testing stateful question-answering with OpenRouter LLM...")
+    
+    # Simulate a conversation history
+    test_messages = [
+        {"role": "user", "content": "Hello, who are you?"},
+        {"role": "assistant", "content": "I am an AI assistant."},
+        {"role": "user", "content": "What is the capital of France?"}
+    ]
+    answer = query_llm(test_messages)
+    print(f"Conversation: {test_messages}")
     print(f"Answer: {answer}")
 
-    print("\nTesting with a different question...")
-    test_question_2 = "Explain the concept of photosynthesis in a few sentences."
-    answer_2 = query_llm(test_question_2)
-    print(f"Question: {test_question_2}")
+    print("\nTesting with a new conversation...")
+    test_messages_2 = [
+        {"role": "user", "content": "Explain the concept of photosynthesis in a few sentences."}
+    ]
+    answer_2 = query_llm(test_messages_2)
+    print(f"Conversation: {test_messages_2}")
     print(f"Answer: {answer_2}")

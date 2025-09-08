@@ -26,3 +26,5 @@ Thumbs.db
 features/
 test/
 context.txt
+database/data/conversation_history.db
+backend/database/data/conversation_history.db

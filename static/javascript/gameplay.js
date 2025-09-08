@@ -680,14 +680,50 @@ class GameStateController {
 
 // Initialize the DOM State Controller and make it globally accessible
 let gameState;
+let gameSessionId = null; // To store the session ID
 
-// For testing purposes, cycle through indices on page refresh
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize the GameStateController
     gameState = new GameStateController();
     
     // Make it globally accessible
     window.HistoryBreakerState = gameState;
+
+    // Retrieve session ID from the HTML
+    const gameplayContainer = document.querySelector('.container');
+    if (gameplayContainer) {
+        gameSessionId = gameplayContainer.dataset.sessionId;
+    }
+
+    if (!gameSessionId) {
+        console.error("Game session ID not found!");
+        // Handle error, maybe redirect or show a message
+        return;
+    }
+
+    // Function to fetch and load conversation history
+    async function loadConversationHistory() {
+        try {
+            const response = await fetch(`/api/get_conversation_history?session_id=${gameSessionId}`);
+            if (!response.ok) {
+                console.error("Failed to fetch conversation history:", response.statusText);
+                return;
+            }
+            const history = await response.json();
+            history.forEach(msg => {
+                if (msg.role === 'user') {
+                    gameState.addMessageAsUser(msg.content, new Date(msg.timestamp));
+                } else if (msg.role === 'assistant') {
+                    gameState.addMessageAsResponse(msg.content, new Date(msg.timestamp));
+                }
+            });
+        } catch (error) {
+            console.error("Error loading conversation history:", error);
+        }
+    }
+
+    // Load the history when the page loads
+    loadConversationHistory();
 
     // Handle Dark/Light Mode buttons (grid-item-15)
     const darkModeButton = document.getElementById("dark-mode-button");
@@ -801,7 +837,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ message: message })
+                    body: JSON.stringify({ message: message, session_id: gameSessionId })
                 });
 
                 if (!response.ok) {
@@ -812,6 +848,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const data = await response.json();
                 gameState.addMessageAsResponse(data.response);
+
+                // Update safety level after getting a response
+                updateSafetyLevel();
 
             } catch (error) {
                 console.error("Error sending message to LLM:", error);
@@ -1115,6 +1154,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update balance every 30 seconds
     setInterval(updateOpenRouterBalance, 30000);
+
+    // Function to fetch and update safety level
+    async function updateSafetyLevel() {
+        if (!gameSessionId) return;
+
+        try {
+            const response = await fetch(`/api/get_safety_level?session_id=${gameSessionId}`);
+            if (!response.ok) {
+                console.error("Failed to fetch safety level:", response.statusText);
+                return;
+            }
+            const data = await response.json();
+            if (data.safety_level !== undefined) {
+                gameState.setDangerIndex(data.safety_level);
+            }
+        } catch (error) {
+            console.error("Error fetching safety level:", error);
+        }
+    }
+
+    // Update safety level on page load and then periodically
+    updateSafetyLevel();
+    setInterval(updateSafetyLevel, 15000); // Update every 15 seconds
 
     const socket = io.connect('http://' + document.domain + ':' + location.port);
 
