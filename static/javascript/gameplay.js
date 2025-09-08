@@ -851,6 +851,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Update safety level after getting a response
                 updateSafetyLevel();
+                // Update perceived time of day after getting a response
+                updatePerceivedTimeOfDay();
 
             } catch (error) {
                 console.error("Error sending message to LLM:", error);
@@ -1176,6 +1178,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update safety level on page load (once)
     updateSafetyLevel();
+
+    // Function to fetch and update perceived time of day
+    async function updatePerceivedTimeOfDay() {
+        if (!gameSessionId) return;
+
+        try {
+            const response = await fetch(`/api/get_perceived_time_of_day?session_id=${gameSessionId}`);
+            if (!response.ok) {
+                console.error("Failed to fetch perceived time of day:", response.statusText);
+                return;
+            }
+            const data = await response.json();
+            if (data.perceived_time_of_day !== undefined) {
+                gameState.setTimeOfDayIndex(data.perceived_time_of_day);
+            }
+        } catch (error) {
+            console.error("Error fetching perceived time of day:", error);
+        }
+    }
+
+    // Update perceived time of day on page load (once)
+    updatePerceivedTimeOfDay();
 
     const socket = io.connect('http://' + document.domain + ':' + location.port);
 

@@ -68,11 +68,8 @@ def get_safety_level(conversation_history: list[dict]) -> int:
         print("API key or small model not found in config.")
         return 0
 
-    # Get the last 6 messages
-    last_messages = conversation_history[-6:]
-    
-    # Format the conversation history for the prompt
-    formatted_history = "\n".join([f"{msg['role']}: {msg['content']}" for msg in last_messages])
+    # Use all available messages, up to the last 6
+    formatted_history = "\n".join([f"{msg['role']}: {msg['content']}" for msg in conversation_history[-6:]])
 
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -108,3 +105,54 @@ if __name__ == "__main__":
         print(f"Fetched OpenRouter balance: ${balance:.2f}")
     else:
         print("Could not retrieve OpenRouter balance.")
+
+def get_perceived_time_of_day(conversation_history: list[dict]) -> int:
+    """
+    Analyzes the conversation history to determine the perceived time of day.
+    """
+    from prompts import PERCEIVED_TIME_SYS, PERCEIVED_TIME_USER
+    
+    # Load LLM config to get API key and small model
+    try:
+        with open(LLM_CONFIG_FILE_PATH, 'r') as f:
+            config = json.load(f)
+        api_key = config.get("api_key")
+        small_model = config.get("small_model")
+    except Exception as e:
+        print(f"Error loading LLM config: {e}")
+        return 13 # Default to unknown if config is missing
+
+    if not api_key or not small_model:
+        print("API key or small model not found in config.")
+        return 13
+
+    # Use all available messages, up to the last 12
+    formatted_history = "\n".join([f"{msg['role']}: {msg['content']}" for msg in conversation_history[-12:]])
+
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model": small_model,
+        "messages": [
+            {"role": "system", "content": PERCEIVED_TIME_SYS},
+            {"role": "user", "content": PERCEIVED_TIME_USER.format(conversation_history=formatted_history)}
+        ],
+        "max_tokens": 1
+    }
+
+    try:
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers=headers,
+            json=payload,
+            timeout=15
+        )
+        response.raise_for_status()
+        result = response.json()
+        perceived_time_index = int(result["choices"][0]["message"]["content"].strip())
+        return max(0, min(13, perceived_time_index)) # Clamp the value between 0 and 13
+    except (requests.exceptions.RequestException, KeyError, ValueError, IndexError) as e:
+        print(f"Error getting perceived time of day: {e}")
+        return 13 # Default to unknown on error

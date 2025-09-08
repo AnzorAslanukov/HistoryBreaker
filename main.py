@@ -16,7 +16,7 @@ import json
 from pathlib import Path  # Import Path from pathlib
 
 from prompts import *
-from backend.agents.basic_nodes import display_openrouter_balance, get_safety_level
+from backend.agents.basic_nodes import display_openrouter_balance, get_safety_level, get_perceived_time_of_day
 from backend.langgraph import query_llm # Import query_llm
 from backend.database.db_manager import ConversationManager # Import ConversationManager
 import uuid # Import uuid for session IDs
@@ -419,6 +419,24 @@ def api_get_safety_level():
 
     safety_level = get_safety_level(conversation_history)
     return jsonify(safety_level=safety_level)
+
+@app.route('/api/get_perceived_time_of_day', methods=['GET'])
+def api_get_perceived_time_of_day():
+    """
+    Analyzes the conversation history and returns the perceived time of day.
+    """
+    session_id = request.args.get('session_id')
+    if not session_id:
+        return jsonify({"error": "Session ID is required"}), 400
+    
+    conversation_history = conversation_manager.load_conversation(session_id)
+    
+    # Ensure there's a conversation to analyze
+    if not conversation_history:
+        return jsonify(perceived_time_of_day=13) # Default to unknown
+
+    perceived_time_of_day = get_perceived_time_of_day(conversation_history)
+    return jsonify(perceived_time_of_day=perceived_time_of_day)
 
 @app.post("/api/save_llm_config")
 def api_save_llm_config():
