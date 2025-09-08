@@ -307,3 +307,73 @@ def get_location_terrain_category(conversation_history: list[dict]) -> int:
             
     # If no specific hint is found after checking all chunks, default to 19 (Unknown/Obscured)
     return 19
+
+def get_temperature(conversation_history: list[dict]) -> int:
+    """
+    Analyzes the conversation history to determine the perceived temperature.
+    Searches backwards in chunks until a temperature hint is found.
+    """
+    from prompts import TEMPERATURE_SYS, TEMPERATURE_USER
+    
+    # Load LLM config to get API key and small model
+    try:
+        with open(LLM_CONFIG_FILE_PATH, 'r') as f:
+            config = json.load(f)
+        api_key = config.get("api_key")
+        small_model = config.get("small_model")
+    except Exception as e:
+        print(f"Error loading LLM config: {e}")
+        return 4 # Default to Mild if config is missing
+
+    if not api_key or not small_model:
+        print("API key or small model not found in config.")
+        return 4
+
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+
+    # Iterate backwards through conversation history in chunks of 12
+    # This allows finding the *last* relevant hint
+    history_length = len(conversation_history)
+    for i in range(history_length, 0, -12):
+        start_index = max(0, i - 12)
+        chunk = conversation_history[start_index:i]
+        
+        if not chunk:
+            continue # Skip empty chunks
+
+        formatted_chunk = "\n".join([f"{msg['role']}: {msg['content']}" for msg in chunk])
+
+        payload = {
+            "model": small_model,
+            "messages": [
+                {"role": "system", "content": TEMPERATURE_SYS},
+                {"role": "user", "content": TEMPERATURE_USER.format(conversation_history=formatted_chunk)}
+            ],
+            "max_tokens": 1
+        }
+
+        try:
+            response = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers=headers,
+                json=payload,
+                timeout=15
+            )
+            response.raise_for_status()
+            result = response.json()
+            temperature_index = int(result["choices"][0]["message"]["content"].strip())
+            
+            # If the LLM returns a valid index (0-7), it means a hint was found in this chunk
+            # If it returns 4 (Mild), it means no hint was found in this chunk.
+            if 0 <= temperature_index <= 7:
+                return temperature_index
+            
+        except (requests.exceptions.RequestException, KeyError, ValueError, IndexError) as e:
+            print(f"Error getting temperature for chunk: {e}")
+            # Continue to next chunk if there's an error with this one
+            
+    # If no specific hint is found after checking all chunks, default to 4 (Mild)
+    return 4

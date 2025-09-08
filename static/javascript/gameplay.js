@@ -857,6 +857,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateEnvironmentAccuracyModifier();
                 // Update location/terrain category after getting a response
                 updateLocationTerrainCategory();
+                // Update temperature after getting a response
+                updateTemperature();
 
             } catch (error) {
                 console.error("Error sending message to LLM:", error);
@@ -1248,6 +1250,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update location/terrain category on page load (once)
     updateLocationTerrainCategory();
+
+    // Function to fetch and update temperature
+    async function updateTemperature() {
+        if (!gameSessionId) return;
+
+        try {
+            const response = await fetch(`/api/get_temperature?session_id=${gameSessionId}`);
+            if (!response.ok) {
+                console.error("Failed to fetch temperature:", response.statusText);
+                return;
+            }
+            const data = await response.json();
+            if (data.temperature !== undefined) {
+                gameState.setTemperatureIndex(data.temperature);
+            }
+        } catch (error) {
+            console.error("Error fetching temperature:", error);
+        }
+    }
+
+    // Update temperature on page load (once)
+    updateTemperature();
 
     const socket = io.connect('http://' + document.domain + ':' + location.port);
 

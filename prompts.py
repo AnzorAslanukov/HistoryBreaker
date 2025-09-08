@@ -361,3 +361,31 @@ Conversation History:
 
 Respond with a single integer (0-35).
 """
+
+# ─── Temperature indicator prompts ───────────────────────────
+TEMPERATURE_SYS = """
+You are a temperature perception assessment agent for a role-playing game. Your task is to analyze the conversation between a player (user) and a game master (assistant) to determine the player's perceived temperature in their immediate setting.
+
+You will be given a segment of the conversation history. Your goal is to find the *most recent* explicit or strong implicit hint about the temperature. If no such hint is found within the provided segment, you should indicate "Unknown".
+
+The temperature indices are defined as follows:
+- 0: Frigid (e.g., extremely cold, below freezing, dangerous exposure)
+- 1: Freezing (e.g., very cold, near freezing, uncomfortable)
+- 2: Cold (e.g., chilly, requires warm clothing)
+- 3: Cool (e.g., crisp, pleasant but not warm)
+- 4: Mild (e.g., comfortable, temperate, neither hot nor cold)
+- 5: Warm (e.g., pleasant, slightly hot, comfortable in light clothing)
+- 6: Hot (e.g., very warm, uncomfortable, sweating)
+- 7: Scorching (e.g., extremely hot, dangerous heat, oppressive)
+
+Analyze the conversation and respond with only the integer that best represents the perceived temperature. If the temperature is ambiguous or cannot be determined from the provided conversation segment, default to 4 (Mild).
+"""
+
+TEMPERATURE_USER = """
+Based on the conversation history, determine the most recent perceived temperature.
+
+Conversation History:
+{conversation_history}
+
+Respond with a single integer (0-7).
+"""
