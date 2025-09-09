@@ -52,6 +52,10 @@ def get_safety_level(conversation_history: list[dict]) -> int:
     """
     Analyzes the conversation history to determine the threat level.
     """
+    # If there is no history, the safety level is unknown.
+    if not conversation_history:
+        return 5 # Return Unknown
+
     from prompts import SAFETY_INDICATOR_SYS, SAFETY_INDICATOR_USER
     
     # Load LLM config to get API key and small model
@@ -62,11 +66,11 @@ def get_safety_level(conversation_history: list[dict]) -> int:
         small_model = config.get("small_model")
     except Exception as e:
         print(f"Error loading LLM config: {e}")
-        return 0 # Default to peaceful if config is missing
+        return 5 # Default to unknown if config is missing
 
     if not api_key or not small_model:
         print("API key or small model not found in config.")
-        return 0
+        return 5
 
     # Use all available messages, up to the last 6
     formatted_history = "\n".join([f"{msg['role']}: {msg['content']}" for msg in conversation_history[-6:]])
@@ -94,10 +98,10 @@ def get_safety_level(conversation_history: list[dict]) -> int:
         response.raise_for_status()
         result = response.json()
         threat_level = int(result["choices"][0]["message"]["content"].strip())
-        return max(0, min(4, threat_level)) # Clamp the value between 0 and 4
+        return max(0, min(5, threat_level)) # Clamp the value between 0 and 5
     except (requests.exceptions.RequestException, KeyError, ValueError, IndexError) as e:
         print(f"Error getting safety level: {e}")
-        return 0 # Default to peaceful on error
+        return 5 # Default to unknown on error
 
 if __name__ == "__main__":
     balance = display_openrouter_balance()
@@ -313,6 +317,10 @@ def get_temperature(conversation_history: list[dict]) -> int:
     Analyzes the conversation history to determine the perceived temperature.
     Searches backwards in chunks until a temperature hint is found.
     """
+    # If there is no history, the temperature is unknown.
+    if not conversation_history:
+        return 8 # Return Unknown
+
     from prompts import TEMPERATURE_SYS, TEMPERATURE_USER
     
     # Load LLM config to get API key and small model
@@ -323,11 +331,11 @@ def get_temperature(conversation_history: list[dict]) -> int:
         small_model = config.get("small_model")
     except Exception as e:
         print(f"Error loading LLM config: {e}")
-        return 4 # Default to Mild if config is missing
+        return 8 # Default to unknown if config is missing
 
     if not api_key or not small_model:
         print("API key or small model not found in config.")
-        return 4
+        return 8
 
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -366,14 +374,13 @@ def get_temperature(conversation_history: list[dict]) -> int:
             result = response.json()
             temperature_index = int(result["choices"][0]["message"]["content"].strip())
             
-            # If the LLM returns a valid index (0-7), it means a hint was found in this chunk
-            # If it returns 4 (Mild), it means no hint was found in this chunk.
-            if 0 <= temperature_index <= 7:
+            # If the LLM returns a valid index (0-8), it means a hint was found in this chunk
+            if 0 <= temperature_index <= 8:
                 return temperature_index
             
         except (requests.exceptions.RequestException, KeyError, ValueError, IndexError) as e:
             print(f"Error getting temperature for chunk: {e}")
             # Continue to next chunk if there's an error with this one
             
-    # If no specific hint is found after checking all chunks, default to 4 (Mild)
-    return 4
+    # If no specific hint is found after checking all chunks, default to 8 (Unknown)
+    return 8

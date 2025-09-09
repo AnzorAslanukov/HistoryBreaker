@@ -231,12 +231,13 @@ The threat levels are defined as follows:
 - 2 (Wary): The situation is tense. There are signs of possible danger, social conflict, or a direct but non-violent threat.
 - 3 (Imminent Danger): A direct threat to the player's safety is present and likely to occur soon. This could be a verbal threat of violence, the presence of weapons, or a clearly hostile environment.
 - 4 (Critical): The player is in immediate, life-threatening danger. An attack is happening or is about to happen.
+- 5 (Unknown): The safety level is ambiguous or cannot be determined from the conversation.
 
-Analyze the conversation and respond with only the integer that best represents the threat level. If the threat level is ambiguous or cannot be determined, default to 0.
+Analyze the conversation and respond with only the integer that best represents the threat level. If the threat level is ambiguous or cannot be determined, default to 5.
 """
 
 SAFETY_INDICATOR_USER = """
-Based on the last 6 messages of the conversation, determine the threat level from 0 (Peaceful) to 4 (Critical).
+Based on the last 6 messages of the conversation, determine the threat level from 0 (Peaceful) to 4 (Critical), or 5 (Unknown).
 
 Conversation History:
 {conversation_history}
@@ -377,8 +378,9 @@ The temperature indices are defined as follows:
 - 5: Warm (e.g., pleasant, slightly hot, comfortable in light clothing)
 - 6: Hot (e.g., very warm, uncomfortable, sweating)
 - 7: Scorching (e.g., extremely hot, dangerous heat, oppressive)
+- 8: Unknown (e.g., no clear indication of temperature, ambiguous, or outside the defined range)
 
-Analyze the conversation and respond with only the integer that best represents the perceived temperature. If the temperature is ambiguous or cannot be determined from the provided conversation segment, default to 4 (Mild).
+Analyze the conversation and respond with only the integer that best represents the perceived temperature. If the temperature is ambiguous or cannot be determined from the provided conversation segment, default to 8.
 """
 
 TEMPERATURE_USER = """
@@ -387,5 +389,5 @@ Based on the conversation history, determine the most recent perceived temperatu
 Conversation History:
 {conversation_history}
 
-Respond with a single integer (0-7).
+Respond with a single integer (0-8).
 """

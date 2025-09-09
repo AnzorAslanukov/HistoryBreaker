@@ -413,10 +413,6 @@ def api_get_safety_level():
     
     conversation_history = conversation_manager.load_conversation(session_id)
     
-    # Ensure there's a conversation to analyze
-    if not conversation_history:
-        return jsonify(safety_level=0)
-
     safety_level = get_safety_level(conversation_history)
     return jsonify(safety_level=safety_level)
 
@@ -485,10 +481,6 @@ def api_get_temperature():
     
     conversation_history = conversation_manager.load_conversation(session_id)
     
-    # Ensure there's a conversation to analyze
-    if not conversation_history:
-        return jsonify(temperature=4) # Default to Mild
-
     temperature = get_temperature(conversation_history)
     return jsonify(temperature=temperature)
 

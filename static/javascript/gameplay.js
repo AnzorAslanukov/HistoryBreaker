@@ -4,11 +4,12 @@ const dangerIndicatorcolors = [
   "#ffc107",  // Tier 1  (Cautious)
   "#ff9800",  // Tier 2  (Wary)
   "#f44336",  // Tier 3  (Imminent Danger)
-  "#6a0dad"   // Tier 4  (Critical)
+  "#6a0dad",   // Tier 4  (Critical)
+  "#666666"    // Tier 5  (Unknown)
 ];
 
-const dangerIndicatorEmojis = ["😇","⚠️","👀","🚨","💀"];
-const dangerIndicatorLabels = ["Peaceful", "Cautious", "Wary", "Imminent Danger", "Critical"];
+const dangerIndicatorEmojis = ["😇","⚠️","👀","🚨","💀","❓"];
+const dangerIndicatorLabels = ["Peaceful", "Cautious", "Wary", "Imminent Danger", "Critical", "Unknown"];
 
 const timeOfDayLabels = [
   "Just Before Sunrise",
@@ -160,7 +161,8 @@ const temperatureTierNames = [
   "Mild",
   "Warm",
   "Hot",
-  "Scorching"
+  "Scorching",
+  "Unknown"
 ];
 
 const temperatureSymbols = [
@@ -171,7 +173,8 @@ const temperatureSymbols = [
   "💧",
   "♨️",
   "♨️",
-  "🔥"
+  "🔥",
+  "❓"
 ];
 
 const temperatureColors = [
@@ -182,7 +185,8 @@ const temperatureColors = [
   "#d14fbc",
   "#182971",
   "#419472",
-  "#35b2d0"
+  "#35b2d0",
+  "#666666"
 ];
 
 // DOM State Controller Class
