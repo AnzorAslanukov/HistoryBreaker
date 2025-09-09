@@ -16,7 +16,7 @@ import json
 from pathlib import Path  # Import Path from pathlib
 
 from prompts import *
-from backend.agents.basic_nodes import display_openrouter_balance, get_safety_level, get_perceived_time_of_day, get_environment_accuracy_modifier, get_location_terrain_category, get_temperature
+from backend.agents.basic_nodes import display_openrouter_balance, get_safety_level, get_perceived_time_of_day, get_environment_accuracy_modifier, get_location_terrain_category, get_temperature, count_tokens, get_total_input_tokens, get_total_output_tokens # Import token counters
 from backend.langgraph import query_llm # Import query_llm
 from backend.database.db_manager import ConversationManager # Import ConversationManager
 import uuid # Import uuid for session IDs
@@ -484,6 +484,30 @@ def api_get_temperature():
     temperature = get_temperature(conversation_history)
     return jsonify(temperature=temperature)
 
+@app.route('/api/get_total_input_tokens', methods=['GET'])
+def api_get_total_input_tokens():
+    """
+    Retrieves the total input tokens for the current session.
+    """
+    session_id = request.args.get('session_id')
+    if not session_id:
+        return jsonify({"error": "Session ID is required"}), 400
+    
+    total_input_tokens = get_total_input_tokens(session_id)
+    return jsonify(total_input_tokens=total_input_tokens)
+
+@app.route('/api/get_total_output_tokens', methods=['GET'])
+def api_get_total_output_tokens():
+    """
+    Retrieves the total output tokens for the current session.
+    """
+    session_id = request.args.get('session_id')
+    if not session_id:
+        return jsonify({"error": "Session ID is required"}), 400
+    
+    total_output_tokens = get_total_output_tokens(session_id)
+    return jsonify(total_output_tokens=total_output_tokens)
+
 @app.post("/api/save_llm_config")
 def api_save_llm_config():
     """
@@ -820,8 +844,22 @@ def api_chat_query():
     if not session_id:
         return jsonify({"response": "Session ID missing."}), 400
 
-    # Save user message
-    conversation_manager.save_message(session_id, "user", user_message)
+    # Load LLM config to get model names for token counting
+    llm_config = load_llm_config()
+    if not llm_config:
+        return jsonify({"response": "LLM configuration missing."}), 500
+    
+    small_model_name = llm_config.get("small_model")
+    main_model_name = llm_config.get("main_model")
+
+    if not small_model_name or not main_model_name:
+        return jsonify({"response": "LLM model names not configured."}), 500
+
+    # Calculate input tokens for the user message
+    user_input_tokens = count_tokens(user_message, small_model_name) # Assuming small_model for user input context
+
+    # Save user message with input token count
+    conversation_manager.save_message(session_id, "user", user_message, input_tokens=user_input_tokens)
 
     # Load entire conversation history for the session
     conversation_history = conversation_manager.load_conversation(session_id)
@@ -829,8 +867,11 @@ def api_chat_query():
     # Pass the conversation history to the LLM
     llm_response = query_llm(conversation_history)
     
-    # Save assistant response
-    conversation_manager.save_message(session_id, "assistant", llm_response)
+    # Calculate output tokens for the LLM response
+    llm_output_tokens = count_tokens(llm_response, main_model_name) # Assuming main_model for LLM response
+
+    # Save assistant response with output token count
+    conversation_manager.save_message(session_id, "assistant", llm_response, output_tokens=llm_output_tokens)
 
     return jsonify({"response": llm_response})
 

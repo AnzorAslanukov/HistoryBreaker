@@ -1,11 +1,27 @@
 import requests
 import json
+import tiktoken # Import tiktoken
 
 # --- Global Constants for Flask and API interactions ---
 FLASK_UPDATE_URL = "http://127.0.0.1:5000/update_label"
 FLASK_HEADERS = {'Content-Type': 'application/json'}
 OPENROUTER_API_CREDITS_URL = "https://openrouter.ai/api/v1/credits"
 LLM_CONFIG_FILE_PATH = "static/json/llm_config.json"
+
+def count_tokens(text: str, model_name: str) -> int:
+    """
+    Counts the number of tokens in a text string using tiktoken.
+    Assumes the model_name is compatible with OpenAI's tiktoken encodings.
+    """
+    try:
+        encoding = tiktoken.encoding_for_model(model_name)
+    except KeyError:
+        # Fallback for models not directly supported by tiktoken's model mapping
+        # Use a common encoding like 'cl100k_base' which is used by gpt-4, gpt-3.5-turbo
+        encoding = tiktoken.get_encoding("cl100k_base")
+    
+    return len(encoding.encode(text))
+
 
 def load_api_key(config_path):
     """Loads the API key from the specified JSON config file."""
@@ -384,3 +400,21 @@ def get_temperature(conversation_history: list[dict]) -> int:
             
     # If no specific hint is found after checking all chunks, default to 8 (Unknown)
     return 8
+
+from backend.database.db_manager import ConversationManager
+
+def get_total_input_tokens(session_id: str) -> int:
+    """
+    Retrieves the total input tokens for a given session ID from the database.
+    """
+    manager = ConversationManager()
+    total_input, _ = manager.get_total_tokens(session_id)
+    return total_input
+
+def get_total_output_tokens(session_id: str) -> int:
+    """
+    Retrieves the total output tokens for a given session ID from the database.
+    """
+    manager = ConversationManager()
+    _, total_output = manager.get_total_tokens(session_id)
+    return total_output

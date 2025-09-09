@@ -863,6 +863,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateLocationTerrainCategory();
                 // Update temperature after getting a response
                 updateTemperature();
+                // Update token counters after getting a response
+                updateTokenCounters();
 
             } catch (error) {
                 console.error("Error sending message to LLM:", error);
@@ -1276,6 +1278,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update temperature on page load (once)
     updateTemperature();
+
+    // Function to fetch and update token counters
+    async function updateTokenCounters() {
+        if (!gameSessionId) return;
+
+        try {
+            const inputResponse = await fetch(`/api/get_total_input_tokens?session_id=${gameSessionId}`);
+            const outputResponse = await fetch(`/api/get_total_output_tokens?session_id=${gameSessionId}`);
+
+            if (!inputResponse.ok || !outputResponse.ok) {
+                console.error("Failed to fetch token counters:", inputResponse.statusText, outputResponse.statusText);
+                return;
+            }
+
+            const inputData = await inputResponse.json();
+            const outputData = await outputResponse.json();
+
+            if (inputData.total_input_tokens !== undefined) {
+                gameState.elements.gridItem6Right.textContent = inputData.total_input_tokens;
+            }
+            if (outputData.total_output_tokens !== undefined) {
+                gameState.elements.gridItem14Right.textContent = outputData.total_output_tokens;
+            }
+
+        } catch (error) {
+            console.error("Error fetching token counters:", error);
+        }
+    }
+
+    // Update token counters on page load (once)
+    updateTokenCounters();
 
     const socket = io.connect('http://' + document.domain + ':' + location.port);
 
