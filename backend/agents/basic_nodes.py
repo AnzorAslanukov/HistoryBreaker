@@ -418,3 +418,167 @@ def get_total_output_tokens(session_id: str) -> int:
     manager = ConversationManager()
     _, total_output = manager.get_total_tokens(session_id)
     return total_output
+
+from prompts import TESA_ANCHOR_IDENTIFIER_SYS, TESA_ANCHOR_IDENTIFIER_USER
+import random
+
+def format_time(seconds: float) -> str:
+    """
+    Formats a duration in seconds into a human-readable string with units.
+    """
+    if seconds < 60:
+        return f"{seconds:.1f}s"
+    elif seconds < 3600:
+        return f"{seconds / 60:.1f}m"
+    elif seconds < 86400:
+        return f"{seconds / 3600:.1f}h"
+    elif seconds < 604800:
+        return f"{seconds / 86400:.1f}d"
+    elif seconds < 2592000:
+        return f"{seconds / 604800:.1f}w"
+    elif seconds < 31536000:
+        return f"{seconds / 2592000:.1f}M"
+    else:
+        return f"{seconds / 31536000:.1f}y"
+
+def temporal_drift(objective_seconds: int) -> float:
+    """
+    Calculates the base temporal drift in seconds based on objective seconds.
+    """
+    objective_days = objective_seconds / 86400.0
+    if objective_days < 1:
+        return 0.0
+    elif objective_days < 7:
+        drift_days = objective_days * 0.25
+    elif objective_days < 30:
+        drift_days = 1.75 + (objective_days - 7) * 0.5
+    elif objective_days < 365:
+        drift_days = 15 + (objective_days - 30) * 0.05
+    elif objective_days < 3650:
+        drift_days = 34 + (objective_days - 365) * 0.0027
+    else:
+        drift_days = 365.0
+    return drift_days * 86400.0
+
+def apply_anchor_modifiers(current_drift: float, anchors: list[str]) -> float:
+    """
+    Applies time anchor reduction effects to the current drift.
+    """
+    reductions = {
+        "mechanical_watch": 0.95,
+        "diary": 0.8,
+        "moon_cycle_tracking": 0.7,
+        "npc_date_mention": 0.9,
+        "seasonal_festival": 0.6,
+        "none": 1.0
+    }
+    for anchor in anchors:
+        current_drift *= reductions.get(anchor, 1.0)
+    return max(current_drift, 0.1)
+
+def get_tesa_indicator(session_id: str) -> dict:
+    """
+    Calculates the TESA (Time Elapsed Since Arrival) indicator values.
+    """
+    try:
+        manager = ConversationManager()
+        objective_time_seconds = manager.get_latest_objective_time(session_id)
+        conversation_history = manager.load_conversation(session_id)
+
+        if objective_time_seconds == 0 and not conversation_history:
+            return {
+                "perceived_time_days": "Unknown",
+                "temporal_drift_days": "Unknown",
+                "time_anchors_identified": []
+            }
+
+        # Load LLM config
+        try:
+            with open(LLM_CONFIG_FILE_PATH, 'r') as f:
+                config = json.load(f)
+            api_key = config.get("api_key")
+            small_model = config.get("small_model")
+        except Exception as e:
+            print(f"Error loading LLM config: {e}")
+            return {
+                "perceived_time_days": "Unknown",
+                "temporal_drift_days": "Unknown",
+                "time_anchors_identified": []
+            }
+
+        if not api_key or not small_model:
+            print("API key or small model not found in config.")
+            return {
+                "perceived_time_days": "Unknown",
+                "temporal_drift_days": "Unknown",
+                "time_anchors_identified": []
+            }
+
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        }
+
+        # Use the last 24 messages to identify time anchors
+        formatted_history = "\n".join([f"{msg['role']}: {msg['content']}" for msg in conversation_history[-24:]])
+
+        payload = {
+            "model": small_model,
+            "messages": [
+                {"role": "system", "content": TESA_ANCHOR_IDENTIFIER_SYS},
+                {"role": "user", "content": TESA_ANCHOR_IDENTIFIER_USER.format(
+                    conversation_history=formatted_history
+                )}
+            ],
+            "max_tokens": 100
+        }
+
+        time_anchors = []
+        try:
+            response = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers=headers,
+                json=payload,
+                timeout=30
+            )
+            response.raise_for_status()
+            result = response.json()
+            llm_output = result["choices"][0]["message"]["content"].strip()
+            
+            # Strip markdown code block if present
+            if llm_output.startswith("```json"):
+                llm_output = llm_output[7:-3].strip()
+            
+            try:
+                parsed_output = json.loads(llm_output)
+                time_anchors = parsed_output.get("time_anchors_identified", [])
+            except json.JSONDecodeError as json_e:
+                print(f"JSON decoding error from LLM: {json_e}. LLM output: {llm_output}")
+                time_anchors = [] # Default to no anchors if JSON is invalid
+        except (requests.exceptions.RequestException, KeyError, ValueError, IndexError) as e:
+            print(f"Error identifying time anchors: {e}")
+            time_anchors = [] # Default to no anchors on API or other errors
+
+        # Perform calculations in Python
+        base_drift_seconds = temporal_drift(objective_time_seconds)
+        final_drift_seconds = apply_anchor_modifiers(base_drift_seconds, time_anchors)
+        
+        # Perceived time is a random value within the drift range
+        # Ensure final_drift is not negative before using in random.uniform
+        if final_drift_seconds < 0:
+            final_drift_seconds = 0.1 # Set a minimum to avoid issues with random.uniform
+
+        perceived_time_seconds = objective_time_seconds - final_drift_seconds + random.uniform(0, final_drift_seconds)
+
+        return {
+            "perceived_time_days": format_time(perceived_time_seconds),
+            "temporal_drift_days": f"±{format_time(final_drift_seconds)}",
+            "time_anchors_identified": time_anchors
+        }
+    except Exception as e:
+        print(f"An unexpected error occurred in get_tesa_indicator: {e}")
+        return {
+            "perceived_time_days": "Unknown",
+            "temporal_drift_days": "Unknown",
+            "time_anchors_identified": []
+        }

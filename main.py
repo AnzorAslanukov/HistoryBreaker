@@ -16,7 +16,7 @@ import json
 from pathlib import Path  # Import Path from pathlib
 
 from prompts import *
-from backend.agents.basic_nodes import display_openrouter_balance, get_safety_level, get_perceived_time_of_day, get_environment_accuracy_modifier, get_location_terrain_category, get_temperature, count_tokens, get_total_input_tokens, get_total_output_tokens # Import token counters
+from backend.agents.basic_nodes import display_openrouter_balance, get_safety_level, get_perceived_time_of_day, get_environment_accuracy_modifier, get_location_terrain_category, get_temperature, count_tokens, get_total_input_tokens, get_total_output_tokens, get_tesa_indicator # Import token counters and TESA
 from backend.langgraph import query_llm # Import query_llm
 from backend.database.db_manager import ConversationManager # Import ConversationManager
 import uuid # Import uuid for session IDs
@@ -858,8 +858,12 @@ def api_chat_query():
     # Calculate input tokens for the user message
     user_input_tokens = count_tokens(user_message, small_model_name) # Assuming small_model for user input context
 
-    # Save user message with input token count
-    conversation_manager.save_message(session_id, "user", user_message, input_tokens=user_input_tokens)
+    # Get the latest objective time and increment it by 60 seconds
+    latest_objective_time = conversation_manager.get_latest_objective_time(session_id)
+    new_objective_time = latest_objective_time + 60
+
+    # Save user message with input token count and new objective time
+    conversation_manager.save_message(session_id, "user", user_message, input_tokens=user_input_tokens, objective_time=new_objective_time)
 
     # Load entire conversation history for the session
     conversation_history = conversation_manager.load_conversation(session_id)
@@ -870,8 +874,14 @@ def api_chat_query():
     # Calculate output tokens for the LLM response
     llm_output_tokens = count_tokens(llm_response, main_model_name) # Assuming main_model for LLM response
 
-    # Save assistant response with output token count
-    conversation_manager.save_message(session_id, "assistant", llm_response, output_tokens=llm_output_tokens)
+    # Save assistant response with output token count and the same new objective time
+    conversation_manager.save_message(session_id, "assistant", llm_response, output_tokens=llm_output_tokens, objective_time=new_objective_time)
+
+    # Calculate and store TESA data
+    tesa_data = get_tesa_indicator(session_id)
+    game_state = session.get('game_state', {})
+    game_state['tesa'] = tesa_data
+    session['game_state'] = game_state
 
     return jsonify({"response": llm_response})
 
@@ -928,19 +938,6 @@ def get_game_state():
     game_state = session.get('game_state', {})
     return jsonify(game_state=game_state)
 
-@app.route('/api/set_tesa_data', methods=['POST'])
-def set_tesa_data():
-    """
-    Saves TESA data to the session.
-    """
-    data = request.get_json()
-    if 'perceived_time' in data and 'temporal_drift' in data:
-        game_state = session.get('game_state', {})
-        game_state['perceived_time'] = data['perceived_time']
-        game_state['temporal_drift'] = data['temporal_drift']
-        session['game_state'] = game_state
-        return jsonify(success=True)
-    return jsonify(success=False, message="Invalid data"), 400
 
 # tiny helper other modules can import
 def load_llm_config() -> dict | None:

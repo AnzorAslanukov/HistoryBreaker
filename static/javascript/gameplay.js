@@ -409,33 +409,6 @@ class GameStateController {
     }
     
     // TESA Methods
-    async _syncTESADataWithServer() {
-        try {
-            const response = await fetch('/api/set_tesa_data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    perceived_time: this.getPerceivedTime(),
-                    temporal_drift: this.getTemporalDrift()
-                })
-            });
-            if (!response.ok) {
-                console.error("Failed to sync TESA data with server:", response.statusText);
-                return;
-            }
-            const result = await response.json();
-            if (result.success) {
-                console.log("TESA data successfully synced with server.");
-            } else {
-                console.error("Server failed to save TESA data.");
-            }
-        } catch (error) {
-            console.error("Error syncing TESA data with server:", error);
-        }
-    }
-
     // Internal UI-only update methods
     _updatePerceivedTimeUI(timeString) {
         this.elements.perceivedTime.textContent = timeString;
@@ -447,10 +420,9 @@ class GameStateController {
         sessionStorage.setItem('temporalDrift', driftString); 
     }
 
-    // Public methods that also sync with the server
+    // Public methods
     setPerceivedTime(timeString) {
         this._updatePerceivedTimeUI(timeString);
-        this._syncTESADataWithServer();
         return true;
     }
     
@@ -460,7 +432,6 @@ class GameStateController {
     
     setTemporalDrift(driftString) {
         this._updateTemporalDriftUI(driftString);
-        this._syncTESADataWithServer();
         return true;
     }
     
@@ -471,7 +442,6 @@ class GameStateController {
     setTESAData(perceivedTime, temporalDrift) {
         this._updatePerceivedTimeUI(perceivedTime);
         this._updateTemporalDriftUI(temporalDrift);
-        this._syncTESADataWithServer(); // Sync with server
         return true;
     }
     
@@ -1112,14 +1082,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const serverState = await response.json();
 
             if (serverState && serverState.game_state) {
-                const { perceived_time, temporal_drift } = serverState.game_state;
-
                 // Use internal UI-only methods to prevent feedback loop
-                if (perceived_time && gameState.getPerceivedTime() !== perceived_time) {
-                    gameState._updatePerceivedTimeUI(perceived_time);
-                }
-                if (temporal_drift && gameState.getTemporalDrift() !== temporal_drift) {
-                    gameState._updateTemporalDriftUI(temporal_drift);
+                if (serverState.game_state.tesa) {
+                    const { perceived_time_days, temporal_drift_days } = serverState.game_state.tesa;
+                    if (perceived_time_days) {
+                        gameState._updatePerceivedTimeUI(perceived_time_days);
+                    }
+                    if (temporal_drift_days) {
+                        gameState._updateTemporalDriftUI(temporal_drift_days);
+                    }
                 }
             }
         } catch (error) {

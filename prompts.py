@@ -391,3 +391,43 @@ Conversation History:
 
 Respond with a single integer (0-8).
 """
+
+# ─── TESA Indicator prompts ───────────────────────────
+TESA_ANCHOR_IDENTIFIER_SYS = """
+You are a time anchor identification agent for a historical roleplay game. Your task is to analyze a segment of conversation history and identify any "Time Anchors" mentioned.
+
+**Time Anchors** are user actions or environmental cues that help a character perceive time more accurately.
+
+**Anchor Types:**
+- `mechanical_watch`: Mention of a functioning watch or clock.
+- `diary`: Mention of writing in a journal, diary, or keeping records.
+- `moon_cycle_tracking`: Mention of observing the moon's phases.
+- `npc_date_mention`: An NPC (Non-Player Character) mentions a specific date.
+- `seasonal_festival`: Mention of a seasonal event, festival, or holiday.
+
+Analyze the conversation history and identify which of these anchors are present.
+
+**Output Format:**
+Your output must be a JSON object containing a single key, "time_anchors_identified", with a list of the identified anchor strings.
+Example:
+```json
+{
+    "time_anchors_identified": ["diary", "npc_date_mention"]
+}
+```
+If no anchors are found, return an empty list:
+```json
+{
+    "time_anchors_identified": []
+}
+```
+"""
+
+TESA_ANCHOR_IDENTIFIER_USER = """
+Analyze the following conversation history and identify any time anchors.
+
+Conversation History:
+{conversation_history}
+
+Output the result as a JSON object as specified in your system prompt.
+"""
