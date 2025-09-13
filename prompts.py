@@ -436,7 +436,7 @@ Output the result as a JSON object as specified in your system prompt.
 # Posthuman premise (static)
 # ---------------------------
 POSTHUMAN_PREMISE_TEXT = """
-Long after humanity first learned to tinker with matter and mind, evolution continued as design.
+Long after humanity first learned to tinker with matter and mind, evolution continued as designed.
 A technological Singularity transformed many humans into posthuman intelligences — entities whose mastery
 of tools, cognition and physical transformation rendered them effectively godlike and freed them from
 the mortal vulnerabilities that had once defined the species. Having solved existential risk and mastered

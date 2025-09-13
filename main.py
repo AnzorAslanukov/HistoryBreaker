@@ -17,7 +17,7 @@ from pathlib import Path  # Import Path from pathlib
 
 from prompts import *
 from backend.agents.basic_nodes import display_openrouter_balance, get_safety_level, get_perceived_time_of_day, get_environment_accuracy_modifier, get_location_terrain_category, get_temperature, count_tokens, get_total_input_tokens, get_total_output_tokens, get_tesa_indicator # Import token counters and TESA
-from backend.langgraph import query_llm # Import query_llm
+from backend.langgraph import query_llm, generate_posthuman_premise, generate_character_backgrounds, resolve_selected_year, generate_arrival_scenario # Import langgraph helpers
 from backend.database.db_manager import ConversationManager # Import ConversationManager
 import uuid # Import uuid for session IDs
 
@@ -394,12 +394,53 @@ def gameplay():
 def get_conversation_history():
     """
     Fetches the conversation history for the current session ID.
+    If the conversation is empty (no rows), and the DB/file exist, initialize
+    the session with the three-part introduction (posthuman premise, character backgrounds,
+    arrival scenario) and save those messages into the conversation DB so the frontend
+    will display them on first load.
     """
     session_id = request.args.get('session_id')
     if not session_id:
         return jsonify({"error": "Session ID is required"}), 400
-    
+
+    # Load existing history
     history = conversation_manager.load_conversation(session_id)
+
+    # If no messages exist for this session, generate and persist the intro sequence
+    if not history:
+        try:
+            # Section 1: posthuman premise (static)
+            premise_msg = generate_posthuman_premise()  # dict with role/content
+
+            # Load game_config for character backgrounds and arrival
+            game_cfg = {}
+            try:
+                if GAME_CONFIG_FILE.exists():
+                    with open(GAME_CONFIG_FILE, 'r', encoding='utf-8') as f:
+                        game_cfg = json.load(f)
+            except Exception:
+                game_cfg = {}
+
+            # Section 2: character backgrounds
+            backgrounds_msg = generate_character_backgrounds(game_cfg)
+
+            # Section 3: resolve year and arrival scenario
+            resolved_year = resolve_selected_year(game_cfg) if isinstance(game_cfg, dict) else None
+            arrival_msg = generate_arrival_scenario(game_cfg, resolved_year)
+
+            # Persist the three messages to the conversation DB as assistant messages
+            for sys_msg in (premise_msg, backgrounds_msg, arrival_msg):
+                content = sys_msg.get("content") if isinstance(sys_msg, dict) else str(sys_msg)
+                # Save as 'assistant' role so the frontend will render them
+                conversation_manager.save_message(session_id, "assistant", content, output_tokens=0, objective_time=0)
+
+            # Reload history after inserting intro messages
+            history = conversation_manager.load_conversation(session_id)
+        except Exception as e:
+            app.logger.error(f"Error initializing intro messages for session {session_id}: {e}")
+            # Fall back to returning empty history if insertion fails
+            history = conversation_manager.load_conversation(session_id)
+
     return jsonify(history)
 
 @app.route('/api/get_safety_level', methods=['GET'])
