@@ -431,3 +431,30 @@ Conversation History:
 
 Output the result as a JSON object as specified in your system prompt.
 """
+
+# ---------------------------
+# Posthuman premise (static)
+# ---------------------------
+POSTHUMAN_PREMISE_TEXT = """
+Long after humanity first learned to tinker with matter and mind, evolution continued as design.
+A technological Singularity transformed many humans into posthuman intelligences — entities whose mastery
+of tools, cognition and physical transformation rendered them effectively godlike and freed them from
+the mortal vulnerabilities that had once defined the species. Having solved existential risk and mastered
+their local physics, these posthumans retreated into higher-dimensional domains of operation, leaving the
+cold, physical universe to persist largely untouched as if it were a sanctuary for the wild processes
+that once shaped life.
+
+Within their new realms, some posthumans treat history as a theater and the physical universe as a curated wildlife refuge.
+They observe, catalogue, and—at times—intervene in cruel or careless ways for amusement. A subset have developed
+a macabre pastime: manipulating timelines like stagehands. They abduct people and objects from one era and deposit
+them in another, or nudge events slightly off-course, all to study behavioral responses or to provoke unexpected drama.
+These manipulations are engineered with precise, programmable frameworks where chronological periods are abstracted
+into configurable modules. Engineers may snapshot, backup or roll back particular strands of time; they may insert
+artifacts, nudge memories, or seed events and then watch what happens.
+
+You, and the people who accompanied you, were not volunteers. Rogue posthuman agents—call them pranksters, predators,
+or sociologists—selected your group at random and enacted an experiment. Your transportation was involuntary, mediated
+by chronal engineering whose rules are precise and, to these beings, trivial. The world you now face was never intended
+to be your stage. It is an arrangement, imposed and observed. This message exists to orient you: you did not arrive here
+by chance alone, and the forces responsible remain beyond easy comprehension.
+"""

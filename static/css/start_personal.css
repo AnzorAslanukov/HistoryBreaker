@@ -147,3 +147,41 @@
 .loading-overlay[hidden] {
     display: none !important;
 }
+
+/* Relationship input note and form element styling */
+.input-note {
+    font-size: 0.85rem;
+    color: #666;
+    margin-left: 8px;
+    font-style: normal;
+}
+
+/* Make selects/inputs/textarea inside player blocks visually consistent */
+.player-block label select,
+.player-block label input,
+.player-block label textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+/* Slightly tighter spacing for the relationship select */
+.player-block label select#player_0_relationship,
+.player-block label select[id^="player_"] {
+    min-width: 200px;
+}
+
+/* Ensure TomSelect dropdown matches block styling where possible */
+.ts-control {
+    border-radius: 6px !important;
+    border: 1px solid #dcdcdc !important;
+}
+
+/* Keep overlay rule at the end */
+.loading-overlay[hidden] {
+    display: none !important;
+}

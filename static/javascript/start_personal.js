@@ -311,6 +311,7 @@ function getPlayerData(index) {
         native_languages: getSelectedLanguages(index),
         items_carried: document.getElementById(`${base}items`)?.value || '',
         physical_description: document.getElementById(`${base}phys`)?.value || '',
+        relationship: document.getElementById(`${base}relationship`)?.value || 'Stranger',
         personality_traits: {
             mbti: (
                 document.querySelector(`[name="${base}mbti_ie"]`)?.value +
@@ -712,6 +713,15 @@ function buildPlayerBlock(i, wrapper) {
                     maxlength="2000" required></textarea>
             <span class="status-icon" id="phys_status_${i}"></span>
         </label>
+        ${i > 0 ? `
+        <label>
+            <div class="label-header">
+                Relationship to user:
+                <small class="input-note">Select how this player is related to the user — helps provide roleplay context.</small>
+            </div>
+            <select id="player_${i}_relationship" name="player_${i}_relationship"></select>
+        </label>
+        ` : ``}
         <label>Personality Type (MBTI Dichotomies):<br>
             I/E:
             <select id="player_${i}_mbti_ie" 
@@ -902,6 +912,42 @@ function buildPlayerBlock(i, wrapper) {
                 sortField: { field: "text", direction: "asc" },
             });
             tsEth.on("change", validateForm);
+        }
+
+        const relationSel = document.getElementById(`player_${i}_relationship`);
+        if (relationSel && !relationSel.dataset.populated) {
+            const RELATION_OPTIONS = [
+                "Stranger","Friend","Close Friend","Partner","Spouse","Coworker","Boss",
+                "Father","Mother","Parent","Son","Daughter","Brother","Sister",
+                "Grandfather","Grandmother","Grandson","Granddaughter",
+                "Uncle","Aunt","Nephew","Niece",
+                "Cousin","First Cousin","Second Cousin","Half Cousin",
+                "Sibling","Child","Relative","Other"
+            ];
+            const phRel = document.createElement("option");
+            phRel.value = "Stranger";
+            phRel.textContent = "Stranger";
+            phRel.selected = true;
+            relationSel.appendChild(phRel);
+
+            for (const rel of RELATION_OPTIONS) {
+                if (rel === "Stranger") continue;
+                const o = document.createElement("option");
+                o.value = rel;
+                o.textContent = rel;
+                relationSel.appendChild(o);
+            }
+            relationSel.dataset.populated = "true";
+
+            const tsRel = new TomSelect(relationSel, {
+                placeholder: "Select relationship...",
+                create: false,
+                maxItems: 1,
+                closeAfterSelect: true,
+                plugins: { dropdown_input: {} },
+                sortField: { field: "text", direction: "asc" }
+            });
+            tsRel.on("change", validateForm);
         }
     }, 0);
 }
