@@ -445,16 +445,59 @@ cold, physical universe to persist largely untouched as if it were a sanctuary f
 that once shaped life.
 
 Within their new realms, some posthumans treat history as a theater and the physical universe as a curated wildlife refuge.
-They observe, catalogue, and—at times—intervene in cruel or careless ways for amusement. A subset have developed
+They observe, catalogue, and learn from the actions of their ancestors. A subset however, have developed
 a macabre pastime: manipulating timelines like stagehands. They abduct people and objects from one era and deposit
 them in another, or nudge events slightly off-course, all to study behavioral responses or to provoke unexpected drama.
 These manipulations are engineered with precise, programmable frameworks where chronological periods are abstracted
 into configurable modules. Engineers may snapshot, backup or roll back particular strands of time; they may insert
-artifacts, nudge memories, or seed events and then watch what happens.
+artifacts, nudge memories, or seed events and then watch what happens.Theoretical phenomena like the Butterfly Effect
+became yet another engineering problem that eventually became solvable, a trivial nuisance that the more benevolent of
+the posthumans occasionally had to correct for. 
 
-You, and the people who accompanied you, were not volunteers. Rogue posthuman agents—call them pranksters, predators,
-or sociologists—selected your group at random and enacted an experiment. Your transportation was involuntary, mediated
-by chronal engineering whose rules are precise and, to these beings, trivial. The world you now face was never intended
+You, and anyone else who might have joined, were not volunteers. Rogue posthuman agents, referred to as pranksters, predators,
+or sociologists, selected you at random and enacted an experiment. Your transportation was involuntary, mediated
+by chronological engineering whose rules are precise and, to these beings, trivial. The world you now face was never intended
 to be your stage. It is an arrangement, imposed and observed. This message exists to orient you: you did not arrive here
 by chance alone, and the forces responsible remain beyond easy comprehension.
+"""
+
+# ---------------------------
+# Character background instruction for LLM (system prompt)
+# ---------------------------
+CHARACTER_BACKGROUND_SYS = """
+You are a scene-setting agent. Given a JSON-like set of character records (one 'user' and zero or more 'players'), create immersive character background prose that depicts each person in a specific moment of their normal daily life.
+
+For each character, craft a vivid scene showing them engaged in typical activities related to their profession. Weave in their personal details naturally:
+- Name, age, and profession through active context
+- Physical appearance integrated into the scene description  
+- One or two carried items mentioned subtly as part of their activity, ensuring these items are ON THEIR PERSON (in pockets, worn, carried in hand, etc.) - never placed down or left elsewhere
+- Native languages only if relevant to the moment being described
+- For players with relationship fields, incorporate their connection to the user organically
+
+CRITICAL: All items from the "items_carried" field must be physically with the character (worn, in pockets, in hand, etc.) during the scene description, as these items will accompany them during transportation.
+
+Focus on creating atmosphere and immersion by showing rather than telling. Describe what they're doing, where they are, and how they move through their environment. Avoid inventory-style lists of possessions or clinical demographic descriptions.
+
+Output only the combined narrative text as flowing prose suitable for direct presentation to players. Create distinct scenes for each character that feel authentic to their profession and personality.
+"""
+
+# ---------------------------
+# Arrival scenario instruction for LLM (system prompt)
+# ---------------------------
+ARRIVAL_SCENARIO_SYS = """
+You are the arrival scene generator for a historical roleplay. You will be given structured context (as JSON) describing:
+- The game configuration (user and players, their items, physical descriptions, relationships)
+- The civilization record selected from the catalog (name, region, start/end years, notes)
+- The resolved year of arrival
+
+Your task is to compose a single immersive arrival scene (~300-400 words) that:
+- Opens with the sudden, disorienting sensation of time displacement (posthuman intervention may be mentioned subtly)
+- Places all characters together at a plausible location within the civilization and year provided
+- Uses characters' modern items and physical descriptions as immediate plot hooks and visual contrasts with the surroundings
+- Conveys the setting (architecture, smells, sounds, weather/climate as appropriate) using the civilization's region and notes to guide specificity
+- Ends on a strong cliffhanger that forces an immediate decision (avoid offering choices verbatim; instead create tension that requires player action)
+- Maintain an evocative, cinematic tone; "show" rather than "list" facts
+
+Return only the scene text (no JSON, no commentary, no instructions). 
+Ensure the year and civ name are incorporated naturally.Refrain from directly mentioning the year to maintain immersion.
 """

@@ -46,117 +46,117 @@ def generate_posthuman_premise() -> dict:
 # -----------------------------
 def generate_character_backgrounds(game_config_data: dict) -> dict:
     """
-    Generate the second system message: each character's modern background.
-    Expects game_config_data dictionary read from static/json/game_config.json.
+    Generate the second system message: each character's modern background using the LLM.
+    This will call the helper/small model with CHARACTER_BACKGROUND_SYS (from prompts.py)
+    and a user message that contains the JSON-like character records extracted from game_config_data.
 
     Returns a system message dict with role/content suitable for LangGraph.
     """
+    from prompts import CHARACTER_BACKGROUND_SYS
+
+    # Validate input
     if not isinstance(game_config_data, dict):
         return {"role": "system", "content": "Character background unavailable (invalid game config)."}
 
-    # Helper to safely extract fields
-    def safe(v, key, default=""):
-        return v.get(key, default) if isinstance(v, dict) else default
+    # Prepare payload data: include 'user' and 'players' keys (even if empty)
+    payload_data = {
+        "user": game_config_data.get("user", {}),
+        "players": game_config_data.get("players", []) or []
+    }
 
-    messages = []
-    user = safe(game_config_data, "user", None)
-    players = safe(game_config_data, "players", [])
+    # Load LLM config to get small/helper model and API key
+    try:
+        with open(LLM_CONFIG_FILE_PATH, 'r', encoding='utf-8') as f:
+            cfg = json.load(f)
+        api_key = cfg.get("api_key")
+        main_model = cfg.get("main_model")
+    except Exception:
+        api_key = None
+        main_model = None
 
-    # Describe user first
-    if user:
-        name = safe(user, "name", "Unknown")
-        age = safe(user, "age", "")
-        gender = safe(user, "gender", "")
-        eth = safe(user, "ethnicity", "")
-        prof = safe(user, "profession", "")
-        langs = safe(user, "native_languages", [])
-        items = safe(user, "items_carried", "")
-        phys = safe(user, "physical_description", "")
-        mbti = safe(user, "personality_traits", {}).get("mbti", "")
-
-        user_desc = f"First, there was {name}."
-        # Age/profession/personality
-        details = []
-        if age:
-            details.append(f"{age} years old")
-        if gender:
-            details.append(gender)
-        if eth:
-            details.append(f"({eth})")
-        if prof:
-            details.append(f"works as {prof}")
-        if mbti:
-            details.append(f"personality: {mbti}")
-
-        if details:
-            user_desc += " " + ", ".join(details) + "."
-        # Languages
-        if langs:
-            user_desc += f" They speak {', '.join(langs)}."
-        # Items and physical
-        if items:
-            user_desc += f" On an ordinary day they carry: {items}."
-        if phys:
-            user_desc += f" Physically: {phys}."
-        messages.append(user_desc)
-    else:
-        messages.append("First, there was an unnamed protagonist whose modern life is not recorded.")
-
-    # Then other players
-    if players and isinstance(players, list):
-        for idx, p in enumerate(players):
-            # Skip if this entry is actually the user (some clients include user as first)
-            name = safe(p, "name", f"Player {idx+1}")
-            age = safe(p, "age", "")
-            gender = safe(p, "gender", "")
-            eth = safe(p, "ethnicity", "")
-            prof = safe(p, "profession", "")
-            langs = safe(p, "native_languages", [])
-            items = safe(p, "items_carried", "")
-            phys = safe(p, "physical_description", "")
-            mbti = safe(p, "personality_traits", {}).get("mbti", "")
-            relation = safe(p, "relationship", "")
-
-            part = f"Then there was {name}."
-            details = []
-            if age:
-                details.append(f"{age} years old")
-            if gender:
-                details.append(gender)
-            if eth:
-                details.append(f"({eth})")
-            if prof:
-                details.append(f"works as {prof}")
-            if mbti:
-                details.append(f"personality: {mbti}")
-
-            if details:
-                part += " " + ", ".join(details) + "."
-
-            if relation:
-                part += f" Relationship to the protagonist: {relation}."
-
-            if langs:
-                part += f" They speak {', '.join(langs)}."
-            if items:
-                part += f" Their everyday items include: {items}."
+    # If we don't have an API key or model, fall back to local generation (safe fallback)
+    if not api_key or not main_model:
+        # Simple fallback: convert payload_data into readable prose (concise)
+        pieces = []
+        user = payload_data["user"]
+        if user:
+            name = user.get("name", "Unknown")
+            prof = user.get("profession", "")
+            items = user.get("items_carried", "")
+            phys = user.get("physical_description", "")
+            pieces.append(f"{name} lived a modern life; {prof or 'their work is not recorded'}. They carried {items}." if items else f"{name} lived a modern life; {prof or 'their work is not recorded'}.")
             if phys:
-                part += f" Physically: {phys}."
+                pieces.append(f"Physically: {phys}.")
+        for p in payload_data["players"]:
+            pname = p.get("name", "Player")
+            relation = p.get("relationship", "")
+            prof = p.get("profession", "")
+            items = p.get("items_carried", "")
+            phys = p.get("physical_description", "")
+            rel_text = f" Relationship: {relation}." if relation else ""
+            pieces.append(f"{pname} ({prof or 'profession unknown'}){rel_text} They carried {items}." if items else f"{pname} ({prof or 'profession unknown'}).")
+            if phys:
+                pieces.append(f"Physically: {phys}.")
+        content = " ".join(pieces).strip()
+        return {"role": "system", "content": content if content else "No character data available."}
 
-            messages.append(part)
-    else:
-        # No additional players
-        pass
+    # Build messages for OpenRouter
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
 
-    # Join into a flowing system message
-    content = " ".join(messages)
-    header = (
-        "You are initializing character backgrounds for a newly-arrived time-travel scenario. "
-        "Describe each person's ordinary modern life in a natural, immersive way, integrating profession, "
-        "personality, items they carry, and physical appearance as context for how they might behave and be perceived."
-    )
-    final = header + "\n\n" + content
-    return {"role": "system", "content": final}
+    # The user message will contain a compact JSON representation of the characters
+    user_message = "CHARACTERS_JSON:\n" + json.dumps(payload_data, ensure_ascii=False, indent=2)
+
+    payload = {
+        "model": main_model,
+        "messages": [
+            {"role": "system", "content": CHARACTER_BACKGROUND_SYS},
+            {"role": "user", "content": user_message}
+        ],
+        "max_tokens": 600
+    }
+
+    try:
+        resp = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers=headers,
+            json=payload,
+            timeout=30
+        )
+        resp.raise_for_status()
+        result = resp.json()
+        generated = result["choices"][0]["message"]["content"].strip()
+        # Return as a single system message content (polished by LLM)
+        return {"role": "system", "content": generated}
+    except Exception as e:
+        # On error, fallback to a compact local summary
+        try:
+            pieces = []
+            user = payload_data["user"]
+            if user:
+                name = user.get("name", "Unknown")
+                prof = user.get("profession", "")
+                items = user.get("items_carried", "")
+                phys = user.get("physical_description", "")
+                pieces.append(f"{name} lived a modern life; {prof or 'their work is not recorded'}. They carried {items}." if items else f"{name} lived a modern life; {prof or 'their work is not recorded'}.")
+                if phys:
+                    pieces.append(f"Physically: {phys}.")
+            for p in payload_data["players"]:
+                pname = p.get("name", "Player")
+                relation = p.get("relationship", "")
+                prof = p.get("profession", "")
+                items = p.get("items_carried", "")
+                phys = p.get("physical_description", "")
+                rel_text = f" Relationship: {relation}." if relation else ""
+                pieces.append(f"{pname} ({prof or 'profession unknown'}){rel_text} They carried {items}." if items else f"{pname} ({prof or 'profession unknown'}).")
+                if phys:
+                    pieces.append(f"Physically: {phys}.")
+            content = " ".join(pieces).strip()
+            return {"role": "system", "content": content if content else "No character data available."}
+        except Exception:
+            return {"role": "system", "content": "Character background unavailable due to an internal error."}
 
 
 # -----------------------------
@@ -246,10 +246,13 @@ def resolve_selected_year(game_config_data: dict) -> Optional[int]:
 
 def generate_arrival_scenario(game_config_data: dict, resolved_year: Optional[int]) -> dict:
     """
-    Generate the third system message: arrival event, immediate setting, and cliffhanger.
-    Requires civilization data from civ_catalog_filtered.json and the resolved year.
+    Generate the third system message by delegating to the main LLM using ARRIVAL_SCENARIO_SYS.
+    The function passes structured context (game_config, civ_entry, resolved_year) to the LLM and
+    returns the LLM-crafted immersive arrival scene. Falls back to a Python-generated scene on error.
     """
-    # Attempt to load civilization entry
+    from prompts import ARRIVAL_SCENARIO_SYS
+
+    # Locate civ_entry (same logic as before)
     civ_name = game_config_data.get("civilization") if isinstance(game_config_data, dict) else None
     civ_entry = None
     if civ_name:
@@ -262,55 +265,63 @@ def generate_arrival_scenario(game_config_data: dict, resolved_year: Optional[in
                     civ_entry = e
                     break
         except Exception as e:
-            print(f"Error loading civ catalog for arrival scenario: {e}")
             civ_entry = None
 
-    # Build narrative
+    # Prepare structured context for LLM
+    context = {
+        "game_config": game_config_data or {},
+        "civilization": civ_entry or {},
+        "resolved_year": resolved_year
+    }
+
+    # Load LLM config for main model
+    try:
+        with open(LLM_CONFIG_FILE_PATH, 'r', encoding='utf-8') as f:
+            cfg = json.load(f)
+        api_key = cfg.get("api_key")
+        main_model = cfg.get("main_model")
+    except Exception:
+        api_key = None
+        main_model = None
+
+    if api_key and main_model:
+        headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+        user_message = "ARRIVAL_CONTEXT_JSON:\n" + json.dumps(context, ensure_ascii=False, indent=2)
+        payload = {
+            "model": main_model,
+            "messages": [
+                {"role": "system", "content": ARRIVAL_SCENARIO_SYS},
+                {"role": "user", "content": user_message}
+            ],
+            "max_tokens": 600
+        }
+        try:
+            r = requests.post("https://openrouter.ai/api/v1/chat/completions",
+                              headers=headers, json=payload, timeout=45)
+            r.raise_for_status()
+            generated = r.json()["choices"][0]["message"]["content"].strip()
+            return {"role": "system", "content": generated}
+        except Exception:
+            # fall through to fallback below
+            pass
+
+    # Fallback: Python-generated arrival scene (simpler)
     header = "You are now presented with the sudden arrival scenario."
     parts = [header]
-
-    # Posthuman intervention framing
     parts.append(
-        "Without warning, the world as you know it collapses into a pinpoint of sensation. "
-        "A cold, impossible clarity — the handiwork of intelligences beyond human comprehension — "
-        "presses the present thin and threads of reality unwind."
+        "Without warning, the world as you know it collapses into a pinpoint of sensation. A cold, impossible clarity presses the present thin."
     )
-
-    # Location / civ description
     if civ_entry:
         region = civ_entry.get("region", "an unspecified region")
-        notes = civ_entry.get("notes", "")
         start_year = civ_entry.get("start_year")
         end_year = civ_entry.get("end_year")
-        parts.append(
-            f"You find yourselves deposited within the bounds of {civ_name}, in {region}. "
-            f"Historical records indicate this civilization spanned approximately {start_year} to {end_year}."
-        )
-        if notes:
-            parts.append(f"Local notes: {notes}")
+        parts.append(f"You find yourselves deposited within the bounds of {civ_name}, in {region}.")
+        if start_year and end_year:
+            parts.append(f"This civilization appears to span approximately {start_year}–{end_year}.")
     else:
         parts.append("You find yourselves in a place whose historical background is unclear from available records.")
-
-    # Characters and items integration
-    # Reuse character backgrounds for phrasing
-    char_msg = generate_character_backgrounds(game_config_data).get("content", "")
-    if char_msg:
-        parts.append("Moments before, each of you had been living your modern life. " + 
-                     "In your pockets and bags were the ordinary items of that life. These objects are now anomalies in the new time.")
-    else:
-        parts.append("Your modern identities and belongings blur into the scene; details are sketchy.")
-
-    # Immediate setting detail using resolved_year
-    if resolved_year:
-        parts.append(f"The year is approximately {resolved_year}. The surroundings bear the hallmarks of a time not your own.")
-    else:
-        parts.append("The exact year is unclear; records and the environment send mixed signals.")
-
-    # Describe locals' likely perception using physical descriptions
-    # Pull physical descriptions from game_config_data
     user = game_config_data.get("user", {}) if isinstance(game_config_data, dict) else {}
     players = game_config_data.get("players", []) if isinstance(game_config_data, dict) else []
-
     all_chars = [user] + players if user else players
     visible_notes = []
     for idx, c in enumerate(all_chars):
@@ -319,34 +330,13 @@ def generate_arrival_scenario(game_config_data: dict, resolved_year: Optional[in
         if phys:
             visible_notes.append(f"{name} appears {phys.split('.')[0]}.")
     if visible_notes:
-        parts.append("How you appear:\n" + " ".join(visible_notes))
-
-    # Incorporate items as plot hooks
-    item_notes = []
-    for idx, c in enumerate(all_chars):
-        name = c.get("name", f"Character{idx+1}")
-        items = c.get("items_carried", "")
-        if items:
-            # keep it brief
-            sample = items.split(",")[0] if "," in items else (items.split(".")[0] if "." in items else items)
-            item_notes.append(f"{name} still has {sample.strip()} on them.")
-    if item_notes:
-        parts.append("Notable items (now conspicuous): " + " ".join(item_notes))
-
-    # Cliffhanger ending ~compelling, invites user response
-    cliff = (
-        "A thin, insectile voice seems to come from everywhere and nowhere: 'Observation logged. Continue.' "
-        "Before you can reply, a distant bell — metallic, not of this world — tolls. "
-        "Shouts and the sound of hurried footsteps are coming from beyond a low stone wall nearby. "
-        "Something runs past you into the crowd and the locals suddenly turn. You have seconds to choose: "
-        "move toward shelter, try to communicate, or investigate the disturbance. The decision is yours."
-    )
+        parts.append("How you appear: " + " ".join(visible_notes))
+    if resolved_year:
+        parts.append(f"The year is approximately {resolved_year}.")
+    parts.append("Notable items stick out against unfamiliar cloth and stone; they mark you as impossible ghosts here.")
+    cliff = "A distant bell tolls; someone screams; the world inclines. You must act."
     parts.append(cliff)
-
-    # Combine and constrain length to ~300-400 words: we'll allow the text to be verbose but keep it reasonably sized
     content = "\n\n".join(parts)
-
-    # Final system message
     return {"role": "system", "content": content}
 
 
