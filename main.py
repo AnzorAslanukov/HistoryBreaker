@@ -873,31 +873,34 @@ def update_label():
 @app.post("/api/chat_query")
 def api_chat_query():
     """
-    Receives a user message, queries the LLM, and returns the response.
-    Also saves the conversation to the database.
+    Receives a user message, validates it against recent narrative context (when required),
+    queries the LLM for a response, and returns that response. Saves conversation to DB.
+    If validation fails, generate a short assistant warning (and save it) instead of querying
+    the main storyline LLM.
     """
     data = request.get_json(silent=True) or {}
     user_message = data.get("message", "").strip()
-    session_id = data.get("session_id") # Get session_id from frontend
+    session_id = data.get("session_id")  # Get session_id from frontend
 
     if not user_message:
         return jsonify({"response": "No message provided."}), 400
     if not session_id:
         return jsonify({"response": "Session ID missing."}), 400
 
-    # Load LLM config to get model names for token counting
+    # Load LLM config to get model names for token counting and helper generation
     llm_config = load_llm_config()
     if not llm_config:
         return jsonify({"response": "LLM configuration missing."}), 500
-    
+
     small_model_name = llm_config.get("small_model")
     main_model_name = llm_config.get("main_model")
+    api_key = llm_config.get("api_key", "")
 
     if not small_model_name or not main_model_name:
         return jsonify({"response": "LLM model names not configured."}), 500
 
     # Calculate input tokens for the user message
-    user_input_tokens = count_tokens(user_message, small_model_name) # Assuming small_model for user input context
+    user_input_tokens = count_tokens(user_message, small_model_name)  # small_model for user input context
 
     # Get the latest objective time and increment it by 60 seconds
     latest_objective_time = conversation_manager.get_latest_objective_time(session_id)
@@ -906,14 +909,90 @@ def api_chat_query():
     # Save user message with input token count and new objective time
     conversation_manager.save_message(session_id, "user", user_message, input_tokens=user_input_tokens, objective_time=new_objective_time)
 
-    # Load entire conversation history for the session
+    # Load entire conversation history for the session (includes the user message we just saved)
     conversation_history = conversation_manager.load_conversation(session_id)
-    
-    # Pass the conversation history to the LLM
+
+    # Validation step: run the validator only when the intro (three system messages) exists.
+    # validate_player_response is liberal and defaults to allow on errors.
+    try:
+        from backend.agents.basic_nodes import validate_player_response
+        is_valid = validate_player_response(session_id, user_message)
+    except Exception as e:
+        # If something goes wrong importing/running validator, default to allow
+        app.logger.debug(f"Validator error; allowing message by default: {e}")
+        is_valid = True
+
+    if not is_valid:
+        # Build a concise assistant warning using the helper (small) model and prompt in prompts.py
+        try:
+            from prompts import RESPONSE_INVALID_WARNING_SYS
+            # Compose a short user instruction including the offending message and a brief
+            # validation summary so the helper model can produce a tailored warning.
+            validation_summary = "The validator judged this message to contain an implausible or impossible action for the setting (e.g., materializing objects from thin air) without in-world justification."
+            helper_user_prompt = (
+                f'Player message: "{user_message}"\n\n'
+                f'Validation explanation: "{validation_summary}"\n\n'
+                "Produce one concise assistant reply (1-3 sentences) that:\n"
+                "- Tells the player their action seems unrealistic,\n"
+                "- Briefly explains why (one sentence),\n"
+                "- Suggests a small, plausible adjustment (one short suggestion).\n"
+                "Return only the assistant text."
+            )
+
+            warning_text = ""
+            if api_key and small_model_name:
+                headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+                payload = {
+                    "model": small_model_name,
+                    "messages": [
+                        {"role": "system", "content": RESPONSE_INVALID_WARNING_SYS},
+                        {"role": "user", "content": helper_user_prompt}
+                    ],
+                    "max_tokens": 80,
+                    "temperature": 0.2
+                }
+                import requests, time
+                for _ in range(2):
+                    try:
+                        r = requests.post("https://openrouter.ai/api/v1/chat/completions",
+                                          headers=headers, json=payload, timeout=20)
+                        r.raise_for_status()
+                        warning_text = r.json()["choices"][0]["message"]["content"].strip()
+                        if warning_text:
+                            break
+                    except Exception:
+                        time.sleep(0.5)
+            # Fallback local warning if model call fails or is not configured
+            if not warning_text:
+                warning_text = ("That action seems unrealistic for the setting because it implies an impossible materialization without explanation. "
+                                "Try describing a believable in-world cause (e.g., you found a hidden device or used a learned ritual).")
+
+            # Save the assistant warning to conversation DB
+            try:
+                out_tokens = count_tokens(warning_text, small_model_name) if small_model_name else 0
+                conversation_manager.save_message(session_id, "assistant", warning_text, output_tokens=out_tokens, objective_time=new_objective_time)
+            except Exception as e:
+                app.logger.error(f"Failed to save validation warning to DB: {e}")
+
+            # Update TESA as usual
+            try:
+                tesa_data = get_tesa_indicator(session_id)
+                game_state = session.get('game_state', {})
+                game_state['tesa'] = tesa_data
+                session['game_state'] = game_state
+            except Exception:
+                pass
+
+            return jsonify({"response": warning_text})
+        except Exception as e:
+            app.logger.error(f"Failed to generate validation warning: {e}")
+            return jsonify({"response": "Your message appears unrealistic for the setting."}), 200
+
+    # If valid, proceed to query the main storyline LLM
     llm_response = query_llm(conversation_history)
-    
+
     # Calculate output tokens for the LLM response
-    llm_output_tokens = count_tokens(llm_response, main_model_name) # Assuming main_model for LLM response
+    llm_output_tokens = count_tokens(llm_response, main_model_name)  # main_model for LLM response
 
     # Save assistant response with output token count and the same new objective time
     conversation_manager.save_message(session_id, "assistant", llm_response, output_tokens=llm_output_tokens, objective_time=new_objective_time)

@@ -501,3 +501,24 @@ Your task is to compose a single immersive arrival scene (~300-400 words) that:
 Return only the scene text (no JSON, no commentary, no instructions). 
 Ensure the year and civ name are incorporated naturally.Refrain from directly mentioning the year to maintain immersion.
 """
+
+# ---------------------------
+# Response validation prompts
+# ---------------------------
+RESPONSE_VALIDITY_SYS = """
+You are an agent that judges whether a player's chat response is plausibly grounded in the current narrative.
+You will be given:
+1) A short chunk of recent conversation (system and user messages) as context.
+2) The candidate player message to evaluate.
+
+Return only one token: "True" if the player's message is plausibly consistent with the recent narrative context and not obviously impossible, or "False" if it contains implausible, clearly impossible actions (e.g., instant materialization from thin air without in-world justification). Be very liberal: allow violence, strong language, horror, and improbable but narratively reasonable actions. Reject only clear physics-breaking or narrative-breaking claims that cannot be reconciled with the context.
+"""
+
+RESPONSE_INVALID_WARNING_SYS = """
+You are an assistant that will deliver a short clear warning to the player when their prior message was judged unrealistic.
+Given the player's message and a brief explanation from the validation agent, produce one concise assistant reply (1-3 sentences) that:
+- Tells the player that their action or claim seems unrealistic for the setting,
+- Briefly explains why (one sentence),
+- Suggests a small, plausible adjustment (one short suggestion).
+Return only the assistant text (no JSON, no meta comments).
+"""

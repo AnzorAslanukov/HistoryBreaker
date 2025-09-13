@@ -582,3 +582,109 @@ def get_tesa_indicator(session_id: str) -> dict:
             "temporal_drift_days": "Unknown",
             "time_anchors_identified": []
         }
+
+
+def validate_player_response(session_id: str, player_message: str) -> bool:
+    """
+    Validate whether a player's message is plausibly grounded in the recent narrative.
+
+    Activation:
+    - Only runs validation if the conversation has at least 3 'system' messages.
+      If fewer than 3 system messages are present, this returns True (allow).
+
+    Behavior:
+    - Reads the last six messages (the last three system-user interactions) from the
+      ConversationManager for the given session_id.
+    - Sends a short context + candidate player message to the configured small LLM
+      using the RESPONSE_VALIDITY_SYS prompt from prompts.py.
+    - Returns True if the LLM indicates the message is plausible, False if it is
+      clearly narrative/physics-breaking.
+
+    Liberal acceptance policy: on any error or ambiguous LLM response, default to True.
+    """
+    from prompts import RESPONSE_VALIDITY_SYS
+
+    # Load LLM config
+    try:
+        with open(LLM_CONFIG_FILE_PATH, 'r') as f:
+            config = json.load(f)
+        api_key = config.get("api_key")
+        small_model = config.get("small_model")
+    except Exception as e:
+        print(f"Error loading LLM config in validate_player_response: {e}")
+        return True
+
+    if not api_key or not small_model:
+        print("API key or small model not found in config for validate_player_response.")
+        return True
+
+    try:
+        manager = ConversationManager()
+        conversation_history = manager.load_conversation(session_id) or []
+
+        # Activation check: require at least 3 intro assistant messages
+        # (the three intro system messages are persisted as role 'assistant' in the DB)
+        assistant_msgs = [m for m in conversation_history if m.get("role") == "assistant"]
+        if len(assistant_msgs) < 3:
+            # Not yet time to validate — allow by default
+            return True
+
+        # Prepare the last 6 messages as context
+        last_six = conversation_history[-6:]
+        formatted_history = "\n".join([f"{msg.get('role')}: {msg.get('content')}" for msg in last_six])
+
+        user_payload = (
+            "Recent conversation (last 6 messages):\n"
+            f"{formatted_history}\n\n"
+            "Candidate player response:\n"
+            f"{player_message}\n\n"
+            "Return only one token: True or False. Be liberal; allow profanity, violence, horror, "
+            "and absurdities as long as they are narratively believable. Reject only clear "
+            "physics- or narrative-breaking claims (e.g., instant materialization from thin air "
+            "without in-world justification)."
+        )
+
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        }
+        payload = {
+            "model": small_model,
+            "messages": [
+                {"role": "system", "content": RESPONSE_VALIDITY_SYS},
+                {"role": "user", "content": user_payload}
+            ],
+            "max_tokens": 3,
+            "temperature": 0.0
+        }
+
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers=headers,
+            json=payload,
+            timeout=15
+        )
+        response.raise_for_status()
+        result = response.json()
+        llm_text = result["choices"][0]["message"]["content"].strip()
+
+        lowered = llm_text.lower()
+        if lowered.startswith("true"):
+            return True
+        if lowered.startswith("false"):
+            return False
+        if "true" in lowered:
+            return True
+        if "false" in lowered:
+            return False
+
+        # Ambiguous output — be permissive
+        print(f"Ambiguous validation output: '{llm_text}' — defaulting to allow.")
+        return True
+
+    except (requests.exceptions.RequestException, KeyError, ValueError, IndexError) as e:
+        print(f"Error during validate_player_response LLM call: {e}")
+        return True
+    except Exception as e:
+        print(f"Unexpected error in validate_player_response: {e}")
+        return True
