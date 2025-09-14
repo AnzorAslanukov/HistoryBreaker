@@ -426,6 +426,20 @@ def get_conversation_history():
 
             # Section 3: resolve year and arrival scenario
             resolved_year = resolve_selected_year(game_cfg) if isinstance(game_cfg, dict) else None
+            # If the start year was requested as 'random', persist the resolved concrete year
+            # into game_config.json so subsequent DB inserts use a stable base year.
+            try:
+                if isinstance(game_cfg, dict) and game_cfg.get("selected_start_year") == "random" and resolved_year is not None:
+                    # Overwrite the selected_start_year with the resolved integer year
+                    game_cfg["selected_start_year"] = int(resolved_year)
+                    # Write back to the game config file so db_manager.save_message can read it
+                    GAME_CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
+                    with open(GAME_CONFIG_FILE, 'w', encoding='utf-8') as f:
+                        json.dump(game_cfg, f, indent=2)
+            except Exception:
+                # If persistence fails, continue without blocking arrival generation
+                pass
+
             arrival_msg = generate_arrival_scenario(game_cfg, resolved_year)
 
             # Persist the three messages to the conversation DB as assistant messages
@@ -1068,6 +1082,12 @@ def load_llm_config() -> dict | None:
 
 # Initialize ConversationManager globally
 conversation_manager = ConversationManager()
+# Backfill estimated_date for any existing conversation rows (non-blocking)
+try:
+    conversation_manager.backfill_estimated_dates()
+except Exception:
+    # Do not block startup if backfill fails
+    pass
 
 if __name__ == "__main__":
     os.makedirs(SAVES_DIR, exist_ok=True)  # ensure saves folder exists
