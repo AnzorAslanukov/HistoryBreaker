@@ -21,6 +21,7 @@ static/json/llm_config.json
 *.log
 .DS_Store
 Thumbs.db
+docs/
 
 # Ignore folder containing details for features
 features/
