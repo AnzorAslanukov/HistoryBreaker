@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import secrets
+import re
 from typing import Optional, Tuple
 
 # File paths
@@ -341,14 +342,44 @@ def generate_arrival_scenario(game_config_data: dict, resolved_year: Optional[in
 
 
 # -----------------------------
+# Helper: world-state summary builder
+# -----------------------------
+def build_world_state_summary_from_messages(messages: list[dict]) -> str | None:
+    """
+    Build a concise, human-friendly one-line world-state summary from the provided
+    conversation messages (prefers the arrival scenario system message when available).
+
+    This avoids re-reading game_config.json and uses the persisted conversation history
+    as the primary source of truth.
+    """
+    try:
+        if not isinstance(messages, list):
+            return None
+        system_msgs = [m.get("content") for m in messages if isinstance(m, dict) and m.get("role") == "system" and isinstance(m.get("content"), str)]
+        if not system_msgs:
+            return None
+        # Prefer the third system message (arrival scenario) if present
+        arrival = system_msgs[2] if len(system_msgs) >= 3 else system_msgs[-1]
+        summary = re.sub(r"\s+", " ", arrival).strip()
+        # Keep it short
+        return summary[:400] + ("..." if len(summary) > 400 else "")
+    except Exception:
+        return None
+
+# -----------------------------
 # LLM query function (integrated)
 # -----------------------------
 def query_llm(messages: list[dict]) -> str | None:
     """
     Queries the OpenRouter LLM with the given conversation history using the main model.
-    This function will prepend the three-section beginning storyline system messages when
-    the conversation appears to be at the start (message count <= 2).
-    Messages should be in the format: [{"role": "user", "content": "..."}]
+
+    Behavior changes:
+    - For the initial conversation (convo_len <= 2) the original three system messages
+      (posthuman premise, character backgrounds, arrival scenario) are still generated.
+    - For ongoing conversations (convo_len > 2), do NOT re-read or pass raw game_config.json.
+      Instead prepend a concise STORYLINE_CONTINUITY_SYS system prompt to guide the narrative LLM.
+    - This reduces excessive repetition of raw config fields and steers the model to use
+      the conversation history as the primary source of truth.
     """
     config = load_llm_config()
     if not config:
@@ -360,16 +391,15 @@ def query_llm(messages: list[dict]) -> str | None:
     if not api_key or not main_model:
         return "Error: API key or main model not found in LLM config."
 
-    # If beginning of conversation, add the three system messages
     # Determine message count (count user+assistant messages)
     convo_len = len(messages) if isinstance(messages, list) else 0
     system_prepends = []
     try:
         if convo_len <= 2:
-            # Section 1: posthuman premise (no data needed)
+            # Beginning of conversation: preserve original three system messages
             system_prepends.append(generate_posthuman_premise())
 
-            # Section 2: character backgrounds (requires game_config.json)
+            # Character backgrounds (requires game_config.json)
             try:
                 with open(GAME_CONFIG_FILE_PATH, 'r', encoding='utf-8') as f:
                     game_cfg = json.load(f)
@@ -378,13 +408,47 @@ def query_llm(messages: list[dict]) -> str | None:
 
             system_prepends.append(generate_character_backgrounds(game_cfg))
 
-            # Section 3: resolve year & arrival scenario (requires civ catalog + game_config)
+            # Arrival scenario (requires civ catalog + game_config)
             resolved_year = resolve_selected_year(game_cfg) if isinstance(game_cfg, dict) else None
             system_prepends.append(generate_arrival_scenario(game_cfg, resolved_year))
+        else:
+            # Ongoing conversation: do NOT re-include raw game_config.json.
+            # Instead prepend a concise continuity system prompt that instructs the narrative model
+            # to use the persisted conversation history and previously established facts.
+            try:
+                from prompts import STORYLINE_CONTINUITY_SYS
+                system_prepends.append({"role": "system", "content": STORYLINE_CONTINUITY_SYS})
+            except Exception:
+                # Fallback to a minimal continuity instruction if the constant isn't present.
+                system_prepends.append({"role": "system", "content": "You are the game's narrative engine. Use only the conversation history and previously established in-world facts to continue the story. Do not reference internal config files or raw JSON data."})
 
+            # Provide the narrative model with a single informational scene date (if available)
+            # extracted from the provided conversation messages. This is strictly for awareness:
+            # the model should not treat the date as a main storyline element, only as an indicator
+            # of elapsed time since the arrival scenario.
+            try:
+                scene_date = None
+                if isinstance(messages, list):
+                    # Prefer the most recent non-empty estimated_date field from message dicts
+                    for m in reversed(messages):
+                        if isinstance(m, dict) and m.get("estimated_date"):
+                            sd = m.get("estimated_date")
+                            if isinstance(sd, str) and sd.strip() != "":
+                                scene_date = sd.strip()
+                                break
+                if scene_date:
+                    date_hint = (
+                        f"SCENE_DATE (informational): {scene_date}. "
+                        "This is provided only to indicate how much time has elapsed since arrival; "
+                        "do not make the date a central plot element or repeat it as a focal detail."
+                    )
+                    system_prepends.append({"role": "system", "content": date_hint})
+            except Exception:
+                # If anything goes wrong extracting the date, silently continue without it.
+                pass
     except Exception as e:
-        # On any error building system messages, fall back to a minimal posthuman premise
-        print(f"Error generating beginning storyline messages: {e}")
+        # On any unexpected error, fall back to a minimal posthuman premise
+        print(f"Error building system messages for query_llm: {e}")
         system_prepends = [generate_posthuman_premise()]
 
     headers = {
