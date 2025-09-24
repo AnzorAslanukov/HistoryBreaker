@@ -1082,12 +1082,6 @@ def load_llm_config() -> dict | None:
 
 # Initialize ConversationManager globally
 conversation_manager = ConversationManager()
-# Backfill estimated_date for any existing conversation rows (non-blocking)
-try:
-    conversation_manager.backfill_estimated_dates()
-except Exception:
-    # Do not block startup if backfill fails
-    pass
 
 if __name__ == "__main__":
     os.makedirs(SAVES_DIR, exist_ok=True)  # ensure saves folder exists
