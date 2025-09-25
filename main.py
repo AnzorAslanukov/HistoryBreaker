@@ -16,7 +16,7 @@ import json
 from pathlib import Path  # Import Path from pathlib 
 
 from prompts import *
-from backend.agents.basic_nodes import display_openrouter_balance, get_safety_level, get_perceived_time_of_day, get_environment_accuracy_modifier, get_location_terrain_category, get_temperature, count_tokens, get_total_input_tokens, get_total_output_tokens, get_tesa_indicator # Import token counters and TESA
+from backend.agents.basic_agents import display_openrouter_balance, get_safety_level, get_perceived_time_of_day, get_environment_accuracy_modifier, get_location_terrain_category, get_temperature, count_tokens, get_total_input_tokens, get_total_output_tokens, get_tesa_indicator # Import token counters and TESA
 from backend.langgraph import query_llm, generate_posthuman_premise, generate_character_backgrounds, resolve_selected_year, generate_arrival_scenario # Import langgraph helpers
 from backend.database.db_manager import ConversationManager # Import ConversationManager
 import uuid # Import uuid for session IDs
@@ -443,12 +443,46 @@ def get_conversation_history():
             arrival_msg = generate_arrival_scenario(game_cfg, resolved_year)
 
             # Persist the three messages to the conversation DB as assistant messages
-            for sys_msg in (premise_msg, backgrounds_msg, arrival_msg):
+            for i, sys_msg in enumerate((premise_msg, backgrounds_msg, arrival_msg)):
                 content = sys_msg.get("content") if isinstance(sys_msg, dict) else str(sys_msg)
                 # Save as 'assistant' role so the frontend will render them
                 conversation_manager.save_message(session_id, "assistant", content, output_tokens=0, objective_time=0)
 
-            # Reload history after inserting intro messages
+                # After the second message (character backgrounds), trigger indicator updates
+                if i == 1:  # After backgrounds_msg (index 1)
+                    try:
+                        # Load current history up to this point
+                        current_history = conversation_manager.load_conversation(session_id)
+
+                        # Calculate and store indicator values in session
+                        game_state = session.get('game_state', {})
+
+                        # Get all indicator values
+                        safety_level = get_safety_level(current_history)
+                        perceived_time = get_perceived_time_of_day(current_history)
+                        environment_mod = get_environment_accuracy_modifier(current_history)
+                        location_category = get_location_terrain_category(current_history)
+                        temperature = get_temperature(current_history)
+
+                        # Store in session for frontend access
+                        game_state.update({
+                            'safety_level': safety_level,
+                            'perceived_time_of_day': perceived_time,
+                            'environment_accuracy_modifier': environment_mod,
+                            'location_terrain_category': location_category,
+                            'temperature': temperature
+                        })
+
+                        # Also calculate TESA if needed
+                        tesa_data = get_tesa_indicator(session_id)
+                        game_state['tesa'] = tesa_data
+
+                        session['game_state'] = game_state
+
+                    except Exception as e:
+                        app.logger.error(f"Error updating indicators after second message: {e}")
+
+            # Reload final history after inserting all intro messages
             history = conversation_manager.load_conversation(session_id)
         except Exception as e:
             app.logger.error(f"Error initializing intro messages for session {session_id}: {e}")
@@ -929,7 +963,7 @@ def api_chat_query():
     # Validation step: run the validator only when the intro (three system messages) exists.
     # validate_player_response is liberal and defaults to allow on errors.
     try:
-        from backend.agents.basic_nodes import validate_player_response
+        from backend.agents.basic_agents import validate_player_response
         is_valid = validate_player_response(session_id, user_message)
     except Exception as e:
         # If something goes wrong importing/running validator, default to allow
