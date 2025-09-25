@@ -1072,6 +1072,14 @@ def get_game_state():
     game_state = session.get('game_state', {})
     return jsonify(game_state=game_state)
 
+@app.get("/api/get_vectorization_status")
+def api_get_vectorization_status():
+    """
+    Returns the current vectorization status for monitoring progress.
+    """
+    status = conversation_manager.get_vectorization_status()
+    return jsonify(status)
+
 
 # tiny helper other modules can import
 def load_llm_config() -> dict | None:
@@ -1082,6 +1090,8 @@ def load_llm_config() -> dict | None:
 
 # Initialize ConversationManager globally
 conversation_manager = ConversationManager()
+# Start background vectorization for content
+conversation_manager.start_background_vectorization(interval_seconds=5)
 
 if __name__ == "__main__":
     os.makedirs(SAVES_DIR, exist_ok=True)  # ensure saves folder exists
